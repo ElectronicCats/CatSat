@@ -73,6 +73,8 @@ Distributed as-is; no warranty is given.
 // Inicializar DHT sensor.
 DHT_Unified dht(DHTPIN, DHTTYPE);
 
+MPU6050 mpu;
+
 uint32_t delayMS;
 
 /* Assign a unique ID to this sensor at the same time */
@@ -152,6 +154,12 @@ void setup() {
     Serial.print(F("Ooops, no BMP085 detected ... Check your wiring or I2C ADDR!"));
     while(1);
   }
+
+ mpu.initialize();
+
+  mpu.setI2CMasterModeEnabled(false);
+  mpu.setI2CBypassEnabled(true) ;
+  mpu.setSleepEnabled(false);
   
   /* Initialise the sensor */
   if(!mag.begin())
@@ -180,7 +188,7 @@ void loop() {
     Serial.println("Error reading temperature!");
   }
   else {
-    Serial.print("Temperature: ");
+    Serial.print("TemperatureDHT: ");
     Serial.print(event.temperature);
     Serial.println(" *C");
   }
@@ -190,7 +198,7 @@ void loop() {
     Serial.println("Error reading humidity!");
   }
   else {
-    Serial.print("Humidity: ");
+    Serial.print("HumidityDHT: ");
     Serial.print(event.relative_humidity);
     Serial.println("%");
   }
@@ -240,11 +248,11 @@ void loop() {
   {
     Serial.println("Sensor error");
   }
-  delay(500);
+  
    
   mag.getEvent(&event);
  
-  /* Display the results (magnetic vector values are in micro-Tesla (uT)) */
+  // Display the results (magnetic vector values are in micro-Tesla (uT))
   Serial.print("X: "); Serial.print(event.magnetic.x); Serial.print("  ");
   Serial.print("Y: "); Serial.print(event.magnetic.y); Serial.print("  ");
   Serial.print("Z: "); Serial.print(event.magnetic.z); Serial.print("  ");Serial.println("uT");
@@ -273,7 +281,7 @@ void loop() {
   
   Serial.print("Heading (degrees): "); Serial.println(headingDegrees);
   
+  
   delay(500);  
-
 
 }
