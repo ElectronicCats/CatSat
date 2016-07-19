@@ -16,7 +16,8 @@ Especificaciones del entorno de Desarrollo:
   Kit CanSat
   - Arduino Mini Pro
   - DHT22
-  - GY87
+  - GY-87
+  - GPS L80
 
 
 Este código es beerware si tu me ves ( o cualquier otro miembro de Electronic Cats) 
@@ -42,7 +43,8 @@ Development environment specifics:
   Kit CanSat
   - Arduino Mini Pro
   - DHT22
-  - GY87
+  - GY-87
+  - GPS L80
 
 This code is beerware; if you see me (or any other Electronic Cats 
 member) at the local, and you've found our code helpful, 
@@ -74,6 +76,9 @@ Distributed as-is; no warranty is given.
 DHT_Unified dht(DHTPIN, DHTTYPE);
 
 MPU6050 mpu;
+
+TinyGPS gps;
+SoftwareSerial ss(4, 3); //4(rx) and 3(tx)
 
 uint32_t delayMS;
 
@@ -145,6 +150,7 @@ void displayDHTDetails(void)
 
 void setup() {
   Serial.begin(9600);
+  ss.begin(115200);
   dht.begin();
 
   /* Initialise the sensor */
