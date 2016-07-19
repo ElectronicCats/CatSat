@@ -87,15 +87,6 @@ int16_t gx, gy, gz;
 // not so easy to parse, and slow(er) over UART.
 #define OUTPUT_READABLE_ACCELGYRO
 
-// uncomment "OUTPUT_BINARY_ACCELGYRO" to send all 6 axes of data as 16-bit
-// binary, one right after the other. This is very fast (as fast as possible
-// without compression or data loss), and easy to parse, but impossible to read
-// for a human.
-//#define OUTPUT_BINARY_ACCELGYRO
-
-
-
-
 
 TinyGPS gps;
 SoftwareSerial ss(4, 3); //4(rx) and 3(tx)
@@ -174,6 +165,50 @@ void displayDHTDetails(void)
   delayMS = sensor.min_delay / 1000;
 }
 
+void gpsread(void){
+  
+  bool newData = false;
+  unsigned long chars;
+  unsigned short sentences, failed;
+
+  // For one second we parse GPS data and report some key values
+  for (unsigned long start = millis(); millis() - start < 1000;)
+  {
+    while (ss.available())
+    {
+      char c = ss.read();
+      // Serial.write(c); // uncomment this line if you want to see the GPS data flowing
+      if (gps.encode(c)) // Did a new valid sentence come in?
+        newData = true;
+    }
+  }
+
+  if (newData)
+  {
+    float flat, flon;
+    unsigned long age;
+    gps.f_get_position(&flat, &flon, &age);
+    Serial.print(F("LAT="));
+    Serial.print(flat == TinyGPS::GPS_INVALID_F_ANGLE ? 0.0 : flat, 6);
+    Serial.print(F(" LON="));
+    Serial.print(flon == TinyGPS::GPS_INVALID_F_ANGLE ? 0.0 : flon, 6);
+    Serial.print(F(" SAT="));
+    Serial.print(gps.satellites() == TinyGPS::GPS_INVALID_SATELLITES ? 0 : gps.satellites());
+    Serial.print(F(" PREC="));
+    Serial.print(gps.hdop() == TinyGPS::GPS_INVALID_HDOP ? 0 : gps.hdop());
+  }
+  
+  gps.stats(&chars, &sentences, &failed);
+  Serial.print(F(" CHARS="));
+  Serial.print(chars);
+  Serial.print(F(" SENTENCES="));
+  Serial.print(sentences);
+  Serial.print(F(" CSUM ERR="));
+  Serial.println(failed);
+  if (chars == 0)
+    Serial.println(F("** No characters received from GPS: check wiring **"));
+}
+
 void setup() {
   Serial.begin(9600);
   ss.begin(115200);
@@ -199,8 +234,6 @@ void setup() {
     accelgyro.setSleepEnabled(false);
 
     
-
-  
   /* Initialise the sensor */
   if(!mag.begin())
   {
@@ -293,6 +326,7 @@ void loop() {
   mag.getEvent(&event);
  
   // Display the results (magnetic vector values are in micro-Tesla (uT))
+  Serial.print("Magnetometro:  "); 
   Serial.print("X: "); Serial.print(event.magnetic.x); Serial.print("  ");
   Serial.print("Y: "); Serial.print(event.magnetic.y); Serial.print("  ");
   Serial.print("Z: "); Serial.print(event.magnetic.z); Serial.print("  ");Serial.println("uT");
@@ -323,8 +357,6 @@ void loop() {
 
   // ##########  read raw accel/gyro measurements from device
     accelgyro.getMotion6(&ax, &ay, &az, &gx, &gy, &gz);
-    
-  #ifdef OUTPUT_READABLE_ACCELGYRO
         // display tab-separated accel/gyro x/y/z values
         Serial.print("Acelerometro "); 
         Serial.print("X:"); Serial.print(ax); Serial.print("\t");
@@ -334,22 +366,12 @@ void loop() {
         Serial.print("X:"); Serial.print(gx); Serial.print("\t");
         Serial.print("X:"); Serial.print(gy); Serial.print("\t");
         Serial.print("X:"); Serial.println(gz);Serial.print("\n");
-    #endif
-
-    #ifdef OUTPUT_BINARY_ACCELGYRO
-        Serial.write((uint8_t)(ax >> 8)); Serial.write((uint8_t)(ax & 0xFF));
-        Serial.write((uint8_t)(ay >> 8)); Serial.write((uint8_t)(ay & 0xFF));
-        Serial.write((uint8_t)(az >> 8)); Serial.write((uint8_t)(az & 0xFF));
-        Serial.write((uint8_t)(gx >> 8)); Serial.write((uint8_t)(gx & 0xFF));
-        Serial.write((uint8_t)(gy >> 8)); Serial.write((uint8_t)(gy & 0xFF));
-        Serial.write((uint8_t)(gz >> 8)); Serial.write((uint8_t)(gz & 0xFF));
-    #endif
     
     /// Fin de Giroscopio y acelerometro.
   Serial.println ("------------fin de sensado--------------");
   
+  gpsread();
   
-  
-  delay(500);  
+  delay(1000);  
 
 }
