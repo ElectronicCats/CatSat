@@ -158,7 +158,7 @@ void displayDHTDetails(void)
    // verify connection
   Serial.println("------------------------------------"); 
   Serial.println("Position");
-  Serial.println("Testing device connections...");
+  Serial.println(F("Testing device connections..."));
   Serial.println(accelgyro.testConnection() ? "MPU6050 connection successful" : "MPU6050 connection failed");
   Serial.println("------------------------------------"); 
   // Set delay between sensor readings based on sensor details.
@@ -221,12 +221,7 @@ void setup() {
     Serial.print(F("Ooops, no BMP085 detected ... Check your wiring or I2C ADDR!"));
     while(1);
   }
-
-   #if I2CDEV_IMPLEMENTATION == I2CDEV_ARDUINO_WIRE
-        Wire.begin();
-    #elif I2CDEV_IMPLEMENTATION == I2CDEV_BUILTIN_FASTWIRE
-        Fastwire::setup(400, true);
-    #endif
+  
     accelgyro.initialize();  /// Initialize MPU
  
     accelgyro.setI2CMasterModeEnabled(false);
@@ -366,11 +361,10 @@ void loop() {
         Serial.print("X:"); Serial.print(gx); Serial.print("\t");
         Serial.print("X:"); Serial.print(gy); Serial.print("\t");
         Serial.print("X:"); Serial.println(gz);Serial.print("\n");
-    
-    /// Fin de Giroscopio y acelerometro.
-  Serial.println ("------------fin de sensado--------------");
   
   gpsread();
+
+  Serial.println ("------------Fin de sensado--------------");
   
   delay(1000);  
 
