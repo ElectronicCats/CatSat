@@ -60,7 +60,7 @@ Distributed as-is; no warranty is given.
 
 #include <TinyGPS.h>
 
-#include "MPU6050.h"
+#include <MPU6050.h>
 
 #include <Adafruit_Sensor.h>
 #include <Adafruit_HMC5883_U.h>
@@ -157,7 +157,7 @@ void displayDHTDetails(void)
   Serial.println("------------------------------------");
    // verify connection
   Serial.println("------------------------------------"); 
-  Serial.println("Position");
+  Serial.println(F("Position"));
   Serial.println(F("Testing device connections..."));
   Serial.println(accelgyro.testConnection() ? "MPU6050 connection successful" : "MPU6050 connection failed");
   Serial.println("------------------------------------"); 
