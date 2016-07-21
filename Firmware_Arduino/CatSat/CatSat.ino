@@ -58,7 +58,8 @@ https://github.com/jrowberg/i2cdevlib
 Library TinyGPS
 https://github.com/janunezc/TinyGPS
 ************************************************************/
-
+#include <SPI.h>
+#include <RH_RF95.h>
 
 #include <Wire.h>
 #include <SoftwareSerial.h>
@@ -74,9 +75,16 @@ https://github.com/janunezc/TinyGPS
 // #include <DHT.h>
 #include <DHT_U.h>
 
-#define DHTPIN 2 // Pin digital para DHT22
+#define DHTPIN 3 // Pin digital para DHT22
 
 #define DHTTYPE DHT22   // DHT 22  (AM2302)
+
+#define RFM95_CS 10 
+#define RFM95_RST 9
+#define RFM95_INT 2
+#define RF95_FREQ 915.0 //usados creando el objeto
+//Creamos objeto LoRa
+RH_RF95 rf95(RFM95_CS, RFM95_INT);
 
 // Inicializar DHT sensor.
 DHT_Unified dht(DHTPIN, DHTTYPE);
@@ -222,7 +230,31 @@ void setup() {
   Serial.begin(9600);
   ss.begin(115200);
   dht.begin();
-
+  /*****LoRa init****/
+  pinMode(RFM95_RST, OUTPUT);
+  digitalWrite(RFM95_RST, HIGH);
+  delay(100);
+  Serial.println("Arduino LoRa prueba");
+  // manual reset
+  digitalWrite(RFM95_RST, LOW);
+  delay(10);
+  digitalWrite(RFM95_RST, HIGH);
+  delay(10);
+  while (!rf95.init()) {
+    Serial.println("LoRa radio init failed");
+    while (1);
+  }
+  Serial.println("LoRa radio init OK!");
+ 
+  // Defaults after init are 915.0MHz, modulation GFSK_Rb250Fd250, +13dbM
+  /*if (!rf95.setFrequency(RF95_FREQ)) {
+    Serial.println("setFrequency failed");
+    while (1);
+  }*/
+  //Serial.print("Set Freq to: "); 
+  //Serial.println(RF95_FREQ);
+  rf95.setTxPower(23, false); //Set the max transmition power
+  /******************/
   /* Initialise the sensor */
   if(!bmp.begin())
   {
@@ -399,5 +431,18 @@ void loop() {
   gpsread();
   
   delay(1000);  
-
+ /*rf95.send((uint8_t *)"variable", "Largo de variable") //para enviar simplemente
+  ****Si se requieres asegurar que llego***********
+  *  if (rf95.waitAvailableTimeout(1000))
+  { 
+    // Should be a reply message for us now   
+    if (rf95.recv(buf, &len))
+   {
+      Serial.print("Got reply: ");
+      Serial.println((char*)buf);
+      Serial.print("RSSI: ");
+      Serial.println(rf95.lastRssi(), DEC);    
+    }
+    */
+  */
 }
