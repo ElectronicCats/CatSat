@@ -1,0 +1,18 @@
+The Raw output is order as
+
+DHT
+event.temperature event.relative_humidity
+
+BMP  
+event.pressure  temp
+
+Magnetometer
+
+event.magnetic.x event.magnetic.y event.magnetic.z
+
+Acele/gyro
+
+"X"=ax "Y"=ay "Z"=az
+
+"X"=gx "Y"=gy "Z"=gz
+        
