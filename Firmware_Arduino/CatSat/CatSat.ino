@@ -57,6 +57,9 @@ https://github.com/jrowberg/i2cdevlib
 
 Library TinyGPS
 https://github.com/janunezc/TinyGPS
+
+Library LoRa Radio
+http://www.airspayce.com/mikem/arduino/RadioHead/index.html
 ************************************************************/
 #include <SPI.h>
 #include <RH_RF95.h>
