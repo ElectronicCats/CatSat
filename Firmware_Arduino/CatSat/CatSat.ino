@@ -104,6 +104,8 @@ int16_t gx, gy, gz;
 // not so easy to parse, and slow(er) over UART.
 #define OUTPUT_READABLE_ACCELGYRO
 
+String Todo; //String a mandar
+uint8_t id_node= 0x00001; //id de nodo
 
 TinyGPS gps;
 SoftwareSerial ss(4, 3); //4(rx) and 3(tx)
@@ -114,6 +116,7 @@ uint32_t delayMS;
 Adafruit_HMC5883_Unified mag = Adafruit_HMC5883_Unified(1);
 
 Adafruit_BMP085_Unified bmp = Adafruit_BMP085_Unified(2);
+
 
 /*Uncomment for debbuger*/
 /*
@@ -309,6 +312,8 @@ void loop() {
     Serial.print(event.temperature);
     Serial.println(F(" *C"));
     */
+    Todo += event.temperature;
+    Todo += " "; 
   }
   // Get humidity event and print its value.
   dht.humidity().getEvent(&event);
@@ -322,6 +327,8 @@ void loop() {
     Serial.print(event.relative_humidity);
     Serial.println(F("%"));
     */
+    Todo += event.relative_humidity;
+    Todo += "\n";
   }
 
   bmp.getEvent(&event);
@@ -336,7 +343,8 @@ void loop() {
     Serial.print(event.pressure);
     Serial.println(F(" hPa"));
     */
-    
+    Todo += event.pressure;
+    Todo += " ";    
     /* Calculating altitude with reasonable accuracy requires pressure    *
      * sea level pressure for your position at the moment the data is     *
      * converted, as well as the ambient temperature in degress           *
@@ -355,6 +363,8 @@ void loop() {
     /* First we get the current temperature from the BMP085 */
     float temperature;
     bmp.getTemperature(&temperature);
+    Todo += temperature;
+    Todo += " "; 
     /*Uncomment for debbuger*/
     /*
     Serial.print(F("Temperature: "));
@@ -390,7 +400,13 @@ void loop() {
   Serial.print(F("Y: ")); Serial.print(event.magnetic.y); Serial.print(F("  "));
   Serial.print(F("Z: ")); Serial.print(event.magnetic.z); Serial.print(F("  "));Serial.println(F("uT"));
   */
-  
+  Todo += "\n";
+  Todo += event.magnetic.x;
+  Todo += " ";
+  Todo += event.magnetic.y;
+  Todo += " ";
+  Todo += event.magnetic.z;
+  Todo += "\n";
   // Hold the module so that Z is pointing 'up' and you can measure the heading with x&y
   // Calculate heading when the magnetometer is level, then correct for signs of axis.
   float heading = atan2(event.magnetic.y, event.magnetic.x);
@@ -412,6 +428,7 @@ void loop() {
    
   // Convert radians to degrees for readability.
   float headingDegrees = heading * 180/M_PI; 
+  
 
   /*Uncomment for debbuger*/
   //Serial.print(F("Heading (degrees): ")); Serial.println(headingDegrees);
@@ -430,21 +447,27 @@ void loop() {
         Serial.print(F("X:")); Serial.print(gy); Serial.print("\t");
         Serial.print(F("X:")); Serial.println(gz);Serial.print("\n");
         */
-        
-  gpsread();
-  
+        Todo += ax;
+        Todo += " ";
+        Todo += ay;
+        Todo += " ";
+        Todo += az;
+        Todo += "\n";
+        Todo += gx;
+        Todo += " ";
+        Todo += gy;
+        Todo += " ";
+        Todo += gz;  
+  delay(10);
+  char todoch[Todo.length()+1];
+  Todo.toCharArray(todoch,Todo.length());
+  Serial.println(todoch);
+  rf95.send((uint8_t *)todoch,Todo.length());   
+ // gpsread();
+  Todo = " ";
+  Serial.println("Listo");
   delay(1000);  
  /*rf95.send((uint8_t *)"variable", "Largo de variable") //para enviar simplemente
-  ****Si se requieres asegurar que llego***********
-  *  if (rf95.waitAvailableTimeout(1000))
-  { 
-    // Should be a reply message for us now   
-    if (rf95.recv(buf, &len))
-   {
-      Serial.print("Got reply: ");
-      Serial.println((char*)buf);
-      Serial.print("RSSI: ");
-      Serial.println(rf95.lastRssi(), DEC);    
-    }
-    */
+  */
+  
 }
