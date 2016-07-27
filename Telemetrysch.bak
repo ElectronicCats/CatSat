@@ -29,19 +29,472 @@ LIBS:atmel
 LIBS:contrib
 LIBS:valves
 LIBS:ArduProMiniTKB
+LIBS:L80-M39
+LIBS:RFM95W-868S2
+LIBS:theinventorhouse
 LIBS:CatSat-cache
 EELAYER 25 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
-Sheet 1 4
+Sheet 3 4
 Title ""
-Date ""
-Rev ""
-Comp ""
-Comment1 ""
+Date "2016-07-26"
+Rev "0.2"
+Comp "Electronic Cats"
+Comment1 "Andres Sabas"
 Comment2 ""
 Comment3 ""
 Comment4 ""
 $EndDescr
+$Comp
+L L80-M39 MODULE1
+U 1 1 57992672
+P 8095 3635
+F 0 "MODULE1" H 7695 4435 50  0000 L CNN
+F 1 "L80-M39" H 7695 2735 50  0000 L CNN
+F 2 "QUECTEL_L80-M39" H 8095 3635 50  0001 L CNN
+F 3 "" H 8095 3635 60  0000 C CNN
+	1    8095 3635
+	1    0    0    -1  
+$EndComp
+$Comp
+L RFM95W-868S2 U2
+U 1 1 579926DC
+P 4875 3605
+F 0 "U2" H 4275 4155 50  0000 L CNN
+F 1 "RFM95W-868S2" H 4275 2905 50  0000 L CNN
+F 2 "XCVR_RFM95W-868S2" H 4875 3605 50  0001 L CNN
+F 3 "" H 4875 3605 60  0000 C CNN
+	1    4875 3605
+	1    0    0    -1  
+$EndComp
+$Comp
+L CONN_01X04 P8
+U 1 1 57992991
+P 6620 1705
+F 0 "P8" H 6620 1955 50  0000 C CNN
+F 1 "CONN_01X04" V 6720 1705 50  0000 C CNN
+F 2 "" H 6620 1705 50  0000 C CNN
+F 3 "" H 6620 1705 50  0000 C CNN
+	1    6620 1705
+	0    -1   -1   0   
+$EndComp
+$Comp
+L CONN_01X07 P7
+U 1 1 57992998
+P 5320 1710
+F 0 "P7" H 5320 2110 50  0000 C CNN
+F 1 "CONN_01X07" V 5420 1710 50  0000 C CNN
+F 2 "" H 5320 1710 50  0000 C CNN
+F 3 "" H 5320 1710 50  0000 C CNN
+	1    5320 1710
+	0    -1   -1   0   
+$EndComp
+$Comp
+L +BATT #PWR09
+U 1 1 5799299F
+P 5325 2435
+F 0 "#PWR09" H 5325 2285 50  0001 C CNN
+F 1 "+BATT" H 5325 2575 50  0000 C CNN
+F 2 "" H 5325 2435 50  0000 C CNN
+F 3 "" H 5325 2435 50  0000 C CNN
+	1    5325 2435
+	1    0    0    -1  
+$EndComp
+Text Label 5220 2075 1    60   ~ 0
+SCL
+Text Label 5320 2070 1    60   ~ 0
+SDA
+Text Label 5420 2080 1    60   ~ 0
+S_RX
+Text Label 5520 2085 1    60   ~ 0
+S_TX
+Text Label 5620 2085 1    60   ~ 0
+DHT/D6
+Text Label 6470 2095 1    60   ~ 0
+A3
+Text Label 6570 2095 1    60   ~ 0
+A2
+Text Label 6670 2090 1    60   ~ 0
+A1
+Text Label 6770 2085 1    60   ~ 0
+A0
+$Comp
+L GND #PWR010
+U 1 1 579929AE
+P 5020 1980
+F 0 "#PWR010" H 5020 1730 50  0001 C CNN
+F 1 "GND" H 5020 1830 50  0000 C CNN
+F 2 "" H 5020 1980 50  0000 C CNN
+F 3 "" H 5020 1980 50  0000 C CNN
+	1    5020 1980
+	1    0    0    -1  
+$EndComp
+NoConn ~ 3985 3605
+NoConn ~ 3985 3705
+NoConn ~ 3990 3805
+NoConn ~ 3990 4005
+Text Label 3985 3505 0    60   ~ 0
+RST
+Text Label 3995 3405 0    60   ~ 0
+NSS
+Text Label 3995 3305 0    60   ~ 0
+SCK
+Text Label 3995 3205 0    60   ~ 0
+MISO
+Text Label 3990 3905 0    60   ~ 0
+INT0
+NoConn ~ 3990 4105
+$Comp
+L GND #PWR011
+U 1 1 57994B3D
+P 5990 4195
+F 0 "#PWR011" H 5990 3945 50  0001 C CNN
+F 1 "GND" H 5990 4045 50  0000 C CNN
+F 2 "" H 5990 4195 50  0000 C CNN
+F 3 "" H 5990 4195 50  0000 C CNN
+	1    5990 4195
+	1    0    0    -1  
+$EndComp
+Text Label 5800 3705 0    60   ~ 0
+MOSI
+$Comp
+L +BATT #PWR012
+U 1 1 57994EF9
+P 5800 3095
+F 0 "#PWR012" H 5800 2945 50  0001 C CNN
+F 1 "+BATT" H 5800 3235 50  0000 C CNN
+F 2 "" H 5800 3095 50  0000 C CNN
+F 3 "" H 5800 3095 50  0000 C CNN
+	1    5800 3095
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5420 1910 5420 2080
+Wire Wire Line
+	5520 1910 5520 2085
+Wire Wire Line
+	5620 1910 5620 2085
+Wire Wire Line
+	6770 1905 6770 2085
+Wire Wire Line
+	6670 1905 6670 2090
+Wire Wire Line
+	6570 1905 6570 2095
+Wire Wire Line
+	6470 1905 6470 2095
+Wire Wire Line
+	5320 1910 5320 2070
+Wire Wire Line
+	5220 1910 5220 2075
+Wire Wire Line
+	5120 2470 5325 2470
+Wire Wire Line
+	5325 2470 5325 2435
+Wire Wire Line
+	5120 1910 5120 2470
+Wire Wire Line
+	5020 1980 5020 1910
+Wire Wire Line
+	4175 3205 3995 3205
+Wire Wire Line
+	4175 3305 3995 3305
+Wire Wire Line
+	4175 3405 3995 3405
+Wire Wire Line
+	4175 3505 3985 3505
+Wire Wire Line
+	4175 3605 3985 3605
+Wire Wire Line
+	4175 3705 3985 3705
+Wire Wire Line
+	4175 3805 3990 3805
+Wire Wire Line
+	4175 3905 3990 3905
+Wire Wire Line
+	4175 4005 3990 4005
+Wire Wire Line
+	4175 4105 3990 4105
+Wire Wire Line
+	5575 4105 5990 4105
+Wire Wire Line
+	5575 4005 5990 4005
+Wire Wire Line
+	5575 3905 5990 3905
+Wire Wire Line
+	5575 3705 5800 3705
+Wire Wire Line
+	5575 3405 5800 3405
+Wire Wire Line
+	5575 3205 5800 3205
+Wire Wire Line
+	5990 3905 5990 4195
+Connection ~ 5990 4105
+Connection ~ 5990 4005
+Wire Wire Line
+	5800 3205 5800 3095
+Wire Wire Line
+	8695 3035 8910 3035
+Wire Wire Line
+	8695 3135 8910 3135
+Wire Wire Line
+	8695 3535 8915 3535
+Wire Wire Line
+	8695 3635 8915 3635
+Wire Wire Line
+	8695 3735 8915 3735
+Wire Wire Line
+	7495 3935 7300 3935
+Wire Wire Line
+	7495 3435 7325 3435
+Wire Wire Line
+	7495 3535 7325 3535
+Wire Wire Line
+	7495 3635 7325 3635
+$Comp
+L GND #PWR013
+U 1 1 57995F4A
+P 8935 4365
+F 0 "#PWR013" H 8935 4115 50  0001 C CNN
+F 1 "GND" H 8935 4215 50  0000 C CNN
+F 2 "" H 8935 4365 50  0000 C CNN
+F 3 "" H 8935 4365 50  0000 C CNN
+	1    8935 4365
+	1    0    0    -1  
+$EndComp
+NoConn ~ 7325 3635
+NoConn ~ 7325 3435
+NoConn ~ 7300 3935
+Text Label 7325 3535 0    60   ~ 0
+S_TX
+Text Label 8915 3535 0    60   ~ 0
+S_RX
+NoConn ~ 8915 3635
+NoConn ~ 8915 3735
+NoConn ~ 8910 3135
+$Comp
+L +BATT #PWR014
+U 1 1 57996632
+P 8910 2905
+F 0 "#PWR014" H 8910 2755 50  0001 C CNN
+F 1 "+BATT" H 8910 3045 50  0000 C CNN
+F 2 "" H 8910 2905 50  0000 C CNN
+F 3 "" H 8910 2905 50  0000 C CNN
+	1    8910 2905
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8910 3035 8910 2905
+$Comp
+L CONN_01X01 P6
+U 1 1 5799700E
+P 6000 3405
+F 0 "P6" H 6000 3505 50  0000 C CNN
+F 1 "ANT" V 6100 3405 50  0000 C CNN
+F 2 "" H 6000 3405 50  0000 C CNN
+F 3 "" H 6000 3405 50  0000 C CNN
+	1    6000 3405
+	1    0    0    -1  
+$EndComp
+Text GLabel 6785 1010 1    60   Input ~ 0
+A3
+Text GLabel 6670 1010 1    60   Input ~ 0
+A2
+Text GLabel 6565 1010 1    60   Input ~ 0
+A1
+Text GLabel 6450 1010 1    60   Input ~ 0
+A0
+Text GLabel 5345 1020 1    60   Input ~ 0
+SDA
+Text GLabel 5230 1020 1    60   Input ~ 0
+SCL
+Text GLabel 5675 1020 1    60   Input ~ 0
+DHT/D6
+Text GLabel 5570 1020 1    60   Input ~ 0
+S_TX
+Text GLabel 5455 1020 1    60   Input ~ 0
+S_RX
+Wire Wire Line
+	5230 1020 5230 1165
+Wire Wire Line
+	5345 1020 5345 1170
+Wire Wire Line
+	5455 1020 5455 1170
+Wire Wire Line
+	5570 1020 5570 1175
+Wire Wire Line
+	5675 1020 5675 1175
+Wire Wire Line
+	6450 1010 6450 1215
+Wire Wire Line
+	6565 1010 6565 1220
+Wire Wire Line
+	6670 1010 6670 1215
+Wire Wire Line
+	6785 1010 6785 1220
+Text Label 5230 1165 3    60   ~ 0
+SCL
+Text Label 5345 1170 3    60   ~ 0
+SDA
+Text Label 5455 1170 3    60   ~ 0
+S_RX
+Text Label 5570 1175 3    60   ~ 0
+S_TX
+Text Label 5675 1175 3    60   ~ 0
+DHT/D6
+Text Label 6450 1215 3    60   ~ 0
+A0
+Text Label 6565 1220 3    60   ~ 0
+A1
+Text Label 6670 1215 3    60   ~ 0
+A2
+Text Label 6785 1220 3    60   ~ 0
+A3
+$Comp
+L CONN_01X07 P10
+U 1 1 579A479E
+P 9845 4395
+F 0 "P10" H 9845 4795 50  0000 C CNN
+F 1 "CONN_01X07" V 9945 4395 50  0000 C CNN
+F 2 "" H 9845 4395 50  0000 C CNN
+F 3 "" H 9845 4395 50  0000 C CNN
+	1    9845 4395
+	1    0    0    -1  
+$EndComp
+$Comp
+L CONN_01X04 P9
+U 1 1 579A47A5
+P 9780 2820
+F 0 "P9" H 9780 3070 50  0000 C CNN
+F 1 "CONN_01X04" V 9880 2820 50  0000 C CNN
+F 2 "" H 9780 2820 50  0000 C CNN
+F 3 "" H 9780 2820 50  0000 C CNN
+	1    9780 2820
+	1    0    0    -1  
+$EndComp
+Text Label 9420 2970 0    60   ~ 0
+D8
+Text Label 9415 2870 0    60   ~ 0
+D7
+Text Label 9460 4295 0    60   ~ 0
+SCK
+Text Label 9465 4395 0    60   ~ 0
+MISO
+Text Label 9470 4495 0    60   ~ 0
+MOSI
+Text Label 9470 4595 0    60   ~ 0
+NSS
+Text Label 9475 4695 0    60   ~ 0
+RST
+Wire Wire Line
+	9645 4695 9475 4695
+Wire Wire Line
+	9645 4595 9470 4595
+Wire Wire Line
+	9645 4495 9470 4495
+Wire Wire Line
+	9645 4395 9465 4395
+Wire Wire Line
+	9645 4295 9460 4295
+Wire Wire Line
+	9580 2970 9420 2970
+Wire Wire Line
+	9580 2870 9415 2870
+Wire Wire Line
+	9300 4195 9645 4195
+Wire Wire Line
+	9335 4095 9645 4095
+Text GLabel 10475 2990 2    60   Input ~ 0
+D8
+Text GLabel 10475 2875 2    60   Input ~ 0
+D7
+Text GLabel 10475 2770 2    60   Input ~ 0
+INT1
+Text GLabel 10475 2655 2    60   Input ~ 0
+INT0
+Text GLabel 10630 4395 2    60   Input ~ 0
+MISO
+Text GLabel 10630 4280 2    60   Input ~ 0
+SCK
+Text GLabel 10630 4725 2    60   Input ~ 0
+RST
+Text GLabel 10630 4620 2    60   Input ~ 0
+NSS
+Text GLabel 10630 4505 2    60   Input ~ 0
+MOSI
+Wire Wire Line
+	10630 4280 10485 4280
+Wire Wire Line
+	10630 4395 10480 4395
+Wire Wire Line
+	10630 4505 10480 4505
+Wire Wire Line
+	10630 4620 10475 4620
+Wire Wire Line
+	10630 4725 10475 4725
+Wire Wire Line
+	10475 2655 10270 2655
+Wire Wire Line
+	10475 2770 10265 2770
+Text Label 10485 4280 2    60   ~ 0
+SCK
+Text Label 10480 4395 2    60   ~ 0
+MISO
+Text Label 10480 4505 2    60   ~ 0
+MOSI
+Text Label 10475 4620 2    60   ~ 0
+NSS
+Text Label 10475 4725 2    60   ~ 0
+RST
+Text Label 10270 2655 2    60   ~ 0
+INT0
+Text Label 10265 2770 2    60   ~ 0
+INT1
+Wire Wire Line
+	9580 2770 9425 2770
+Wire Wire Line
+	9580 2670 9425 2670
+Text Label 9425 2670 0    60   ~ 0
+INT0
+Text Label 9425 2770 0    60   ~ 0
+INT1
+Wire Wire Line
+	10265 2990 10475 2990
+Text Label 10265 2990 2    60   ~ 0
+D8
+Text Label 10270 2875 2    60   ~ 0
+D7
+Wire Wire Line
+	10270 2875 10475 2875
+$Comp
+L +BATT #PWR015
+U 1 1 579A7853
+P 9335 4005
+F 0 "#PWR015" H 9335 3855 50  0001 C CNN
+F 1 "+BATT" H 9335 4145 50  0000 C CNN
+F 2 "" H 9335 4005 50  0000 C CNN
+F 3 "" H 9335 4005 50  0000 C CNN
+	1    9335 4005
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR016
+U 1 1 579A787C
+P 9300 4305
+F 0 "#PWR016" H 9300 4055 50  0001 C CNN
+F 1 "GND" H 9300 4155 50  0000 C CNN
+F 2 "" H 9300 4305 50  0000 C CNN
+F 3 "" H 9300 4305 50  0000 C CNN
+	1    9300 4305
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	9335 4095 9335 4005
+Wire Wire Line
+	9300 4305 9300 4195
+Wire Wire Line
+	8695 4235 8935 4235
+Wire Wire Line
+	8935 4235 8935 4365
 $EndSCHEMATC

@@ -1,4 +1,4 @@
-update=lun 25 jul 2016 15:04:15 CDT
+update=mar 26 jul 2016 18:26:33 CDT
 version=1
 last_client=kicad
 [pcbnew]
@@ -23,6 +23,8 @@ ModuleOutlineThickness=0.150000000000
 [cvpcb]
 version=1
 NetIExt=net
+[general]
+version=1
 [eeschema]
 version=1
 LibDir=
@@ -59,5 +61,4 @@ LibName29=valves
 LibName30=/home/electronica/Documentos/LibreriasKicad/ArduProMiniTKB
 LibName31=/home/electronica/Documentos/LibreriasKicad/L80-M39
 LibName32=/home/electronica/Documentos/LibreriasKicad/RFM95W-868S2
-[general]
-version=1
+LibName33=/home/electronica/Documentos/LibreriasKicad/KicadLibrary_Inventors/theinventorhouse

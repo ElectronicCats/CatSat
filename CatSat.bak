@@ -29,6 +29,9 @@ LIBS:atmel
 LIBS:contrib
 LIBS:valves
 LIBS:ArduProMiniTKB
+LIBS:L80-M39
+LIBS:RFM95W-868S2
+LIBS:theinventorhouse
 LIBS:CatSat-cache
 EELAYER 25 0
 EELAYER END
