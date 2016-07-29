@@ -1,4 +1,5 @@
 EESchema Schematic File Version 2
+LIBS:CatSat-rescue
 LIBS:power
 LIBS:device
 LIBS:transistors
@@ -28,11 +29,8 @@ LIBS:opto
 LIBS:atmel
 LIBS:contrib
 LIBS:valves
-LIBS:ArduProMiniTKB
-LIBS:L80-M39
-LIBS:RFM95W-868S2
-LIBS:theinventorhouse
 LIBS:CatSat-cache
+LIBS:rfm95
 EELAYER 25 0
 EELAYER END
 $Descr A4 11693 8268
@@ -48,19 +46,19 @@ Comment3 ""
 Comment4 ""
 $EndDescr
 $Sheet
-S 2510 2275 1165 1115
+S 3465 3480 1165 1115
 U 57965E31
 F0 "control" 60
 F1 "control.sch" 60
 $EndSheet
 $Sheet
-S 4400 2275 1240 1140
+S 7110 3440 1240 1140
 U 57965E45
 F0 "Telemetry" 60
 F1 "Telemetrysch.sch" 60
 $EndSheet
 $Sheet
-S 6235 2275 1370 1130
+S 5165 3455 1370 1130
 U 57965E56
 F0 "Sensors" 60
 F1 "Sensors.sch" 60

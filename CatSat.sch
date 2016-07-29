@@ -1,4 +1,5 @@
 EESchema Schematic File Version 2
+LIBS:CatSat-rescue
 LIBS:power
 LIBS:device
 LIBS:transistors
@@ -28,11 +29,8 @@ LIBS:opto
 LIBS:atmel
 LIBS:contrib
 LIBS:valves
-LIBS:ArduProMiniTKB
-LIBS:L80-M39
-LIBS:RFM95W-868S2
-LIBS:theinventorhouse
 LIBS:CatSat-cache
+LIBS:rfm95
 EELAYER 25 0
 EELAYER END
 $Descr A4 11693 8268
