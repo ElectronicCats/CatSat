@@ -55,8 +55,8 @@ Distributed as-is; no warranty is given.
 Library I2CDev and MPU6050
 https://github.com/jrowberg/i2cdevlib
 
-Library TinyGPS
-https://github.com/janunezc/TinyGPS
+Library TinyGPS++
+https://github.com/mikalhart/TinyGPSPlus
 
 Library LoRa Radio
 http://www.airspayce.com/mikem/arduino/RadioHead/index.html
@@ -68,7 +68,7 @@ http://www.airspayce.com/mikem/arduino/RadioHead/index.html
 #include <SoftwareSerial.h>
 #include <I2Cdev.h>
 
-#include <TinyGPS.h>
+#include <TinyGPS++.h>
 
 #include <MPU6050.h>
 
@@ -78,7 +78,7 @@ http://www.airspayce.com/mikem/arduino/RadioHead/index.html
 // #include <DHT.h>
 #include <DHT_U.h>
 
-#define DHTPIN 3 // Pin digital para DHT22
+#define DHTPIN 4 // Pin digital para DHT22
 
 #define DHTTYPE DHT22   // DHT 22  (AM2302)
 
@@ -107,8 +107,12 @@ int16_t gx, gy, gz;
 String Todo; //String a mandar
 uint8_t id_node= 0x00001; //id de nodo
 
-TinyGPS gps;
-SoftwareSerial ss(4, 3); //4(rx) and 3(tx)
+TinyGPSPlus gps;
+static const int RXPin = 5, TXPin = 6;
+static const uint32_t GPSBaud = 9600;
+
+SoftwareSerial ss(RXPin, TXPin);
+//#define ss Serial
 
 uint32_t delayMS;
 
@@ -190,77 +194,106 @@ void displayDHTDetails(void)
 
 void gpsread(void){
   
-  bool newData = false;
-  unsigned long chars;
-  unsigned short sentences, failed;
-
-  // For one second we parse GPS data and report some key values
-  for (unsigned long start = millis(); millis() - start < 1000;)
-  {
-    while (ss.available())
+  // 
+  while (ss.available() > 0)
+    if (gps.encode(ss.read()))
     {
-      char c = ss.read();
-      // Serial.write(c); // uncomment this line if you want to see the GPS data flowing
-      if (gps.encode(c)) // Did a new valid sentence come in?
-        newData = true;
-    }
-  }
+     Serial.print(F("Location: ")); 
+      if (gps.location.isValid())
+      { 
+        Todo += String(gps.location.lat(), 6);
+        Todo += " ";
+        Todo += String(gps.location.lng(), 6);
+        Todo += " ";
+        Serial.print(gps.location.lat(), 6);
+        Serial.print(F(","));
+        Serial.print(gps.location.lng(), 6);
+      }
+      else
+      { 
+        Todo += "0";
+        Todo += " ";
+        Todo += "0";
+        Todo += "\n";
+        Serial.print(F("INVALID"));
+      }
 
-  if (newData)
-  {
-    float flat, flon;
-    unsigned long age;
-    gps.f_get_position(&flat, &flon, &age);
-    Serial.print(F("LAT="));
-    Serial.print(flat == TinyGPS::GPS_INVALID_F_ANGLE ? 0.0 : flat, 6);
-    Serial.print(F(" LON="));
-    Serial.print(flon == TinyGPS::GPS_INVALID_F_ANGLE ? 0.0 : flon, 6);
-    Serial.print(F(" SAT="));
-    Serial.print(gps.satellites() == TinyGPS::GPS_INVALID_SATELLITES ? 0 : gps.satellites());
-    Serial.print(F(" PREC="));
-    Serial.print(gps.hdop() == TinyGPS::GPS_INVALID_HDOP ? 0 : gps.hdop());
-  }
+      Serial.print(F("  Date/Time: "));
+      if (gps.date.isValid())
+      {
+        Serial.print(gps.date.month());
+        Serial.print(F("/"));
+        Serial.print(gps.date.day());
+        Serial.print(F("/"));
+        Serial.print(gps.date.year());
+      }
+      else
+      {
+        Serial.print(F("INVALID"));
+      }
+
+      Serial.print(F(" "));
+      if (gps.time.isValid())
+      {
+        if (gps.time.hour() < 10) Serial.print(F("0"));
+        Serial.print(gps.time.hour());
+        Serial.print(F(":"));
+      if (gps.time.minute() < 10) Serial.print(F("0"));
+        Serial.print(gps.time.minute());
+        Serial.print(F(":"));
+      if (gps.time.second() < 10) Serial.print(F("0"));
+        Serial.print(gps.time.second());
+        Serial.print(F("."));
+      if (gps.time.centisecond() < 10) Serial.print(F("0"));
+        Serial.print(gps.time.centisecond());
+      }
+      else
+      {
+        Serial.print(F("INVALID"));
+      }
+
+      Serial.println(); 
+     }
+      
+
+      if (millis() > 5000 && gps.charsProcessed() < 10)
+      {
+        Serial.println(F("No GPS detected: check wiring."));
+        while(true);
+      }
   
-  gps.stats(&chars, &sentences, &failed);
-  Serial.print(F(" CHARS="));
-  Serial.print(chars);
-  Serial.print(F(" SENTENCES="));
-  Serial.print(sentences);
-  Serial.print(F(" CSUM ERR="));
-  Serial.println(failed);
-  if (chars == 0)
-    Serial.println(F("** No characters received from GPS: check wiring **"));
 }
 
 void setup() {
-  Serial.begin(9600);
-  ss.begin(115200);
+  Serial.begin(115200);
+  ss.begin(GPSBaud);
   dht.begin();
   /*****LoRa init****/
   pinMode(RFM95_RST, OUTPUT);
   digitalWrite(RFM95_RST, HIGH);
   delay(100);
-  Serial.println("Arduino LoRa prueba");
   // manual reset
   digitalWrite(RFM95_RST, LOW);
   delay(10);
   digitalWrite(RFM95_RST, HIGH);
   delay(10);
+  
   while (!rf95.init()) {
-    Serial.println("LoRa radio init failed");
+    Serial.println(F("LoRa radio init failed"));
     while (1);
   }
   Serial.println("LoRa radio init OK!");
  
   // Defaults after init are 915.0MHz, modulation GFSK_Rb250Fd250, +13dbM
-  /*if (!rf95.setFrequency(RF95_FREQ)) {
-    Serial.println("setFrequency failed");
+  if (!rf95.setFrequency(RF95_FREQ)) {
+    Serial.println(F("setFrequency failed"));
     while (1);
-  }*/
+  }
   //Serial.print("Set Freq to: "); 
   //Serial.println(RF95_FREQ);
   rf95.setTxPower(23, false); //Set the max transmition power
   /******************/
+ 
   /* Initialise the sensor */
   if(!bmp.begin())
   {
@@ -293,7 +326,7 @@ void setup() {
   displayDHTDetails();
   */
   
-  Serial.println(F("CatSat!"));
+  //Serial.println(F("CatSat!"));
   
 }
 
@@ -303,7 +336,7 @@ void loop() {
 
   dht.temperature().getEvent(&event);
   if (isnan(event.temperature)) {
-    Serial.println(F("Error reading temperature!"));
+    //Serial.println(F("Error reading temperature!"));
   }
   else {
     /*Uncomment for debbuger*/
@@ -318,7 +351,7 @@ void loop() {
   // Get humidity event and print its value.
   dht.humidity().getEvent(&event);
   if (isnan(event.relative_humidity)) {
-    Serial.println(F("Error reading humidity!"));
+    //Serial.println(F("Error reading humidity!"));
   }
   else {
     /*Uncomment for debbuger*/
@@ -386,7 +419,7 @@ void loop() {
   }
   else
   {
-    Serial.println(F("Sensor error"));
+    //Serial.println(F("Sensor error"));
   }
   
    
@@ -433,6 +466,7 @@ void loop() {
   /*Uncomment for debbuger*/
   //Serial.print(F("Heading (degrees): ")); Serial.println(headingDegrees);
 
+  
   // ##########  read raw accel/gyro measurements from device
     accelgyro.getMotion6(&ax, &ay, &az, &gx, &gy, &gz);
         // display tab-separated accel/gyro x/y/z values
@@ -457,15 +491,18 @@ void loop() {
         Todo += " ";
         Todo += gy;
         Todo += " ";
-        Todo += gz;  
+        Todo += gz;
+        Todo += " ";
+        Todo += "\n";  
+
+        gpsread();
+ 
   delay(10);
   char todoch[Todo.length()+1];
   Todo.toCharArray(todoch,Todo.length());
   Serial.println(todoch);
   rf95.send((uint8_t *)todoch,Todo.length());   
- // gpsread();
   Todo = " ";
-  Serial.println("Listo");
   delay(1000);  
  /*rf95.send((uint8_t *)"variable", "Largo de variable") //para enviar simplemente
   */
