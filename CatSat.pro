@@ -1,4 +1,4 @@
-update=27/07/2016 04:30:38 p. m.
+update=01/08/2016 07:44:58 p. m.
 version=1
 last_client=kicad
 [pcbnew]
@@ -61,3 +61,13 @@ LibName29=contrib
 LibName30=valves
 LibName31=CatSat-cache
 LibName32=LoRa.pretty/rfm95
+[schematic_editor]
+version=1
+PageLayoutDescrFile=
+PlotDirectoryName=
+SubpartIdSeparator=0
+SubpartFirstId=65
+NetFmtName=
+SpiceForceRefPrefix=0
+SpiceUseNetNumbers=0
+LabSize=60
