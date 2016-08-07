@@ -110,6 +110,7 @@ uint8_t id_node= 0x00001; //id de nodo
 TinyGPSPlus gps;
 static const int RXPin = 5, TXPin = 6;
 static const uint32_t GPSBaud = 9600;
+int gps_flag = 0;
 
 SoftwareSerial ss(RXPin, TXPin);
 //#define ss Serial
@@ -195,7 +196,7 @@ void displayDHTDetails(void)
 void gpsread(void){
   
   // 
-  while (ss.available() > 0)
+  while ((ss.available() > 0) && (gps_flag == 0))
     if (gps.encode(ss.read()))
     {
      Serial.print(F("Location: ")); 
@@ -208,6 +209,7 @@ void gpsread(void){
         Serial.print(gps.location.lat(), 6);
         Serial.print(F(","));
         Serial.print(gps.location.lng(), 6);
+        gps_flag = 1;
       }
       else
       { 
@@ -216,6 +218,7 @@ void gpsread(void){
         Todo += "0";
         Todo += "\n";
         Serial.print(F("INVALID"));
+        gps_flag = 1;
       }
 
       Serial.print(F("  Date/Time: "));
@@ -498,12 +501,16 @@ void loop() {
         gpsread();
  
   delay(10);
-  char todoch[Todo.length()+1];
-  Todo.toCharArray(todoch,Todo.length());
-  Serial.println(todoch);
-  rf95.send((uint8_t *)todoch,Todo.length());   
+  if(gps_flag == 1)
+  {
+    char todoch[Todo.length()+1];
+    Todo.toCharArray(todoch,Todo.length());
+    Serial.println(todoch);
+    rf95.send((uint8_t *)todoch,Todo.length());   
+  }
   Todo = " ";
   delay(1000);  
+  gps_flag = 0;
  /*rf95.send((uint8_t *)"variable", "Largo de variable") //para enviar simplemente
   */
   
