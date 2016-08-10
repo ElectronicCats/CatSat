@@ -3,7 +3,8 @@ SPANISH
 CatSat.ino
 CatSat - Satelite en Lata Educativo
 Andres Sabas @ Electronic Cats
-Original Creation Date: Jal 10, 2016
+Eduardo Contreras @ Electronic Cats
+Original Creation Date: Jul 10, 2016
 https://github.com/ElectronicsCats/CatSat/
 
 Este ejemplos demuestra el funcionamiento basico de los sensores y funcionalidad
@@ -105,7 +106,7 @@ int16_t gx, gy, gz;
 #define OUTPUT_READABLE_ACCELGYRO
 
 String Todo; //String a mandar
-uint8_t id_node= 0x00001; //id de nodo
+String id_node= "A1"; //id de nodo
 
 TinyGPSPlus gps;
 static const int RXPin = 5, TXPin = 6;
@@ -332,6 +333,8 @@ void setup() {
 
 void loop() {
   /* Get a new sensor event */ 
+  Todo += id_node;  //Add id to String 
+  Todo += "\n";
   sensors_event_t event;
 
   dht.temperature().getEvent(&event);
@@ -498,11 +501,11 @@ void loop() {
         gpsread();
  
   delay(10);
-  char todoch[Todo.length()+1];
+  char todoch[Todo.length()];
   Todo.toCharArray(todoch,Todo.length());
   Serial.println(todoch);
   rf95.send((uint8_t *)todoch,Todo.length());   
-  Todo = " ";
+  Todo = "";
   delay(1000);  
  /*rf95.send((uint8_t *)"variable", "Largo de variable") //para enviar simplemente
   */
