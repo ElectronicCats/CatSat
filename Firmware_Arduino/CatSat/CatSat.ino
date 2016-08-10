@@ -504,13 +504,12 @@ void loop() {
         gpsread();
  
   delay(10);
-<<<<<<< HEAD
+
   char todoch[Todo.length()];
   Todo.toCharArray(todoch,Todo.length());
   Serial.println(todoch);
   rf95.send((uint8_t *)todoch,Todo.length());   
   Todo = "";
-=======
   if(gps_flag == 1)
   {
     char todoch[Todo.length()+1];
@@ -519,7 +518,6 @@ void loop() {
     rf95.send((uint8_t *)todoch,Todo.length());   
   }
   Todo = " ";
->>>>>>> 857d59cf252a882e34652a3e4793a8ed052cad65
   delay(1000);  
   gps_flag = 0;
  /*rf95.send((uint8_t *)"variable", "Largo de variable") //para enviar simplemente
