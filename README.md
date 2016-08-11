@@ -10,4 +10,6 @@ Firmware released under an GNU AGPL v3.0 license. See the LICENSE file for more 
 
 Hardware released under an CERN Open Hardware Licence v1.2. See the LICENSE file for more information.
 
+Electronic Cats is a registered trademark, please do not use if you sell these PCBs.
+
 16 July 2016
