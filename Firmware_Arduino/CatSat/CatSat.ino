@@ -79,7 +79,7 @@ http://www.airspayce.com/mikem/arduino/RadioHead/index.html
 // #include <DHT.h>
 #include <DHT_U.h>
 
-#define DHTPIN 4 // Pin digital para DHT22
+#define DHTPIN 6 // Pin digital para DHT22
 
 #define DHTTYPE DHT22   // DHT 22  (AM2302)
 
@@ -357,7 +357,7 @@ void loop() {
   // Get humidity event and print its value.
   dht.humidity().getEvent(&event);
   if (isnan(event.relative_humidity)) {
-    //Serial.println(F("Error reading humidity!"));
+    Serial.println(F("Error reading humidity!"));
   }
   else {
     /*Uncomment for debbuger*/
