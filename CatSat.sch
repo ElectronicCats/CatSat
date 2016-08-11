@@ -30,17 +30,16 @@ LIBS:atmel
 LIBS:contrib
 LIBS:valves
 LIBS:CatSat-cache
-LIBS:rfm95
 EELAYER 25 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
 Sheet 1 4
-Title ""
-Date ""
-Rev ""
-Comp ""
-Comment1 ""
+Title "CatSat v1.0"
+Date "2016-08-10"
+Rev "0.2"
+Comp "ElectronicCats"
+Comment1 "Andres Sabas"
 Comment2 ""
 Comment3 ""
 Comment4 ""
