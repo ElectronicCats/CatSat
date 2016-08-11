@@ -30,14 +30,13 @@ LIBS:atmel
 LIBS:contrib
 LIBS:valves
 LIBS:CatSat-cache
-LIBS:rfm95
 EELAYER 25 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
 Sheet 2 4
-Title ""
-Date "2016-07-26"
+Title "CatSat v1.0"
+Date "2016-08-10"
 Rev "0.2"
 Comp "Electronic Cats"
 Comment1 "Andres Sabas"
@@ -617,4 +616,18 @@ Wire Wire Line
 	8225 3095 8225 3190
 Wire Wire Line
 	8235 3490 8225 3490
+$Comp
+L GND #PWR?
+U 1 1 57AC0CD8
+P 8180 4085
+F 0 "#PWR?" H 8180 3835 50  0001 C CNN
+F 1 "GND" H 8180 3935 50  0000 C CNN
+F 2 "" H 8180 4085 50  0000 C CNN
+F 3 "" H 8180 4085 50  0000 C CNN
+	1    8180 4085
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8180 4085 8180 3850
+Connection ~ 8180 3850
 $EndSCHEMATC
