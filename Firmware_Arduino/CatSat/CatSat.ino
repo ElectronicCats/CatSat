@@ -204,9 +204,9 @@ void gpsread(void){
       if (gps.location.isValid())
       { 
         Todo += String(gps.location.lat(), 6);
-        Todo += " ";
+        Todo += ",";
         Todo += String(gps.location.lng(), 6);
-        Todo += " ";
+        Todo += "\n";
         Serial.print(gps.location.lat(), 6);
         Serial.print(F(","));
         Serial.print(gps.location.lng(), 6);
@@ -215,7 +215,7 @@ void gpsread(void){
       else
       { 
         Todo += "0";
-        Todo += " ";
+        Todo += ",";
         Todo += "0";
         Todo += "\n";
         Serial.print(F("INVALID"));
@@ -352,7 +352,7 @@ void loop() {
     Serial.println(F(" *C"));
     */
     Todo += event.temperature;
-    Todo += " "; 
+    Todo += ","; 
   }
   // Get humidity event and print its value.
   dht.humidity().getEvent(&event);
@@ -367,7 +367,7 @@ void loop() {
     Serial.println(F("%"));
     */
     Todo += event.relative_humidity;
-    Todo += "\n";
+    Todo += ",";
   }
 
   bmp.getEvent(&event);
@@ -383,7 +383,7 @@ void loop() {
     Serial.println(F(" hPa"));
     */
     Todo += event.pressure;
-    Todo += " ";    
+    Todo += ",";    
     /* Calculating altitude with reasonable accuracy requires pressure    *
      * sea level pressure for your position at the moment the data is     *
      * converted, as well as the ambient temperature in degress           *
@@ -403,7 +403,7 @@ void loop() {
     float temperature;
     bmp.getTemperature(&temperature);
     Todo += temperature;
-    Todo += " "; 
+    Todo += ","; 
     /*Uncomment for debbuger*/
     /*
     Serial.print(F("Temperature: "));
@@ -439,13 +439,13 @@ void loop() {
   Serial.print(F("Y: ")); Serial.print(event.magnetic.y); Serial.print(F("  "));
   Serial.print(F("Z: ")); Serial.print(event.magnetic.z); Serial.print(F("  "));Serial.println(F("uT"));
   */
-  Todo += "\n";
+  Todo += ",";
   Todo += event.magnetic.x;
-  Todo += " ";
+  Todo += ",";
   Todo += event.magnetic.y;
-  Todo += " ";
+  Todo += ",";
   Todo += event.magnetic.z;
-  Todo += "\n";
+  Todo += ",";
   // Hold the module so that Z is pointing 'up' and you can measure the heading with x&y
   // Calculate heading when the magnetometer is level, then correct for signs of axis.
   float heading = atan2(event.magnetic.y, event.magnetic.x);
@@ -488,18 +488,18 @@ void loop() {
         Serial.print(F("X:")); Serial.println(gz);Serial.print("\n");
         */
         Todo += ax;
-        Todo += " ";
+        Todo += ",";
         Todo += ay;
-        Todo += " ";
+        Todo += ",";
         Todo += az;
-        Todo += "\n";
+        Todo += ",";
         Todo += gx;
-        Todo += " ";
+        Todo += ",";
         Todo += gy;
-        Todo += " ";
+        Todo += ",";
         Todo += gz;
-        Todo += " ";
-        Todo += "\n";  
+        Todo += ",";
+     // Todo += "\n";  
 
         gpsread();
  
