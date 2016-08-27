@@ -1,4 +1,5 @@
 EESchema Schematic File Version 2
+LIBS:earth station-rescue
 LIBS:power
 LIBS:device
 LIBS:transistors
@@ -28,6 +29,9 @@ LIBS:opto
 LIBS:atmel
 LIBS:contrib
 LIBS:valves
+LIBS:rfm95
+LIBS:CatSat-cache
+LIBS:CatSat-rescue
 LIBS:earth station-cache
 EELAYER 25 0
 EELAYER END
@@ -66,7 +70,7 @@ F 3 "" H 7695 3350 60  0000 C CNN
 	0    -1   -1   0   
 $EndComp
 $Comp
-L GND #PWR01
+L GND-RESCUE-earth_station #PWR01
 U 1 1 57A11C57
 P 2280 5150
 F 0 "#PWR01" H 2280 5150 30  0001 C CNN
@@ -77,7 +81,7 @@ F 3 "" H 2280 5150 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L GND #PWR02
+L GND-RESCUE-earth_station #PWR02
 U 1 1 57A11D39
 P 7020 2880
 F 0 "#PWR02" H 7020 2880 30  0001 C CNN
@@ -94,7 +98,7 @@ NoConn ~ 3745 5265
 NoConn ~ 3745 5365
 NoConn ~ 3745 5465
 $Comp
-L GND #PWR03
+L GND-RESCUE-earth_station #PWR03
 U 1 1 57A12CBA
 P 5620 3010
 F 0 "#PWR03" H 5620 3010 30  0001 C CNN
@@ -105,7 +109,7 @@ F 3 "" H 5620 3010 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L GND #PWR04
+L GND-RESCUE-earth_station #PWR04
 U 1 1 57A12CCE
 P 5585 2285
 F 0 "#PWR04" H 5585 2285 30  0001 C CNN
@@ -120,7 +124,7 @@ INT0
 Text Label 2405 5165 0    60   ~ 0
 INT0
 $Comp
-L GND #PWR05
+L GND-RESCUE-earth_station #PWR05
 U 1 1 57A133C4
 P 7395 3350
 F 0 "#PWR05" H 7395 3350 30  0001 C CNN
@@ -131,7 +135,7 @@ F 3 "" H 7395 3350 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L GND #PWR06
+L GND-RESCUE-earth_station #PWR06
 U 1 1 57A133F6
 P 7545 3350
 F 0 "#PWR06" H 7545 3350 30  0001 C CNN
@@ -142,7 +146,7 @@ F 3 "" H 7545 3350 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L GND #PWR07
+L GND-RESCUE-earth_station #PWR07
 U 1 1 57A13487
 P 7545 2650
 F 0 "#PWR07" H 7545 2650 30  0001 C CNN
@@ -153,7 +157,7 @@ F 3 "" H 7545 2650 60  0000 C CNN
 	-1   0    0    1   
 $EndComp
 $Comp
-L GND #PWR08
+L GND-RESCUE-earth_station #PWR08
 U 1 1 57A1340A
 P 7395 2650
 F 0 "#PWR08" H 7395 2650 30  0001 C CNN
@@ -164,7 +168,7 @@ F 3 "" H 7395 2650 60  0000 C CNN
 	-1   0    0    1   
 $EndComp
 $Comp
-L GND #PWR09
+L GND-RESCUE-earth_station #PWR09
 U 1 1 57A13741
 P 5005 2860
 F 0 "#PWR09" H 5005 2860 30  0001 C CNN
@@ -360,7 +364,7 @@ F 3 "" H 2750 2540 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L GND #PWR013
+L GND-RESCUE-earth_station #PWR013
 U 1 1 57A677A2
 P 4170 2955
 F 0 "#PWR013" H 4170 2955 30  0001 C CNN
@@ -377,7 +381,7 @@ Wire Wire Line
 Wire Wire Line
 	4170 2890 4170 2955
 $Comp
-L GND #PWR014
+L GND-RESCUE-earth_station #PWR014
 U 1 1 57A6805A
 P 2255 2940
 F 0 "#PWR014" H 2255 2940 30  0001 C CNN
@@ -388,7 +392,7 @@ F 3 "" H 2255 2940 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L GND #PWR015
+L GND-RESCUE-earth_station #PWR015
 U 1 1 57A680EA
 P 2505 2945
 F 0 "#PWR015" H 2505 2945 30  0001 C CNN
