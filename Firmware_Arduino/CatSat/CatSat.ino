@@ -61,6 +61,8 @@ https://github.com/mikalhart/TinyGPSPlus
 
 Library LoRa Radio
 http://www.airspayce.com/mikem/arduino/RadioHead/index.html
+************************************************************
+*    IMPORTANTE CAMBIAR id_node DEPENDIENDO TU CANSAT      *
 ************************************************************/
 #include <SPI.h>
 #include <RH_RF95.h>
@@ -76,17 +78,18 @@ http://www.airspayce.com/mikem/arduino/RadioHead/index.html
 #include <Adafruit_Sensor.h>
 #include <Adafruit_HMC5883_U.h>
 #include <Adafruit_BMP085_U.h>
-// #include <DHT.h>
 #include <DHT_U.h>
 
 #define DHTPIN 6 // Pin digital para DHT22
-
 #define DHTTYPE DHT22   // DHT 22  (AM2302)
 
 #define RFM95_CS 10 
 #define RFM95_RST 9
 #define RFM95_INT 2
 #define RF95_FREQ 915.0 //usados creando el objeto
+
+String id_node= "A1"; //CAMBIAR ID DE NODO
+
 //Creamos objeto LoRa
 RH_RF95 rf95(RFM95_CS, RFM95_INT);
 
@@ -106,7 +109,7 @@ int16_t gx, gy, gz;
 #define OUTPUT_READABLE_ACCELGYRO
 
 String Todo; //String a mandar
-String id_node= "A1"; //id de nodo
+
 
 TinyGPSPlus gps;
 static const int RXPin = 5, TXPin = 6;
