@@ -343,6 +343,8 @@ void loop() {
   dht.temperature().getEvent(&event);
   if (isnan(event.temperature)) {
     //Serial.println(F("Error reading temperature!"));
+    Todo += 0;
+    Todo += ","; 
   }
   else {
     /*Uncomment for debbuger*/
@@ -357,7 +359,9 @@ void loop() {
   // Get humidity event and print its value.
   dht.humidity().getEvent(&event);
   if (isnan(event.relative_humidity)) {
-    Serial.println(F("Error reading humidity!"));
+    //Serial.println(F("Error reading humidity!"));
+    Todo += 0;
+    Todo += ","; 
   }
   else {
     /*Uncomment for debbuger*/
