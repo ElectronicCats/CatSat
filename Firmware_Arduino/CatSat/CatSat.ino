@@ -337,7 +337,7 @@ void setup() {
 void loop() {
   /* Get a new sensor event */ 
   Todo += id_node;  //Add id to String 
-  Todo += "\n";
+  Todo += ",";
   sensors_event_t event;
 
   dht.temperature().getEvent(&event);
@@ -517,7 +517,7 @@ void loop() {
     Serial.println(todoch);
     rf95.send((uint8_t *)todoch,Todo.length());   
   }
-  Todo = " ";
+  Todo = "";
   delay(1000);  
   gps_flag = 0;
  /*rf95.send((uint8_t *)"variable", "Largo de variable") //para enviar simplemente
