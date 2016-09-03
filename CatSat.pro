@@ -1,4 +1,4 @@
-update=01/08/2016 07:44:58 p. m.
+update=Friday, 02 September 2016 'pmt' 19:36:10
 version=1
 last_client=kicad
 [pcbnew]
@@ -64,7 +64,7 @@ LibName32=LoRa.pretty/rfm95
 [schematic_editor]
 version=1
 PageLayoutDescrFile=
-PlotDirectoryName=
+PlotDirectoryName=PDF's/
 SubpartIdSeparator=0
 SubpartFirstId=65
 NetFmtName=

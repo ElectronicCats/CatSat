@@ -40,7 +40,7 @@ Date "2016-08-10"
 Rev "0.2"
 Comp "Electronic Cats"
 Comment1 "Andres Sabas"
-Comment2 ""
+Comment2 "Eduardo Contreras"
 Comment3 ""
 Comment4 ""
 $EndDescr
@@ -197,7 +197,7 @@ F 3 "" H 4785 4295 50  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L GND #PWR03
+L GND-RESCUE-CatSat #PWR03
 U 1 1 579865C8
 P 4605 4160
 AR Path="/579865C8" Ref="#PWR03"  Part="1" 
@@ -214,7 +214,7 @@ NoConn ~ 2860 4245
 NoConn ~ 2870 4145
 NoConn ~ 2880 4045
 $Comp
-L GND #PWR04
+L GND-RESCUE-CatSat #PWR04
 U 1 1 579869BC
 P 2705 4440
 AR Path="/579869BC" Ref="#PWR04"  Part="1" 
@@ -273,7 +273,7 @@ $EndComp
 NoConn ~ 7010 3600
 NoConn ~ 7010 3850
 $Comp
-L GND #PWR06
+L GND-RESCUE-CatSat #PWR06
 U 1 1 5798B584
 P 2835 2310
 AR Path="/5798B584" Ref="#PWR06"  Part="1" 
@@ -526,7 +526,7 @@ D7
 Wire Wire Line
 	6075 3125 6280 3125
 $Comp
-L GND #PWR07
+L GND-RESCUE-CatSat #PWR07
 U 1 1 579A7004
 P 5105 4515
 AR Path="/579A7004" Ref="#PWR07"  Part="1" 
@@ -576,7 +576,7 @@ F 3 "" H 6955 2385 50  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L GND #PWR?
+L GND-RESCUE-CatSat #PWR?
 U 1 1 579BC6D3
 P 6955 2785
 AR Path="/579BC6D3" Ref="#PWR?"  Part="1" 
@@ -617,9 +617,11 @@ Wire Wire Line
 Wire Wire Line
 	8235 3490 8225 3490
 $Comp
-L GND #PWR?
+L GND-RESCUE-CatSat #PWR?
 U 1 1 57AC0CD8
 P 8180 4085
+AR Path="/57AC0CD8" Ref="#PWR?"  Part="1" 
+AR Path="/57965E31/57AC0CD8" Ref="#PWR?"  Part="1" 
 F 0 "#PWR?" H 8180 3835 50  0001 C CNN
 F 1 "GND" H 8180 3935 50  0000 C CNN
 F 2 "" H 8180 4085 50  0000 C CNN

@@ -40,7 +40,7 @@ Date "2016-08-10"
 Rev "0.2"
 Comp "Electronic Cats"
 Comment1 "Andres Sabas"
-Comment2 ""
+Comment2 "Eduardo Contreras"
 Comment3 ""
 Comment4 ""
 $EndDescr
@@ -118,7 +118,7 @@ A1
 Text Label 5870 2190 1    60   ~ 0
 A0
 $Comp
-L GND #PWR012
+L GND-RESCUE-CatSat #PWR012
 U 1 1 579929AE
 P 4120 2085
 AR Path="/579929AE" Ref="#PWR012"  Part="1" 
@@ -146,7 +146,7 @@ Text Label 3090 4010 0    60   ~ 0
 INT0
 NoConn ~ 3090 4210
 $Comp
-L GND #PWR013
+L GND-RESCUE-CatSat #PWR013
 U 1 1 57994B3D
 P 5090 4300
 AR Path="/57994B3D" Ref="#PWR013"  Part="1" 
@@ -172,7 +172,7 @@ F 3 "" H 4900 3200 50  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L GND #PWR015
+L GND-RESCUE-CatSat #PWR015
 U 1 1 57995F4A
 P 8035 4470
 AR Path="/57995F4A" Ref="#PWR015"  Part="1" 
@@ -328,7 +328,7 @@ F 3 "" H 8435 4110 50  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L GND #PWR018
+L GND-RESCUE-CatSat #PWR018
 U 1 1 579A787C
 P 8400 4410
 AR Path="/579A787C" Ref="#PWR018"  Part="1" 
@@ -502,7 +502,7 @@ F 3 "" H 5565 3860 60  0000 C CNN
 	0    -1   -1   0   
 $EndComp
 $Comp
-L GND #PWR019
+L GND-RESCUE-CatSat #PWR019
 U 1 1 57994571
 P 5265 3920
 AR Path="/57994571" Ref="#PWR019"  Part="1" 
@@ -515,7 +515,7 @@ F 3 "" H 5265 3920 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L GND #PWR020
+L GND-RESCUE-CatSat #PWR020
 U 1 1 5799469E
 P 5265 3160
 AR Path="/5799469E" Ref="#PWR020"  Part="1" 
@@ -543,7 +543,7 @@ F 3 "" H 7350 1800 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L GND #PWR021
+L GND-RESCUE-CatSat #PWR021
 U 1 1 579BD6A9
 P 7350 2015
 AR Path="/579BD6A9" Ref="#PWR021"  Part="1" 
@@ -571,7 +571,7 @@ $EndComp
 Wire Wire Line
 	7350 1605 7350 1650
 $Comp
-L GND #PWR023
+L GND-RESCUE-CatSat #PWR023
 U 1 1 579F7DD8
 P 5415 3160
 AR Path="/579F7DD8" Ref="#PWR023"  Part="1" 
@@ -584,7 +584,7 @@ F 3 "" H 5415 3160 60  0000 C CNN
 	-1   0    0    1   
 $EndComp
 $Comp
-L GND #PWR024
+L GND-RESCUE-CatSat #PWR024
 U 1 1 579F7E1D
 P 5415 3920
 AR Path="/579F7E1D" Ref="#PWR024"  Part="1" 
@@ -1186,7 +1186,7 @@ AD C2 9E 3F BA 42 B5 1B CD 8C 90 C5 F9 74 F3 E5 DF 58 BF 76 A2 23 9D 79 10 58 21
 36 8F CE B2 53 50 91 5C 80 F5 07 77 3D C2 99 C3 48 2F AC A3 91 0D 15 26 65 DC 23 F5 73 48 2A E4 
 B4 9B 58 9F 89 F5 C5 4E A6 3A 93 35 43 E1 02 C8 B6 83 79 58 D3 19 67 0E 01 8E 29 B6 92 20 A6 00 
 AF 03 2F 20 E9 04 FE 83 B8 0B 65 AF 55 15 F5 52 F8 7F CD 7A 0A 22 2F B5 BD D0 00 00 00 00 49 45 
-4E 44 AE 42 60 82 00 
+4E 44 AE 42 60 82 79 
 EndData
 $EndBitmap
 $EndSCHEMATC
