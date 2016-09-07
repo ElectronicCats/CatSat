@@ -16,3 +16,5 @@ Acele/gyro
 
 "X"=gx "Y"=gy "Z"=gz
         
+
+A1,temp1,hum,press,temp2,mx,my,mz,ax,ay,az,gx,gy,gz,

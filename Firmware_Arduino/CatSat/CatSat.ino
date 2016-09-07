@@ -446,7 +446,6 @@ void loop() {
   Serial.print(F("Y: ")); Serial.print(event.magnetic.y); Serial.print(F("  "));
   Serial.print(F("Z: ")); Serial.print(event.magnetic.z); Serial.print(F("  "));Serial.println(F("uT"));
   */
-  Todo += ",";
   Todo += event.magnetic.x;
   Todo += ",";
   Todo += event.magnetic.y;
