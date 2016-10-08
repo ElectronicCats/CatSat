@@ -514,8 +514,6 @@ void loop() {
   char todoch[Todo.length()];
   Todo.toCharArray(todoch,Todo.length());
   Serial.println(todoch);
-  rf95.send((uint8_t *)todoch,Todo.length());   
-  Todo = "";
   if(gps_flag == 1)
   {
     char todoch[Todo.length()+1];
