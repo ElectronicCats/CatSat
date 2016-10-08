@@ -239,7 +239,7 @@ void gpsread(void){
         Serial.print(F("INVALID"));
       }
 
-      Serial.print(F(" "));
+      Serial.print(F(""));
       if (gps.time.isValid())
       {
         if (gps.time.hour() < 10) Serial.print(F("0"));
