@@ -1,5 +1,4 @@
 EESchema Schematic File Version 2
-LIBS:CatSat-rescue
 LIBS:power
 LIBS:device
 LIBS:transistors
@@ -29,15 +28,15 @@ LIBS:opto
 LIBS:atmel
 LIBS:contrib
 LIBS:valves
-LIBS:CatSat-cache
+LIBS:MainBoard-cache
 EELAYER 25 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
-Sheet 2 4
+Sheet 1 1
 Title "CatSat v1.0"
-Date "2016-08-10"
-Rev "0.2"
+Date "2016-10-16"
+Rev "0.3"
 Comp "Electronic Cats"
 Comment1 "Andres Sabas"
 Comment2 "Eduardo Contreras"
@@ -201,7 +200,7 @@ L GND-RESCUE-CatSat #PWR03
 U 1 1 579865C8
 P 4605 4160
 AR Path="/579865C8" Ref="#PWR03"  Part="1" 
-AR Path="/57965E31/579865C8" Ref="#PWR03"  Part="1" 
+AR Path="/57965E31/579865C8" Ref="#PWR?"  Part="1" 
 F 0 "#PWR03" H 4605 3910 50  0001 C CNN
 F 1 "GND" H 4605 4010 50  0000 C CNN
 F 2 "" H 4605 4160 50  0000 C CNN
@@ -218,7 +217,7 @@ L GND-RESCUE-CatSat #PWR04
 U 1 1 579869BC
 P 2705 4440
 AR Path="/579869BC" Ref="#PWR04"  Part="1" 
-AR Path="/57965E31/579869BC" Ref="#PWR04"  Part="1" 
+AR Path="/57965E31/579869BC" Ref="#PWR?"  Part="1" 
 F 0 "#PWR04" H 2705 4190 50  0001 C CNN
 F 1 "GND" H 2705 4290 50  0000 C CNN
 F 2 "" H 2705 4440 50  0000 C CNN
@@ -238,10 +237,10 @@ F 3 "" H 7510 3750 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L CONN_01X02 P5
+L CONN_01X02 P6
 U 1 1 57987F4D
 P 8745 3710
-F 0 "P5" H 8745 3860 50  0000 C CNN
+F 0 "P6" H 8745 3860 50  0000 C CNN
 F 1 "BATTERY" V 8845 3710 50  0000 C CNN
 F 2 "Pin_Headers:Pin_Header_Straight_1x02" H 8745 3710 50  0001 C CNN
 F 3 "" H 8745 3710 50  0000 C CNN
@@ -277,7 +276,7 @@ L GND-RESCUE-CatSat #PWR06
 U 1 1 5798B584
 P 2835 2310
 AR Path="/5798B584" Ref="#PWR06"  Part="1" 
-AR Path="/57965E31/5798B584" Ref="#PWR06"  Part="1" 
+AR Path="/57965E31/5798B584" Ref="#PWR?"  Part="1" 
 F 0 "#PWR06" H 2835 2060 50  0001 C CNN
 F 1 "GND" H 2835 2160 50  0000 C CNN
 F 2 "" H 2835 2310 50  0000 C CNN
@@ -285,24 +284,6 @@ F 3 "" H 2835 2310 50  0000 C CNN
 	1    2835 2310
 	1    0    0    -1  
 $EndComp
-Text GLabel 4600 1345 1    60   Input ~ 0
-A3
-Text GLabel 4485 1345 1    60   Input ~ 0
-A2
-Text GLabel 4380 1345 1    60   Input ~ 0
-A1
-Text GLabel 4265 1345 1    60   Input ~ 0
-A0
-Text GLabel 3160 1355 1    60   Input ~ 0
-SDA
-Text GLabel 3045 1355 1    60   Input ~ 0
-SCL
-Text GLabel 3490 1355 1    60   Input ~ 0
-DHT/D6
-Text GLabel 3385 1355 1    60   Input ~ 0
-S_TX
-Text GLabel 3270 1355 1    60   Input ~ 0
-S_RX
 Wire Wire Line
 	3235 2240 3235 2410
 Wire Wire Line
@@ -428,88 +409,6 @@ Wire Wire Line
 Wire Wire Line
 	2705 4345 2705 4440
 Wire Wire Line
-	3045 1355 3045 1500
-Wire Wire Line
-	3160 1355 3160 1505
-Wire Wire Line
-	3270 1355 3270 1505
-Wire Wire Line
-	3385 1355 3385 1510
-Wire Wire Line
-	3490 1355 3490 1510
-Wire Wire Line
-	4265 1345 4265 1550
-Wire Wire Line
-	4380 1345 4380 1555
-Wire Wire Line
-	4485 1345 4485 1550
-Wire Wire Line
-	4600 1345 4600 1555
-Text Label 3045 1500 3    60   ~ 0
-SCL
-Text Label 3160 1505 3    60   ~ 0
-SDA
-Text Label 3270 1505 3    60   ~ 0
-S_RX
-Text Label 3385 1510 3    60   ~ 0
-S_TX
-Text Label 3490 1510 3    60   ~ 0
-DHT/D6
-Text Label 4265 1550 3    60   ~ 0
-A0
-Text Label 4380 1555 3    60   ~ 0
-A1
-Text Label 4485 1550 3    60   ~ 0
-A2
-Text Label 4600 1555 3    60   ~ 0
-A3
-Text GLabel 6280 3240 2    60   Input ~ 0
-D8
-Text GLabel 6280 3125 2    60   Input ~ 0
-D7
-Text GLabel 6280 3020 2    60   Input ~ 0
-INT1
-Text GLabel 6280 2905 2    60   Input ~ 0
-INT0
-Text GLabel 6435 4645 2    60   Input ~ 0
-MISO
-Text GLabel 6435 4530 2    60   Input ~ 0
-SCK
-Text GLabel 6435 4975 2    60   Input ~ 0
-RST
-Text GLabel 6435 4870 2    60   Input ~ 0
-NSS
-Text GLabel 6435 4755 2    60   Input ~ 0
-MOSI
-Wire Wire Line
-	6435 4530 6290 4530
-Wire Wire Line
-	6435 4645 6285 4645
-Wire Wire Line
-	6435 4755 6285 4755
-Wire Wire Line
-	6435 4870 6280 4870
-Wire Wire Line
-	6435 4975 6280 4975
-Wire Wire Line
-	6280 2905 6075 2905
-Wire Wire Line
-	6280 3020 6070 3020
-Text Label 6290 4530 2    60   ~ 0
-SCK
-Text Label 6285 4645 2    60   ~ 0
-MISO
-Text Label 6285 4755 2    60   ~ 0
-MOSI
-Text Label 6280 4870 2    60   ~ 0
-NSS
-Text Label 6280 4975 2    60   ~ 0
-RST
-Text Label 6075 2905 2    60   ~ 0
-INT0
-Text Label 6070 3020 2    60   ~ 0
-INT1
-Wire Wire Line
 	5385 3020 5230 3020
 Wire Wire Line
 	5385 2920 5230 2920
@@ -517,20 +416,12 @@ Text Label 5230 2920 0    60   ~ 0
 INT0
 Text Label 5230 3020 0    60   ~ 0
 INT1
-Wire Wire Line
-	6070 3240 6280 3240
-Text Label 6070 3240 2    60   ~ 0
-D8
-Text Label 6075 3125 2    60   ~ 0
-D7
-Wire Wire Line
-	6075 3125 6280 3125
 $Comp
 L GND-RESCUE-CatSat #PWR07
 U 1 1 579A7004
 P 5105 4515
 AR Path="/579A7004" Ref="#PWR07"  Part="1" 
-AR Path="/57965E31/579A7004" Ref="#PWR07"  Part="1" 
+AR Path="/57965E31/579A7004" Ref="#PWR?"  Part="1" 
 F 0 "#PWR07" H 5105 4265 50  0001 C CNN
 F 1 "GND" H 5105 4365 50  0000 C CNN
 F 2 "" H 5105 4515 50  0000 C CNN
@@ -558,7 +449,7 @@ L C C1
 U 1 1 579BC305
 P 6955 2585
 F 0 "C1" H 6980 2685 50  0000 L CNN
-F 1 "C" H 6980 2485 50  0000 L CNN
+F 1 "0.1uF" H 6980 2485 50  0000 L CNN
 F 2 "Capacitors_ThroughHole:C_Disc_D6_P5" H 6993 2435 30  0001 C CNN
 F 3 "" H 6955 2585 60  0000 C CNN
 	1    6955 2585
@@ -576,11 +467,11 @@ F 3 "" H 6955 2385 50  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L GND-RESCUE-CatSat #PWR?
+L GND-RESCUE-CatSat #PWR010
 U 1 1 579BC6D3
 P 6955 2785
-AR Path="/579BC6D3" Ref="#PWR?"  Part="1" 
-AR Path="/57965E31/579BC6D3" Ref="#PWR010"  Part="1" 
+AR Path="/579BC6D3" Ref="#PWR010"  Part="1" 
+AR Path="/57965E31/579BC6D3" Ref="#PWR?"  Part="1" 
 F 0 "#PWR010" H 6955 2535 50  0001 C CNN
 F 1 "GND" H 6955 2635 50  0000 C CNN
 F 2 "" H 6955 2785 50  0000 C CNN
@@ -597,17 +488,6 @@ Wire Wire Line
 Connection ~ 8235 3600
 Wire Wire Line
 	8010 3600 8545 3600
-$Comp
-L CONN_01X02 P0n1
-U 1 1 57A00135
-P 8470 3045
-F 0 "P0n1" H 8470 3195 50  0000 C CNN
-F 1 "ON" V 8570 3045 50  0000 C CNN
-F 2 "Pin_Headers:Pin_Header_Straight_1x02" H 8470 3045 50  0001 C CNN
-F 3 "" H 8470 3045 50  0000 C CNN
-	1    8470 3045
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
 	8260 2995 8270 2995
 Wire Wire Line
@@ -617,12 +497,12 @@ Wire Wire Line
 Wire Wire Line
 	8235 3490 8225 3490
 $Comp
-L GND-RESCUE-CatSat #PWR?
+L GND-RESCUE-CatSat #PWR011
 U 1 1 57AC0CD8
 P 8180 4085
-AR Path="/57AC0CD8" Ref="#PWR?"  Part="1" 
+AR Path="/57AC0CD8" Ref="#PWR011"  Part="1" 
 AR Path="/57965E31/57AC0CD8" Ref="#PWR?"  Part="1" 
-F 0 "#PWR?" H 8180 3835 50  0001 C CNN
+F 0 "#PWR011" H 8180 3835 50  0001 C CNN
 F 1 "GND" H 8180 3935 50  0000 C CNN
 F 2 "" H 8180 4085 50  0000 C CNN
 F 3 "" H 8180 4085 50  0000 C CNN
@@ -634,7 +514,7 @@ Wire Wire Line
 Connection ~ 8180 3850
 $Bitmap
 Pos 9650 6940
-Scale 1.000000
+Scale 1,000000
 Data
 89 50 4E 47 0D 0A 1A 0A 00 00 00 0D 49 48 44 52 00 00 01 77 00 00 01 29 08 06 00 00 00 68 44 62 
 79 00 00 00 04 73 42 49 54 08 08 08 08 7C 08 64 88 00 00 00 09 70 48 59 73 00 00 0A F0 00 00 0A 
@@ -1176,4 +1056,15 @@ AF 03 2F 20 E9 04 FE 83 B8 0B 65 AF 55 15 F5 52 F8 7F CD 7A 0A 22 2F B5 BD D0 00
 4E 44 AE 42 60 82 00 
 EndData
 $EndBitmap
+$Comp
+L CONN_01X02 P5
+U 1 1 5803FCFF
+P 8470 3045
+F 0 "P5" H 8470 3195 50  0000 C CNN
+F 1 "ON/OFF" V 8570 3045 50  0000 C CNN
+F 2 "Pin_Headers:Pin_Header_Angled_1x02" H 8470 3045 50  0001 C CNN
+F 3 "" H 8470 3045 50  0000 C CNN
+	1    8470 3045
+	1    0    0    -1  
+$EndComp
 $EndSCHEMATC
