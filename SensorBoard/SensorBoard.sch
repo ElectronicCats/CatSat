@@ -34,7 +34,7 @@ EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
 Sheet 1 1
-Title "CatSat v1.0"
+Title "SensorBoard CatSat v1.0"
 Date "2016-10-16"
 Rev "0.3"
 Comp "Electronic Cats"
