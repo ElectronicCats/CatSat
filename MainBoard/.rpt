@@ -1,0 +1,17 @@
+** Drc report for /Users/sabas/Documents/proyectoshd/CatSat/MainBoard/MainBoard.kicad_pcb **
+** Created on 2016-10-17 20:34:46 **
+
+** Found 3 DRC errors **
+ErrType(4): Pista cerca de pad
+    @ (99,260mm,96,400mm): Pista 0,500mm, red [Net-(D1-Pad1)] (11) en capa F.Cu, longitud: 3,111mm
+    @ (101,790mm,96,400mm): Pad 1 en F.Cu, B.Cu, Interno, Sin cobre de P5
+ErrType(4): Pista cerca de pad
+    @ (84,953mm,74,700mm): Pista 0,250mm, red [/RST] (29) en capa B.Cu, longitud: 3,394mm
+    @ (87,600mm,73,200mm): Pad 1 en F.Cu, B.Cu, Interno, Sin cobre de C1
+ErrType(4): Pista cerca de pad
+    @ (87,353mm,72,300mm): Pista 0,250mm, red [/RST] (29) en capa B.Cu, longitud: 2,687mm
+    @ (87,600mm,73,200mm): Pad 1 en F.Cu, B.Cu, Interno, Sin cobre de C1
+
+** Found 0 unconnected pads **
+
+** End of Report **
