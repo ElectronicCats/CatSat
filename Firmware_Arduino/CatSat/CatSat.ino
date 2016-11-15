@@ -61,6 +61,7 @@ https://github.com/mikalhart/TinyGPSPlus
 
 Library LoRa Radio
 http://www.airspayce.com/mikem/arduino/RadioHead/index.html
+
 ************************************************************
 *    IMPORTANTE CAMBIAR id_node DEPENDIENDO TU CANSAT      *
 ************************************************************/
@@ -101,15 +102,8 @@ MPU6050 accelgyro;
 // #### Accel and Gyro Vars
 int16_t ax, ay, az;
 int16_t gx, gy, gz;
-// ####
-
-// uncomment "OUTPUT_READABLE_ACCELGYRO" if you want to see a tab-separated
-// list of the accel X/Y/Z and then gyro X/Y/Z values in decimal. Easy to read,
-// not so easy to parse, and slow(er) over UART.
-#define OUTPUT_READABLE_ACCELGYRO
 
 String Todo; //String a mandar
-
 
 TinyGPSPlus gps;
 static const int RXPin = 5, TXPin = 6;
@@ -420,7 +414,7 @@ void loop() {
     
     /* Then convert the atmospheric pressure, and SLP to altitude         */
     /* Update this next line with the current SLP for better results      */
-    float seaLevelPressure = SENSORS_PRESSURE_SEALEVELHPA;
+    //float seaLevelPressure = SENSORS_PRESSURE_SEALEVELHPA;
     /*Uncomment for debbuger*/
     /*
     Serial.print(F("Altitude:    ")); 
@@ -454,17 +448,17 @@ void loop() {
   Todo += ",";
   // Hold the module so that Z is pointing 'up' and you can measure the heading with x&y
   // Calculate heading when the magnetometer is level, then correct for signs of axis.
-  float heading = atan2(event.magnetic.y, event.magnetic.x);
+  //float heading = atan2(event.magnetic.y, event.magnetic.x);
   
   // Once you have your heading, you must then add your 'Declination Angle', which is the 'Error' of the magnetic field in your location.
   // Find yours here: http://www.magnetic-declination.com/
   // Mine is: -13* 2' W, which is ~13 Degrees, or (which we need) 0.22 radians
   // If you cannot find your Declination, comment out these two lines, your compass will be slightly off.
-  float declinationAngle = 0.22;
-  heading += declinationAngle;
+  //float declinationAngle = 0.22;
+  //heading += declinationAngle;
   
   // Correct for when signs are reversed.
-  if(heading < 0)
+ /* if(heading < 0)
     heading += 2*PI;
     
   // Check for wrap due to addition of declination.
@@ -475,9 +469,9 @@ void loop() {
   float headingDegrees = heading * 180/M_PI; 
   
 
-  /*Uncomment for debbuger*/
-  //Serial.print(F("Heading (degrees): ")); Serial.println(headingDegrees);
-
+  //Uncomment for debbuger
+  Serial.print(F("Heading (degrees): ")); Serial.println(headingDegrees);
+*/
   
   // ##########  read raw accel/gyro measurements from device
     accelgyro.getMotion6(&ax, &ay, &az, &gx, &gy, &gz);
@@ -509,11 +503,6 @@ void loop() {
 
         gpsread();
  
-  delay(10);
-
-  char todoch[Todo.length()];
-  Todo.toCharArray(todoch,Todo.length());
-  Serial.println(todoch);
   if(gps_flag == 1)
   {
     char todoch[Todo.length()+1];
@@ -524,7 +513,6 @@ void loop() {
   Todo = "";
   delay(1000);  
   gps_flag = 0;
- /*rf95.send((uint8_t *)"variable", "Largo de variable") //para enviar simplemente
-  */
+
   
 }

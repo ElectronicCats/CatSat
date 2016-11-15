@@ -12,7 +12,7 @@ la cual filtra los Satelites
 http://electroniccats.com
 
 Especificaciones del entorno de Desarrollo:
-  IDE: Arduino 1.6.8
+  IDE: Arduino 1.6.11
   Plataforma de Hardware:
   Estacion terrena CanSat
   - Arduino Mini Pro
