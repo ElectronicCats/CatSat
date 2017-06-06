@@ -120,77 +120,6 @@ Adafruit_HMC5883_Unified mag = Adafruit_HMC5883_Unified(1);
 
 Adafruit_BMP085_Unified bmp = Adafruit_BMP085_Unified(2);
 
-
-/*Uncomment for debbuger*/
-/*
-void displayHMCDetails(void)
-{
-  sensor_t sensor;
-  mag.getSensor(&sensor);
-  Serial.println("------------------------------------");
-  Serial.print  (F("Sensor:       ")); Serial.println(sensor.name);
-  Serial.print  (F("Driver Ver:   ")); Serial.println(sensor.version);
-  Serial.print  (F("Unique ID:    ")); Serial.println(sensor.sensor_id);
-  Serial.print  (F("Max Value:    ")); Serial.print(sensor.max_value); Serial.println(F(" uT"));
-  Serial.print  (F("Min Value:    ")); Serial.print(sensor.min_value); Serial.println(F(" uT"));
-  Serial.print  (F("Resolution:   ")); Serial.print(sensor.resolution); Serial.println(F(" uT"));  
-  Serial.println(F("------------------------------------"));
-  Serial.println(F(""));
-  delay(500);
-}
-
-void displayBMPDetails(void)
-{
-  sensor_t sensor;
-  bmp.getSensor(&sensor);
-  Serial.println(F("------------------------------------"));
-  Serial.print  (F("Sensor:       ")); Serial.println(sensor.name);
-  Serial.print  (F("Driver Ver:   ")); Serial.println(sensor.version);
-  Serial.print  (F("Unique ID:    ")); Serial.println(sensor.sensor_id);
-  Serial.print  (F("Max Value:    ")); Serial.print(sensor.max_value); Serial.println(F(" hPa"));
-  Serial.print  (F("Min Value:    ")); Serial.print(sensor.min_value); Serial.println(F(" hPa"));
-  Serial.print  (F("Resolution:   ")); Serial.print(sensor.resolution); Serial.println(F(" hPa"));  
-  Serial.println(F("------------------------------------"));
-  Serial.println(F(""));
-  delay(500);
-}
-
-void displayDHTDetails(void)
-{
-  // Print temperature sensor details.
-  sensor_t sensor;
-  dht.temperature().getSensor(&sensor);
-  Serial.println(F("------------------------------------"));
-  Serial.println(F("Temperature"));
-  Serial.print  (F("Sensor:       ")); Serial.println(sensor.name);
-  Serial.print  (F("Driver Ver:   ")); Serial.println(sensor.version);
-  Serial.print  (F("Unique ID:    ")); Serial.println(sensor.sensor_id);
-  Serial.print  (F("Max Value:    ")); Serial.print(sensor.max_value); Serial.println(F(" *C"));
-  Serial.print  (F("Min Value:    ")); Serial.print(sensor.min_value); Serial.println(F(" *C"));
-  Serial.print  (F("Resolution:   ")); Serial.print(sensor.resolution); Serial.println(F(" *C"));  
-  Serial.println(F("------------------------------------"));
-  // Print humidity sensor details.
-  dht.humidity().getSensor(&sensor);
-  Serial.println(F("------------------------------------"));
-  Serial.println(F("Humidity"));
-  Serial.print  (F("Sensor:       ")); Serial.println(sensor.name);
-  Serial.print  (F("Driver Ver:   ")); Serial.println(sensor.version);
-  Serial.print  (F("Unique ID:    ")); Serial.println(sensor.sensor_id);
-  Serial.print  (F("Max Value:    ")); Serial.print(sensor.max_value); Serial.println(F("%"));
-  Serial.print  (F("Min Value:    ")); Serial.print(sensor.min_value); Serial.println(F("%"));
-  Serial.print  (F("Resolution:   ")); Serial.print(sensor.resolution); Serial.println(F("%"));  
-  Serial.println(F("------------------------------------"));
-   // verify connection
-  Serial.println(F("------------------------------------")); 
-  Serial.println(F("Position"));
-  Serial.println(F("Testing device connections..."));
-  Serial.println(accelgyro.testConnection() ? "MPU6050 connection successful" : "MPU6050 connection failed");
-  Serial.println("------------------------------------"); 
-  // Set delay between sensor readings based on sensor details.
-  delayMS = sensor.min_delay / 1000;
-}
-*/
-
 void gpsread(void){
   
   // 
@@ -203,14 +132,27 @@ void gpsread(void){
         Todo += String(gps.location.lat(), 6);
         Todo += ",";
         Todo += String(gps.location.lng(), 6);
+        Todo += ",";
+        Todo += String(gps.altitude.meters(), 6);
+        Todo += ",";
+        Todo += String(gps.speed.mps(), 6);
         Todo += "\n";
         Serial.print(gps.location.lat(), 6);
         Serial.print(F(","));
         Serial.print(gps.location.lng(), 6);
+        Serial.print(F(","));
+        Serial.print(gps.altitude.meters(), 6);
+        Serial.print(F(","));
+        Serial.print(gps.speed.mps(), 6);
+        
         gps_flag = 1;
       }
       else
       { 
+        Todo += "0";
+        Todo += ",";
+        Todo += "0";
+        Todo += ",";
         Todo += "0";
         Todo += ",";
         Todo += "0";
@@ -350,8 +292,8 @@ void loop() {
     Serial.print(event.temperature);
     Serial.println(F(" *C"));
     */
-    Todo += event.temperature;
-    Todo += ","; 
+    //Todo += event.temperature;
+    //Todo += ","; 
   }
   // Get humidity event and print its value.
   dht.humidity().getEvent(&event);
@@ -440,12 +382,14 @@ void loop() {
   Serial.print(F("Y: ")); Serial.print(event.magnetic.y); Serial.print(F("  "));
   Serial.print(F("Z: ")); Serial.print(event.magnetic.z); Serial.print(F("  "));Serial.println(F("uT"));
   */
+  /*
   Todo += event.magnetic.x;
   Todo += ",";
   Todo += event.magnetic.y;
   Todo += ",";
   Todo += event.magnetic.z;
   Todo += ",";
+  */
   // Hold the module so that Z is pointing 'up' and you can measure the heading with x&y
   // Calculate heading when the magnetometer is level, then correct for signs of axis.
   //float heading = atan2(event.magnetic.y, event.magnetic.x);
@@ -486,7 +430,7 @@ void loop() {
         Serial.print(F("X:")); Serial.print(gx); Serial.print("\t");
         Serial.print(F("X:")); Serial.print(gy); Serial.print("\t");
         Serial.print(F("X:")); Serial.println(gz);Serial.print("\n");
-        */
+        
         Todo += ax;
         Todo += ",";
         Todo += ay;
@@ -499,7 +443,7 @@ void loop() {
         Todo += ",";
         Todo += gz;
         Todo += ",";
-     // Todo += "\n";  
+        */ 
 
         gpsread();
  
