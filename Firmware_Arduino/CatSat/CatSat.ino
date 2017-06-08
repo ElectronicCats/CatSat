@@ -87,7 +87,10 @@ http://www.airspayce.com/mikem/arduino/RadioHead/index.html
 #define RFM95_CS 10 
 #define RFM95_RST 9
 #define RFM95_INT 2
-#define RF95_FREQ 915.0 //usados creando el objeto
+#define RF95_FREQ 915.0 //Usados creando el objeto
+
+//Command activation Balloon mode
+#define PMTK_SET_NMEA_886_PMTK_FR_MODE  "$PMTK001,886,3*36"
 
 String id_node= "A1"; //CAMBIAR ID DE NODO
 
@@ -211,6 +214,14 @@ void setup() {
   Serial.begin(115200);
   ss.begin(GPSBaud);
   dht.begin();
+
+  /*
+   * Activation Balloon mode: 
+   * For high-altitude balloon purpose that the vertical movement will 
+   * have more effect on the position calculation
+  */
+  ss.println(PMTK_SET_NMEA_886_PMTK_FR_MODE);
+  
   /*****LoRa init****/
   pinMode(RFM95_RST, OUTPUT);
   digitalWrite(RFM95_RST, HIGH);
