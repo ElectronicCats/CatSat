@@ -59,11 +59,20 @@ http://www.airspayce.com/mikem/arduino/RadioHead/index.html
 #include <SPI.h>
 #include <RH_RF95.h>
 
+/*******************************************************  
+ *Selecciona un canal entre 0 y 12 este debe coincidir *
+ *con el canal de tu satelite                          *
+ *******************************************************/
+int channel = 1;
+
 String ID = "A1";
 
+float chann;
 String buff;
+
 RH_RF95 rf95(10, 2);
  
+float selectBand(int);
  
 void setup() 
 {     
@@ -84,7 +93,8 @@ void setup()
     Serial.println("LoRa radio init failed");
     while (1);
   }
-  if (!rf95.setFrequency(915.0)) {
+  chann = selectBand(channel);
+  if (!rf95.setFrequency(chann)) {
     while (1);
   }
   rf95.setTxPower(23, false);
@@ -102,6 +112,9 @@ void loop()
     if (rf95.recv(buf, &len))
     {
       String buff = (char*)buf;
+      buff += ",";
+      buff += rf95.lastRssi();
+//      Serial.println(rf95.lastRssi(), DEC);  
        if(buff.startsWith(ID))
         {
           Serial.println((char*)buf);
@@ -114,4 +127,49 @@ void loop()
   }
 }
 
+float selectBand(int a)
+{    
+  switch(a){ 
+    case 0:
+    return 903.08;
+  break;
+    case 1:
+    return 905.24;
+  break;
+    case 2:
+    return 907.40;
+  break;
+    case 3:
+    return 909.56;
+  break;
+    case 4:
+    return 911.72;
+  break;
+    case 5:
+    return 913.88;
+  break;
+    case 6:
+    return 916.04;
+  break;
+    case 7:
+    return 918.20;
+  break;
+    case 8:
+    return 920.36;
+  break;
+    case 9:
+    return 922.52;
+  break;
+    case 10:
+    return 924.68;
+  break;
+    case 11:
+    return 926.84;
+  break;
+    case 12:
+    return 915;
+  break;
+  }
+  
+ }
 
