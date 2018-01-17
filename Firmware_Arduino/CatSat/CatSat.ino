@@ -62,9 +62,7 @@ https://github.com/mikalhart/TinyGPSPlus
 Library LoRa Radio
 http://www.airspayce.com/mikem/arduino/RadioHead/index.html
 
-************************************************************
-*    IMPORTANTE CAMBIAR id_node DEPENDIENDO TU CANSAT      *
-************************************************************/
+*/
 #include <SPI.h>
 #include <RH_RF95.h>
 
@@ -91,8 +89,17 @@ http://www.airspayce.com/mikem/arduino/RadioHead/index.html
 
 float selectBand(int);
 
-String id_node= "A1"; //CAMBIAR ID DE SATELITE
-int channel = 12;     //CAMBIAR CANAL DE TU SATELITE 1-12
+/************************************************************
+*    IMPORTANTE CAMBIAR id_node DEPENDIENDO TU CANSAT      *
+************************************************************/
+
+String id_node= "A1"; 
+
+/*******************************************************  
+ *Selecciona un canal entre 0 y 12 este debe coincidir *
+ *con el canal de tu satelite                          *
+ *******************************************************/
+int channel = 12;    
 
 //Creamos objeto LoRa
 RH_RF95 rf95(RFM95_CS, RFM95_INT);
