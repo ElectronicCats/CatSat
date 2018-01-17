@@ -89,7 +89,10 @@ http://www.airspayce.com/mikem/arduino/RadioHead/index.html
 #define RFM95_INT 2
 #define RF95_FREQ 915.0 //usados creando el objeto
 
-String id_node= "A1"; //CAMBIAR ID DE NODO
+float selectBand(int);
+
+String id_node= "A1"; //CAMBIAR ID DE SATELITE
+int channel = 12;     //CAMBIAR CANAL DE TU SATELITE 1-12
 
 //Creamos objeto LoRa
 RH_RF95 rf95(RFM95_CS, RFM95_INT);
@@ -286,12 +289,12 @@ void setup() {
   Serial.println("LoRa radio init OK!");
  
   // Defaults after init are 915.0MHz, modulation GFSK_Rb250Fd250, +13dbM
-  if (!rf95.setFrequency(RF95_FREQ)) {
+  float chann = selectBand(channel);
+  if (!rf95.setFrequency(chann)) {
     Serial.println(F("setFrequency failed"));
     while (1);
-  }
-  //Serial.print("Set Freq to: "); 
-  //Serial.println(RF95_FREQ);
+    }
+    
   rf95.setTxPower(23, false); //Set the max transmition power
   /******************/
  
@@ -516,3 +519,49 @@ void loop() {
 
   
 }
+
+float selectBand(int a)
+{    
+  switch(a){ 
+    case 0:
+    return 903.08;
+  break;
+    case 1:
+    return 905.24;
+  break;
+    case 2:
+    return 907.40;
+  break;
+    case 3:
+    return 909.56;
+  break;
+    case 4:
+    return 911.72;
+  break;
+    case 5:
+    return 913.88;
+  break;
+    case 6:
+    return 916.04;
+  break;
+    case 7:
+    return 918.20;
+  break;
+    case 8:
+    return 920.36;
+  break;
+    case 9:
+    return 922.52;
+  break;
+    case 10:
+    return 924.68;
+  break;
+    case 11:
+    return 926.84;
+  break;
+    case 12:
+    return 915;
+  break;
+  }
+  
+ }
