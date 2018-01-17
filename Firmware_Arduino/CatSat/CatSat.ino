@@ -87,6 +87,9 @@ http://www.airspayce.com/mikem/arduino/RadioHead/index.html
 #define RFM95_INT 2
 #define RF95_FREQ 915.0 //usados creando el objeto
 
+//Command activation Balloon mode
+#define PMTK_SET_NMEA_886_PMTK_FR_MODE  "$PMTK001,886,3*36"
+
 float selectBand(int);
 
 /************************************************************
@@ -279,6 +282,13 @@ void setup() {
   Serial.begin(115200);
   ss.begin(GPSBaud);
   dht.begin();
+  /*
+   * Activation Balloon mode: 
+   * For high-altitude balloon purpose that the vertical movement will 
+   * have more effect on the position calculation
+  */
+  ss.println(PMTK_SET_NMEA_886_PMTK_FR_MODE);
+  
   /*****LoRa init****/
   pinMode(RFM95_RST, OUTPUT);
   digitalWrite(RFM95_RST, HIGH);
