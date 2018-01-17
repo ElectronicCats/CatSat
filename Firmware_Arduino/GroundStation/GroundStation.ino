@@ -63,7 +63,7 @@ http://www.airspayce.com/mikem/arduino/RadioHead/index.html
  *Selecciona un canal entre 0 y 12 este debe coincidir *
  *con el canal de tu satelite                          *
  *******************************************************/
-int channel = 1;
+int channel = 12;
 
 String ID = "A1";
 

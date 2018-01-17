@@ -93,7 +93,7 @@ http://www.airspayce.com/mikem/arduino/RadioHead/index.html
 #define PMTK_SET_NMEA_886_PMTK_FR_MODE  "$PMTK001,886,3*36"
 
 String id_node= "A1"; //CAMBIAR ID DE NODO
-int channel = 1;      //Cambiar canal de tu satelite
+int channel = 12;      //Cambiar canal de tu satelite
 float chann;
 
 //Creamos objeto LoRa
@@ -240,6 +240,7 @@ void setup() {
     Serial.println(F("LoRa radio init failed"));
     while (1);
   }
+  setFrequency(Bw125Cr48Sf4096);   //Bw125 CR=4/8 SF12
   Serial.println("LoRa radio init OK!");
  
   chann = selectBand(channel);
@@ -296,8 +297,8 @@ void loop() {
   dht.temperature().getEvent(&event);
   if (isnan(event.temperature)) {
     //Serial.println(F("Error reading temperature!"));
-    Todo += 0;
-    Todo += ","; 
+    //Todo += 0;
+    //Todo += ","; 
   }
   else {
     /*Uncomment for debbuger*/
