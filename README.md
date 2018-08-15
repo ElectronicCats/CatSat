@@ -1,7 +1,8 @@
 # CatSat I
 
 ![OSHW](https://github.com/ElectronicCats/CatSat/raw/master/MX0004.png)
-**[OSHW] MX0003 | Certified open source hardware |** [oshwa.org/cert.](https://www.oshwa.org/cert)
+
+**[OSHW] MX0004 | Certified open source hardware |** [oshwa.org/cert.](https://www.oshwa.org/cert)
 
 Kit CatSat Education
 
