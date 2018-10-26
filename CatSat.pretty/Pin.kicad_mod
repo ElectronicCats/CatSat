@@ -1,0 +1,9 @@
+(module Pin (layer F.Cu) (tedit 5BCE8061)
+  (fp_text reference REF** (at 3.5 -1.6) (layer F.Fab) hide
+    (effects (font (size 1 1) (thickness 0.15)))
+  )
+  (fp_text value Pin (at -2.9 -1.5) (layer F.Fab) hide
+    (effects (font (size 1 1) (thickness 0.15)))
+  )
+  (pad 1 thru_hole circle (at 0 0) (size 2.1844 2.1844) (drill 1.2) (layers *.Cu *.Mask))
+)
