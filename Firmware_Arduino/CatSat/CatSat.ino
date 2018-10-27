@@ -74,35 +74,27 @@ http://www.airspayce.com/mikem/arduino/RadioHead/index.html
 
 #include <TinyGPS++.h>
 
-#include <MPU6050.h>
-
 #include <Adafruit_Sensor.h>
-#include <Adafruit_HMC5883_U.h>
 #include <Adafruit_BMP085_U.h>
 #include <DHT_U.h>
 
-#define DHTPIN 6 // Pin digital para DHT22
-#define DHTTYPE DHT22   // DHT 22  (AM2302)
+#define DHTPIN 6
+#define DHTTYPE DHT22   
 
 #define RFM95_CS 10 
 #define RFM95_RST 9
 #define RFM95_INT 2
-#define RF95_FREQ 915.0 //Usados creando el objeto
+#define RF95_FREQ 915.0
 
-//Command activation Balloon mode
 #define PMTK_SET_NMEA_886_PMTK_FR_MODE  "$PMTK001,886,3*36"
 
 String id_node= "A1"; //CAMBIAR ID DE NODO
 int channel = 12;      //Cambiar canal de tu satelite
 float chann;
 
-//Creamos objeto LoRa
 RH_RF95 rf95(RFM95_CS, RFM95_INT);
 
-// Inicializar DHT sensor.
 DHT_Unified dht(DHTPIN, DHTTYPE);
-
-//MPU6050 accelgyro;
 
 String Todo; //String a mandar
 
@@ -115,12 +107,108 @@ SoftwareSerial ss(RXPin, TXPin);
 
 uint32_t delayMS;
 
-/* Assign a unique ID to this sensor at the same time */
-Adafruit_HMC5883_Unified mag = Adafruit_HMC5883_Unified(1);
-
 Adafruit_BMP085_Unified bmp = Adafruit_BMP085_Unified(2);
 
 float selectBand(int);
+
+
+void setup() {
+  Serial.begin(115200);
+  ss.begin(GPSBaud);
+  dht.begin();
+
+  /*
+   * Activation Balloon mode: 
+   * For high-altitude balloon purpose that the vertical movement will 
+   * have more effect on the position calculation
+  */
+  ss.println(PMTK_SET_NMEA_886_PMTK_FR_MODE);
+  
+  /*****LoRa init****/
+  pinMode(RFM95_RST, OUTPUT);
+  digitalWrite(RFM95_RST, HIGH);
+  delay(100);
+  // manual reset
+  digitalWrite(RFM95_RST, LOW);
+  delay(10);
+  digitalWrite(RFM95_RST, HIGH);
+  delay(10);
+  
+  while (!rf95.init()) {
+    Serial.println(F("LoRa radio init failed"));
+    while (1);
+  }
+ // setFrequency(Bw125Cr48Sf4096);   //Bw125 CR=4/8 SF12
+
+  chann = selectBand(channel);
+  if (!rf95.setFrequency(chann)) {
+    while (1);
+  }
+
+
+  rf95.setTxPower(23, false); //Set the max transmition power
+  Serial.println("LoRa radio init OK!");
+ 
+  
+  if(!bmp.begin())
+  {
+    Serial.print(F("Ooops, no BMP085 detected ... Check your wiring or I2C ADDR!"));
+    while(1);
+  }
+
+  /***Sensors intialized***/
+  Serial.println(F("CatSat!"));
+  
+}
+
+void loop() {
+  /* Get a new sensor event */ 
+  Todo += id_node;  //Add id to String 
+  Todo += ",";
+  sensors_event_t event;
+  // Get humidity event and print its value.
+  dht.humidity().getEvent(&event);
+  if (isnan(event.relative_humidity)) {
+    Todo += 0;
+    Todo += ","; 
+  }
+  else {
+    Todo += event.relative_humidity;
+    Todo += ",";
+  }
+
+  bmp.getEvent(&event);
+ 
+  if (event.pressure)
+  {
+    Todo += event.pressure;
+    Todo += ",";    
+     
+    float temperature;
+    bmp.getTemperature(&temperature);
+    Todo += temperature;
+    Todo += ","; 
+  }
+  else
+  {
+    Serial.println(F("Sensor error"));
+  }
+  
+  gpsread();
+ 
+  if(gps_flag == 1)
+  {
+    char todoch[Todo.length()+1];
+    Todo.toCharArray(todoch,Todo.length());
+    Serial.println(todoch);
+    rf95.send((uint8_t *)todoch,Todo.length()); 
+  }
+  Todo = "";
+  delay(2000);  
+  gps_flag = 0;
+  
+}
+
 
 void gpsread(void){
   while ((ss.available() > 0) && (gps_flag == 0))
@@ -206,134 +294,6 @@ void gpsread(void){
       }
   
 }
-
-void setup() {
-  Serial.begin(115200);
-  ss.begin(GPSBaud);
-  dht.begin();
-
-  /*
-   * Activation Balloon mode: 
-   * For high-altitude balloon purpose that the vertical movement will 
-   * have more effect on the position calculation
-  */
-  ss.println(PMTK_SET_NMEA_886_PMTK_FR_MODE);
-  
-  /*****LoRa init****/
-  pinMode(RFM95_RST, OUTPUT);
-  digitalWrite(RFM95_RST, HIGH);
-  delay(100);
-  // manual reset
-  digitalWrite(RFM95_RST, LOW);
-  delay(10);
-  digitalWrite(RFM95_RST, HIGH);
-  delay(10);
-  
-  while (!rf95.init()) {
-    Serial.println(F("LoRa radio init failed"));
-    while (1);
-  }
- // setFrequency(Bw125Cr48Sf4096);   //Bw125 CR=4/8 SF12
-
-  chann = selectBand(channel);
-  if (!rf95.setFrequency(chann)) {
-    while (1);
-  }
-
-
-  rf95.setTxPower(23, false); //Set the max transmition power
-  /******************/
-  Serial.println("LoRa radio init OK!");
- 
-  
-  if(!bmp.begin())
-  {
-    Serial.print(F("Ooops, no BMP085 detected ... Check your wiring or I2C ADDR!"));
-    while(1);
-  }
-
-  
-  Serial.println(F("CatSat!"));
-
-    
-  /* Initialise the sensor 
-  if(!mag.begin())
-  {
-    Serial.println(F("Ooops, no HMC5883 detected ... Check your wiring!"));
-    while(1);
-  }
-*/
-  /* Display some basic information on this sensor */
-  /*Uncomment for debbuger*/
-  /*
-  Serial.println(F("Display some basic information on this sensors"));
-  displayHMCDetails();
-  displayBMPDetails();
-  displayDHTDetails();
-  */
-  
-  
-}
-
-void loop() {
-  /* Get a new sensor event */ 
-  Todo += id_node;  //Add id to String 
-  Todo += ",";
-  sensors_event_t event;
-  //Todo += 0;
-  //Todo += ","; 
-  // Get humidity event and print its value.
-  dht.humidity().getEvent(&event);
-  if (isnan(event.relative_humidity)) {
-    Todo += 0;
-    Todo += ","; 
-  }
-  else {
-    Todo += event.relative_humidity;
-    Todo += ",";
-  }
-
-  bmp.getEvent(&event);
- 
-  /* Display the results (barometric pressure is measure in hPa) */
-  if (event.pressure)
-  {
-    /* Display atmospheric pressue in hPa */
-    /*Uncomment for debbuger*/
-    /*
-    Serial.print(F("Pressure:    "));
-    Serial.print(event.pressure);
-    Serial.println(F(" hPa"));
-    */
-    Todo += event.pressure;
-    Todo += ",";    
-     
-    /* First we get the current temperature from the BMP085 */
-    float temperature;
-    bmp.getTemperature(&temperature);
-    Todo += temperature;
-    Todo += ","; 
-  }
-  else
-  {
-    //Serial.println(F("Sensor error"));
-  }
-  
-  gpsread();
- 
-  if(gps_flag == 1)
-  {
-    char todoch[Todo.length()+1];
-    Todo.toCharArray(todoch,Todo.length());
-    Serial.println(todoch);
-    rf95.send((uint8_t *)todoch,Todo.length()); 
-  }
-  Todo = "";
-  delay(2000);  
-  gps_flag = 0;
-  
-}
-
 
 float selectBand(int a)
 {    
