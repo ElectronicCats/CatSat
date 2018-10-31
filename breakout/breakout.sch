@@ -1,4 +1,5 @@
 EESchema Schematic File Version 4
+LIBS:breakout-cache
 EELAYER 26 0
 EELAYER END
 $Descr A4 11693 8268
@@ -13,45 +14,45 @@ Comment2 "Eduardo Contreras"
 Comment3 ""
 Comment4 ""
 $EndDescr
-Text Label 7515 3315 0    60   ~ 0
+Text Label 7860 3355 0    60   ~ 0
 D8
-Text Label 7510 3215 0    60   ~ 0
+Text Label 7855 3255 0    60   ~ 0
 D7
-Text Label 7380 4520 0    60   ~ 0
+Text Label 7815 4510 0    60   ~ 0
 SCK
-Text Label 7385 4620 0    60   ~ 0
+Text Label 7820 4610 0    60   ~ 0
 MISO
-Text Label 7390 4720 0    60   ~ 0
+Text Label 7825 4710 0    60   ~ 0
 MOSI
-Text Label 7390 4820 0    60   ~ 0
+Text Label 7825 4810 0    60   ~ 0
 NSS
-Text Label 7395 4920 0    60   ~ 0
+Text Label 7830 4910 0    60   ~ 0
 RST
 Wire Wire Line
-	7565 4920 7395 4920
+	8000 4910 7830 4910
 Wire Wire Line
-	7565 4820 7390 4820
+	8000 4810 7825 4810
 Wire Wire Line
-	7565 4720 7390 4720
+	8000 4710 7825 4710
 Wire Wire Line
-	7565 4620 7385 4620
+	8000 4610 7820 4610
 Wire Wire Line
-	7565 4520 7380 4520
+	8000 4510 7815 4510
 Wire Wire Line
-	7675 3315 7515 3315
+	8020 3355 7860 3355
 Wire Wire Line
-	7675 3215 7510 3215
+	8020 3255 7855 3255
 Wire Wire Line
-	7215 4420 7565 4420
+	7650 4410 8000 4410
 Wire Wire Line
-	7190 4320 7565 4320
+	7625 4310 8000 4310
 Wire Wire Line
-	7675 3115 7520 3115
+	8020 3155 7865 3155
 Wire Wire Line
-	7675 3015 7520 3015
-Text Label 7520 3015 0    60   ~ 0
+	8020 3055 7865 3055
+Text Label 7865 3055 0    60   ~ 0
 INT0
-Text Label 7520 3115 0    60   ~ 0
+Text Label 7865 3155 0    60   ~ 0
 INT1
 $Comp
 L power:+BATT #PWR01
@@ -111,18 +112,18 @@ Wire Wire Line
 $Comp
 L power:+BATT #PWR04
 U 1 1 579A7C57
-P 7190 4250
-F 0 "#PWR04" H 7190 4100 50  0001 C CNN
-F 1 "+BATT" H 7190 4390 50  0000 C CNN
-F 2 "" H 7190 4250 50  0000 C CNN
-F 3 "" H 7190 4250 50  0000 C CNN
-	1    7190 4250
+P 7625 4240
+F 0 "#PWR04" H 7625 4090 50  0001 C CNN
+F 1 "+BATT" H 7625 4380 50  0000 C CNN
+F 2 "" H 7625 4240 50  0000 C CNN
+F 3 "" H 7625 4240 50  0000 C CNN
+	1    7625 4240
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	7190 4250 7190 4320
+	7625 4240 7625 4310
 Wire Wire Line
-	7215 4420 7215 4505
+	7650 4410 7650 4495
 $Bitmap
 Pos 9720 6850
 Scale 1.000000
@@ -670,12 +671,12 @@ $EndBitmap
 $Comp
 L Connector:Conn_01x04_Male P6
 U 1 1 5BB408FD
-P 7875 3215
-F 0 "P6" H 7848 3095 50  0000 R CNN
-F 1 "Conn_01x04_Male" H 7848 3186 50  0000 R CNN
-F 2 "" H 7875 3215 50  0001 C CNN
-F 3 "~" H 7875 3215 50  0001 C CNN
-	1    7875 3215
+P 8220 3255
+F 0 "P6" H 8193 3135 50  0000 R CNN
+F 1 "Conn_01x04_Male" H 8193 3226 50  0000 R CNN
+F 2 "" H 8220 3255 50  0001 C CNN
+F 3 "~" H 8220 3255 50  0001 C CNN
+	1    8220 3255
 	-1   0    0    1   
 $EndComp
 $Comp
@@ -703,19 +704,19 @@ $EndComp
 $Comp
 L Connector:Conn_01x07_Male P5
 U 1 1 5BB41B6E
-P 7765 4620
-F 0 "P5" H 7738 4550 50  0000 R CNN
-F 1 "Conn_01x07_Male" H 7738 4641 50  0000 R CNN
-F 2 "" H 7765 4620 50  0001 C CNN
-F 3 "~" H 7765 4620 50  0001 C CNN
-	1    7765 4620
+P 8200 4610
+F 0 "P5" H 8173 4540 50  0000 R CNN
+F 1 "Conn_01x07_Male" H 8173 4631 50  0000 R CNN
+F 2 "" H 8200 4610 50  0001 C CNN
+F 3 "~" H 8200 4610 50  0001 C CNN
+	1    8200 4610
 	-1   0    0    1   
 $EndComp
 $Comp
-L power:GND #PWR?
+L power:GND #PWR0101
 U 1 1 5BB41D9B
 P 4220 2650
-F 0 "#PWR?" H 4220 2400 50  0001 C CNN
+F 0 "#PWR0101" H 4220 2400 50  0001 C CNN
 F 1 "GND" H 4225 2477 50  0000 C CNN
 F 2 "" H 4220 2650 50  0001 C CNN
 F 3 "" H 4220 2650 50  0001 C CNN
@@ -723,14 +724,609 @@ F 3 "" H 4220 2650 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L power:GND #PWR?
+L power:GND #PWR0102
 U 1 1 5BB41E0F
-P 7215 4505
-F 0 "#PWR?" H 7215 4255 50  0001 C CNN
-F 1 "GND" H 7220 4332 50  0000 C CNN
-F 2 "" H 7215 4505 50  0001 C CNN
-F 3 "" H 7215 4505 50  0001 C CNN
-	1    7215 4505
+P 7650 4495
+F 0 "#PWR0102" H 7650 4245 50  0001 C CNN
+F 1 "GND" H 7655 4322 50  0000 C CNN
+F 2 "" H 7650 4495 50  0001 C CNN
+F 3 "" H 7650 4495 50  0001 C CNN
+	1    7650 4495
 	1    0    0    -1  
 $EndComp
+$Comp
+L Connector_Generic:Conn_01x01 J1
+U 1 1 5BD900E7
+P 5380 3395
+F 0 "J1" H 5475 3400 50  0000 C CNN
+F 1 "D7" H 5560 3400 50  0000 C CNN
+F 2 "CatSat:Pin" H 5380 3395 50  0001 C CNN
+F 3 "~" H 5380 3395 50  0001 C CNN
+	1    5380 3395
+	0    1    1    0   
+$EndComp
+$Comp
+L Connector_Generic:Conn_01x01 J10
+U 1 1 5BD90370
+P 5490 3390
+F 0 "J10" H 5595 3385 50  0000 C CNN
+F 1 "D7" H 5690 3390 50  0000 C CNN
+F 2 "CatSat:Pin" H 5490 3390 50  0001 C CNN
+F 3 "~" H 5490 3390 50  0001 C CNN
+	1    5490 3390
+	0    1    1    0   
+$EndComp
+Text Label 5325 3155 2    60   ~ 0
+A3
+Wire Wire Line
+	5490 3190 5435 3190
+Wire Wire Line
+	5380 3190 5380 3195
+Wire Wire Line
+	5325 3155 5435 3155
+Wire Wire Line
+	5435 3155 5435 3190
+Connection ~ 5435 3190
+Wire Wire Line
+	5435 3190 5380 3190
+$Comp
+L Connector_Generic:Conn_01x01 J7
+U 1 1 5BD92B23
+P 5690 3380
+F 0 "J7" H 5785 3385 50  0000 C CNN
+F 1 "D7" H 5870 3385 50  0000 C CNN
+F 2 "CatSat:Pin" H 5690 3380 50  0001 C CNN
+F 3 "~" H 5690 3380 50  0001 C CNN
+	1    5690 3380
+	0    1    1    0   
+$EndComp
+$Comp
+L Connector_Generic:Conn_01x01 J5
+U 1 1 5BD92B29
+P 5800 3375
+F 0 "J5" H 5905 3370 50  0000 C CNN
+F 1 "D7" H 6000 3375 50  0000 C CNN
+F 2 "CatSat:Pin" H 5800 3375 50  0001 C CNN
+F 3 "~" H 5800 3375 50  0001 C CNN
+	1    5800 3375
+	0    1    1    0   
+$EndComp
+Text Label 5635 3140 2    60   ~ 0
+A2
+Wire Wire Line
+	5800 3175 5745 3175
+Wire Wire Line
+	5690 3175 5690 3180
+Wire Wire Line
+	5635 3140 5745 3140
+Wire Wire Line
+	5745 3140 5745 3175
+Connection ~ 5745 3175
+Wire Wire Line
+	5745 3175 5690 3175
+$Comp
+L Connector_Generic:Conn_01x01 J6
+U 1 1 5BD93199
+P 5985 3375
+F 0 "J6" H 6080 3380 50  0000 C CNN
+F 1 "D7" H 6165 3380 50  0000 C CNN
+F 2 "CatSat:Pin" H 5985 3375 50  0001 C CNN
+F 3 "~" H 5985 3375 50  0001 C CNN
+	1    5985 3375
+	0    1    1    0   
+$EndComp
+$Comp
+L Connector_Generic:Conn_01x01 J4
+U 1 1 5BD9319F
+P 6095 3370
+F 0 "J4" H 6200 3365 50  0000 C CNN
+F 1 "D7" H 6295 3370 50  0000 C CNN
+F 2 "CatSat:Pin" H 6095 3370 50  0001 C CNN
+F 3 "~" H 6095 3370 50  0001 C CNN
+	1    6095 3370
+	0    1    1    0   
+$EndComp
+Text Label 5930 3135 2    60   ~ 0
+A1
+Wire Wire Line
+	6095 3170 6040 3170
+Wire Wire Line
+	5985 3170 5985 3175
+Wire Wire Line
+	5930 3135 6040 3135
+Wire Wire Line
+	6040 3135 6040 3170
+Connection ~ 6040 3170
+Wire Wire Line
+	6040 3170 5985 3170
+$Comp
+L Connector_Generic:Conn_01x01 J9
+U 1 1 5BD93968
+P 6295 3385
+F 0 "J9" H 6390 3390 50  0000 C CNN
+F 1 "D7" H 6475 3390 50  0000 C CNN
+F 2 "CatSat:Pin" H 6295 3385 50  0001 C CNN
+F 3 "~" H 6295 3385 50  0001 C CNN
+	1    6295 3385
+	0    1    1    0   
+$EndComp
+$Comp
+L Connector_Generic:Conn_01x01 J8
+U 1 1 5BD9396E
+P 6405 3380
+F 0 "J8" H 6510 3375 50  0000 C CNN
+F 1 "D7" H 6605 3380 50  0000 C CNN
+F 2 "CatSat:Pin" H 6405 3380 50  0001 C CNN
+F 3 "~" H 6405 3380 50  0001 C CNN
+	1    6405 3380
+	0    1    1    0   
+$EndComp
+Text Label 6240 3145 2    60   ~ 0
+A0
+Wire Wire Line
+	6405 3180 6350 3180
+Wire Wire Line
+	6295 3180 6295 3185
+Wire Wire Line
+	6240 3145 6350 3145
+Wire Wire Line
+	6350 3145 6350 3180
+Connection ~ 6350 3180
+Wire Wire Line
+	6350 3180 6295 3180
+$Comp
+L Connector_Generic:Conn_01x01 J2
+U 1 1 5BD962E4
+P 7215 3070
+F 0 "J2" H 7310 3075 50  0000 C CNN
+F 1 "D7" H 7395 3075 50  0000 C CNN
+F 2 "CatSat:Pin" H 7215 3070 50  0001 C CNN
+F 3 "~" H 7215 3070 50  0001 C CNN
+	1    7215 3070
+	-1   0    0    1   
+$EndComp
+$Comp
+L Connector_Generic:Conn_01x01 J3
+U 1 1 5BD962EA
+P 7220 3180
+F 0 "J3" H 7325 3175 50  0000 C CNN
+F 1 "D7" H 7420 3180 50  0000 C CNN
+F 2 "CatSat:Pin" H 7220 3180 50  0001 C CNN
+F 3 "~" H 7220 3180 50  0001 C CNN
+	1    7220 3180
+	-1   0    0    1   
+$EndComp
+Text Label 7455 3015 2    60   ~ 0
+INT1
+Wire Wire Line
+	7420 3180 7420 3125
+Wire Wire Line
+	7420 3070 7415 3070
+Wire Wire Line
+	7455 3015 7455 3125
+Wire Wire Line
+	7455 3125 7420 3125
+Connection ~ 7420 3125
+Wire Wire Line
+	7420 3125 7420 3070
+$Comp
+L Connector_Generic:Conn_01x01 J11
+U 1 1 5BD999EE
+P 7205 3435
+F 0 "J11" H 7300 3440 50  0000 C CNN
+F 1 "D7" H 7385 3440 50  0000 C CNN
+F 2 "CatSat:Pin" H 7205 3435 50  0001 C CNN
+F 3 "~" H 7205 3435 50  0001 C CNN
+	1    7205 3435
+	-1   0    0    1   
+$EndComp
+$Comp
+L Connector_Generic:Conn_01x01 J12
+U 1 1 5BD999F4
+P 7210 3545
+F 0 "J12" H 7315 3540 50  0000 C CNN
+F 1 "D7" H 7410 3545 50  0000 C CNN
+F 2 "CatSat:Pin" H 7210 3545 50  0001 C CNN
+F 3 "~" H 7210 3545 50  0001 C CNN
+	1    7210 3545
+	-1   0    0    1   
+$EndComp
+Text Label 7445 3380 2    60   ~ 0
+D7
+Wire Wire Line
+	7410 3545 7410 3490
+Wire Wire Line
+	7410 3435 7405 3435
+Wire Wire Line
+	7445 3380 7445 3490
+Wire Wire Line
+	7445 3490 7410 3490
+Connection ~ 7410 3490
+Wire Wire Line
+	7410 3490 7410 3435
+$Comp
+L Connector_Generic:Conn_01x01 J23
+U 1 1 5BD9A7AB
+P 7220 3755
+F 0 "J23" H 7315 3760 50  0000 C CNN
+F 1 "D7" H 7400 3760 50  0000 C CNN
+F 2 "CatSat:Pin" H 7220 3755 50  0001 C CNN
+F 3 "~" H 7220 3755 50  0001 C CNN
+	1    7220 3755
+	-1   0    0    1   
+$EndComp
+$Comp
+L Connector_Generic:Conn_01x01 J24
+U 1 1 5BD9A7B1
+P 7225 3865
+F 0 "J24" H 7330 3860 50  0000 C CNN
+F 1 "D7" H 7425 3865 50  0000 C CNN
+F 2 "CatSat:Pin" H 7225 3865 50  0001 C CNN
+F 3 "~" H 7225 3865 50  0001 C CNN
+	1    7225 3865
+	-1   0    0    1   
+$EndComp
+Text Label 7460 3700 2    60   ~ 0
+D8
+Wire Wire Line
+	7425 3865 7425 3810
+Wire Wire Line
+	7425 3755 7420 3755
+Wire Wire Line
+	7460 3700 7460 3810
+Wire Wire Line
+	7460 3810 7425 3810
+Connection ~ 7425 3810
+Wire Wire Line
+	7425 3810 7425 3755
+$Comp
+L Connector_Generic:Conn_01x01 J13
+U 1 1 5BD9BA07
+P 3470 3655
+F 0 "J13" H 3565 3660 50  0000 C CNN
+F 1 "D7" H 3650 3660 50  0000 C CNN
+F 2 "CatSat:Pin" H 3470 3655 50  0001 C CNN
+F 3 "~" H 3470 3655 50  0001 C CNN
+	1    3470 3655
+	0    1    1    0   
+$EndComp
+$Comp
+L Connector_Generic:Conn_01x01 J14
+U 1 1 5BD9BA0D
+P 3575 3655
+F 0 "J14" H 3680 3650 50  0000 C CNN
+F 1 "D7" H 3775 3655 50  0000 C CNN
+F 2 "CatSat:Pin" H 3575 3655 50  0001 C CNN
+F 3 "~" H 3575 3655 50  0001 C CNN
+	1    3575 3655
+	0    1    1    0   
+$EndComp
+$Comp
+L Connector_Generic:Conn_01x01 J16
+U 1 1 5BD9D302
+P 3785 3655
+F 0 "J16" H 3890 3650 50  0000 C CNN
+F 1 "D7" H 3985 3655 50  0000 C CNN
+F 2 "CatSat:Pin" H 3785 3655 50  0001 C CNN
+F 3 "~" H 3785 3655 50  0001 C CNN
+	1    3785 3655
+	0    1    1    0   
+$EndComp
+$Comp
+L Connector_Generic:Conn_01x01 J17
+U 1 1 5BD9D38F
+P 3885 3655
+F 0 "J17" H 3990 3650 50  0000 C CNN
+F 1 "D7" H 4085 3655 50  0000 C CNN
+F 2 "CatSat:Pin" H 3885 3655 50  0001 C CNN
+F 3 "~" H 3885 3655 50  0001 C CNN
+	1    3885 3655
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	3885 3455 3885 3355
+Wire Wire Line
+	3470 3355 3470 3455
+$Comp
+L Connector_Generic:Conn_01x01 J15
+U 1 1 5BD9CCE6
+P 3680 3655
+F 0 "J15" H 3785 3650 50  0000 C CNN
+F 1 "D7" H 3880 3655 50  0000 C CNN
+F 2 "CatSat:Pin" H 3680 3655 50  0001 C CNN
+F 3 "~" H 3680 3655 50  0001 C CNN
+	1    3680 3655
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	3575 3455 3575 3355
+Connection ~ 3575 3355
+Wire Wire Line
+	3575 3355 3470 3355
+Wire Wire Line
+	3680 3455 3680 3355
+Wire Wire Line
+	3575 3355 3680 3355
+Connection ~ 3680 3355
+Wire Wire Line
+	3785 3455 3785 3355
+Wire Wire Line
+	3680 3355 3785 3355
+Connection ~ 3785 3355
+Wire Wire Line
+	3785 3355 3885 3355
+Wire Wire Line
+	3420 3340 3420 3355
+Wire Wire Line
+	3420 3355 3470 3355
+Connection ~ 3470 3355
+$Comp
+L power:+BATT #PWR0103
+U 1 1 5BDA715B
+P 3420 3340
+F 0 "#PWR0103" H 3420 3190 50  0001 C CNN
+F 1 "+BATT" H 3420 3480 50  0000 C CNN
+F 2 "" H 3420 3340 50  0000 C CNN
+F 3 "" H 3420 3340 50  0000 C CNN
+	1    3420 3340
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector_Generic:Conn_01x01 J29
+U 1 1 5BDA767A
+P 3875 4195
+F 0 "J29" H 3970 4200 50  0000 C CNN
+F 1 "D7" H 4055 4200 50  0000 C CNN
+F 2 "CatSat:Pin" H 3875 4195 50  0001 C CNN
+F 3 "~" H 3875 4195 50  0001 C CNN
+	1    3875 4195
+	0    -1   -1   0   
+$EndComp
+$Comp
+L Connector_Generic:Conn_01x01 J28
+U 1 1 5BDA7680
+P 3770 4195
+F 0 "J28" H 3875 4190 50  0000 C CNN
+F 1 "D7" H 3970 4195 50  0000 C CNN
+F 2 "CatSat:Pin" H 3770 4195 50  0001 C CNN
+F 3 "~" H 3770 4195 50  0001 C CNN
+	1    3770 4195
+	0    -1   -1   0   
+$EndComp
+$Comp
+L Connector_Generic:Conn_01x01 J26
+U 1 1 5BDA7686
+P 3560 4195
+F 0 "J26" H 3665 4190 50  0000 C CNN
+F 1 "D7" H 3760 4195 50  0000 C CNN
+F 2 "CatSat:Pin" H 3560 4195 50  0001 C CNN
+F 3 "~" H 3560 4195 50  0001 C CNN
+	1    3560 4195
+	0    -1   -1   0   
+$EndComp
+$Comp
+L Connector_Generic:Conn_01x01 J25
+U 1 1 5BDA768C
+P 3460 4195
+F 0 "J25" H 3565 4190 50  0000 C CNN
+F 1 "D7" H 3660 4195 50  0000 C CNN
+F 2 "CatSat:Pin" H 3460 4195 50  0001 C CNN
+F 3 "~" H 3460 4195 50  0001 C CNN
+	1    3460 4195
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	3460 4395 3460 4495
+Wire Wire Line
+	3875 4495 3875 4395
+$Comp
+L Connector_Generic:Conn_01x01 J27
+U 1 1 5BDA7694
+P 3665 4195
+F 0 "J27" H 3770 4190 50  0000 C CNN
+F 1 "D7" H 3865 4195 50  0000 C CNN
+F 2 "CatSat:Pin" H 3665 4195 50  0001 C CNN
+F 3 "~" H 3665 4195 50  0001 C CNN
+	1    3665 4195
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	3770 4395 3770 4495
+Connection ~ 3770 4495
+Wire Wire Line
+	3770 4495 3875 4495
+Wire Wire Line
+	3665 4395 3665 4495
+Wire Wire Line
+	3770 4495 3665 4495
+Connection ~ 3665 4495
+Wire Wire Line
+	3560 4395 3560 4495
+Wire Wire Line
+	3665 4495 3560 4495
+Connection ~ 3560 4495
+Wire Wire Line
+	3560 4495 3460 4495
+Wire Wire Line
+	3925 4510 3925 4495
+Wire Wire Line
+	3925 4495 3875 4495
+Connection ~ 3875 4495
+$Comp
+L power:GND #PWR0104
+U 1 1 5BDAD9E5
+P 3925 4510
+F 0 "#PWR0104" H 3925 4260 50  0001 C CNN
+F 1 "GND" H 3930 4337 50  0000 C CNN
+F 2 "" H 3925 4510 50  0001 C CNN
+F 3 "" H 3925 4510 50  0001 C CNN
+	1    3925 4510
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector_Generic:Conn_01x01 J18
+U 1 1 5BDB26E9
+P 4315 3740
+F 0 "J18" H 4410 3745 50  0000 C CNN
+F 1 "D7" H 4495 3745 50  0000 C CNN
+F 2 "CatSat:Pin" H 4315 3740 50  0001 C CNN
+F 3 "~" H 4315 3740 50  0001 C CNN
+	1    4315 3740
+	0    1    1    0   
+$EndComp
+$Comp
+L Connector_Generic:Conn_01x01 J19
+U 1 1 5BDB26EF
+P 4420 3740
+F 0 "J19" H 4525 3735 50  0000 C CNN
+F 1 "D7" H 4620 3740 50  0000 C CNN
+F 2 "CatSat:Pin" H 4420 3740 50  0001 C CNN
+F 3 "~" H 4420 3740 50  0001 C CNN
+	1    4420 3740
+	0    1    1    0   
+$EndComp
+$Comp
+L Connector_Generic:Conn_01x01 J21
+U 1 1 5BDB26F5
+P 4630 3740
+F 0 "J21" H 4735 3735 50  0000 C CNN
+F 1 "D7" H 4830 3740 50  0000 C CNN
+F 2 "CatSat:Pin" H 4630 3740 50  0001 C CNN
+F 3 "~" H 4630 3740 50  0001 C CNN
+	1    4630 3740
+	0    1    1    0   
+$EndComp
+$Comp
+L Connector_Generic:Conn_01x01 J22
+U 1 1 5BDB26FB
+P 4730 3740
+F 0 "J22" H 4835 3735 50  0000 C CNN
+F 1 "D7" H 4930 3740 50  0000 C CNN
+F 2 "CatSat:Pin" H 4730 3740 50  0001 C CNN
+F 3 "~" H 4730 3740 50  0001 C CNN
+	1    4730 3740
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	4730 3540 4730 3440
+Wire Wire Line
+	4315 3440 4315 3540
+$Comp
+L Connector_Generic:Conn_01x01 J20
+U 1 1 5BDB2703
+P 4525 3740
+F 0 "J20" H 4630 3735 50  0000 C CNN
+F 1 "D7" H 4725 3740 50  0000 C CNN
+F 2 "CatSat:Pin" H 4525 3740 50  0001 C CNN
+F 3 "~" H 4525 3740 50  0001 C CNN
+	1    4525 3740
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	4420 3540 4420 3440
+Connection ~ 4420 3440
+Wire Wire Line
+	4420 3440 4315 3440
+Wire Wire Line
+	4525 3540 4525 3440
+Wire Wire Line
+	4420 3440 4525 3440
+Connection ~ 4525 3440
+Wire Wire Line
+	4630 3540 4630 3440
+Wire Wire Line
+	4525 3440 4630 3440
+Connection ~ 4630 3440
+Wire Wire Line
+	4630 3440 4730 3440
+Wire Wire Line
+	4265 3425 4265 3440
+Wire Wire Line
+	4265 3440 4315 3440
+Connection ~ 4315 3440
+$Comp
+L Connector_Generic:Conn_01x01 J30
+U 1 1 5BDB271C
+P 4340 4375
+F 0 "J30" H 4435 4380 50  0000 C CNN
+F 1 "D7" H 4520 4380 50  0000 C CNN
+F 2 "CatSat:Pin" H 4340 4375 50  0001 C CNN
+F 3 "~" H 4340 4375 50  0001 C CNN
+	1    4340 4375
+	0    1    1    0   
+$EndComp
+$Comp
+L Connector_Generic:Conn_01x01 J31
+U 1 1 5BDB2722
+P 4445 4375
+F 0 "J31" H 4550 4370 50  0000 C CNN
+F 1 "D7" H 4645 4375 50  0000 C CNN
+F 2 "CatSat:Pin" H 4445 4375 50  0001 C CNN
+F 3 "~" H 4445 4375 50  0001 C CNN
+	1    4445 4375
+	0    1    1    0   
+$EndComp
+$Comp
+L Connector_Generic:Conn_01x01 J33
+U 1 1 5BDB2728
+P 4655 4375
+F 0 "J33" H 4760 4370 50  0000 C CNN
+F 1 "D7" H 4855 4375 50  0000 C CNN
+F 2 "CatSat:Pin" H 4655 4375 50  0001 C CNN
+F 3 "~" H 4655 4375 50  0001 C CNN
+	1    4655 4375
+	0    1    1    0   
+$EndComp
+$Comp
+L Connector_Generic:Conn_01x01 J34
+U 1 1 5BDB272E
+P 4755 4375
+F 0 "J34" H 4860 4370 50  0000 C CNN
+F 1 "D7" H 4955 4375 50  0000 C CNN
+F 2 "CatSat:Pin" H 4755 4375 50  0001 C CNN
+F 3 "~" H 4755 4375 50  0001 C CNN
+	1    4755 4375
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	4755 4175 4755 4075
+Wire Wire Line
+	4340 4075 4340 4175
+$Comp
+L Connector_Generic:Conn_01x01 J32
+U 1 1 5BDB2736
+P 4550 4375
+F 0 "J32" H 4655 4370 50  0000 C CNN
+F 1 "D7" H 4750 4375 50  0000 C CNN
+F 2 "CatSat:Pin" H 4550 4375 50  0001 C CNN
+F 3 "~" H 4550 4375 50  0001 C CNN
+	1    4550 4375
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	4445 4175 4445 4075
+Connection ~ 4445 4075
+Wire Wire Line
+	4445 4075 4340 4075
+Wire Wire Line
+	4550 4175 4550 4075
+Wire Wire Line
+	4445 4075 4550 4075
+Connection ~ 4550 4075
+Wire Wire Line
+	4655 4175 4655 4075
+Wire Wire Line
+	4550 4075 4655 4075
+Connection ~ 4655 4075
+Wire Wire Line
+	4655 4075 4755 4075
+Wire Wire Line
+	4290 4060 4290 4075
+Wire Wire Line
+	4290 4075 4340 4075
+Connection ~ 4340 4075
+Text Label 4265 3425 2    60   ~ 0
+SCL
+Text Label 4290 4060 2    60   ~ 0
+SDA
 $EndSCHEMATC
