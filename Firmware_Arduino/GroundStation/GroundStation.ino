@@ -110,14 +110,16 @@ void loop()
     uint8_t len = sizeof(buf);
     
     if (rf95.recv(buf, &len))
-    {
+    { 
+      // String buff = (char*)buf;
+       //Serial.println(buff);
       String buff = (char*)buf;
       buff += ",";
-      buff += rf95.lastRssi();
-//      Serial.println(rf95.lastRssi(), DEC);  
+      buff += String(rf95.lastRssi());
+       //Serial.println(rf95.lastRssi(), DEC);  
        if(buff.startsWith(ID))
         {
-          Serial.println((char*)buf);
+          Serial.println(buff);
           }
       }
     else
@@ -172,4 +174,3 @@ float selectBand(int a)
   }
   
  }
-
