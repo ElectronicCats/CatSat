@@ -56,9 +56,6 @@ Distributed as-is; no warranty is given.
 Library I2CDev and MPU6050
 https://github.com/jrowberg/i2cdevlib
 
-Library TinyGPS++
-https://github.com/mikalhart/TinyGPSPlus
-
 Library LoRa Radio
 http://www.airspayce.com/mikem/arduino/RadioHead/index.html
 
@@ -70,7 +67,7 @@ http://www.airspayce.com/mikem/arduino/RadioHead/index.html
 #include <SoftwareSerial.h>
 #include <I2Cdev.h>
 
-#include <TinyGPS++.h>
+#include <NMEAGPS.h>
 
 #include <MPU6050.h>
 
@@ -118,7 +115,7 @@ int16_t gx, gy, gz;
 
 String Todo; //String a mandar
 
-TinyGPSPlus gps;
+NMEAGPS gps;
 static const int RXPin = 5, TXPin = 6;
 static const uint32_t GPSBaud = 9600;
 int gps_flag = 0;
@@ -206,21 +203,19 @@ void displayDHTDetails(void)
 
 void gpsread(void){
   
-  // 
-  while ((ss.available() > 0) && (gps_flag == 0))
-    if (gps.encode(ss.read()))
+  while ((ss.available() > 0))
     {
+    gps_fix fix = gps.read();
      Serial.print(F("Location: ")); 
-      if (gps.location.isValid())
+      if (fix.valid.location)
       { 
-        Todo += String(gps.location.lat(), 6);
+        Todo += String(fix.latitude(), 6);
         Todo += ",";
-        Todo += String(gps.location.lng(), 6);
+        Todo += String(fix.longitude(), 6);
         Todo += "\n";
-        Serial.print(gps.location.lat(), 6);
+        Serial.print(fix.latitude(), 6);
         Serial.print(F(","));
-        Serial.print(gps.location.lng(), 6);
-        gps_flag = 1;
+        Serial.print(fix.longitude(), 6);
       }
       else
       { 
@@ -233,13 +228,13 @@ void gpsread(void){
       }
 
       Serial.print(F("  Date/Time: "));
-      if (gps.date.isValid())
+      if (fix.valid.date)
       {
-        Serial.print(gps.date.month());
+        Serial.print(fix.dateTime.month);
         Serial.print(F("/"));
-        Serial.print(gps.date.day());
+        Serial.print(fix.dateTime.day);
         Serial.print(F("/"));
-        Serial.print(gps.date.year());
+        Serial.print(fix.dateTime.year);
       }
       else
       {
@@ -247,19 +242,17 @@ void gpsread(void){
       }
 
       Serial.print(F(""));
-      if (gps.time.isValid())
+      if (fix.valid.date)
       {
-        if (gps.time.hour() < 10) Serial.print(F("0"));
-        Serial.print(gps.time.hour());
+        if (fix.dateTime.hours < 10) Serial.print(F("0"));
+        Serial.print(fix.dateTime.hours);
         Serial.print(F(":"));
-      if (gps.time.minute() < 10) Serial.print(F("0"));
-        Serial.print(gps.time.minute());
+      if (fix.dateTime.minutes < 10) Serial.print(F("0"));
+        Serial.print(fix.dateTime.minutes);
         Serial.print(F(":"));
-      if (gps.time.second() < 10) Serial.print(F("0"));
-        Serial.print(gps.time.second());
+      if (fix.dateTime.seconds < 10) Serial.print(F("0"));
+        Serial.print(fix.dateTime.seconds);
         Serial.print(F("."));
-      if (gps.time.centisecond() < 10) Serial.print(F("0"));
-        Serial.print(gps.time.centisecond());
       }
       else
       {
@@ -268,13 +261,6 @@ void gpsread(void){
 
       Serial.println(); 
      }
-      
-
-      if (millis() > 5000 && gps.charsProcessed() < 10)
-      {
-        Serial.println(F("No GPS detected: check wiring."));
-        while(true);
-      }
   
 }
 
