@@ -132,77 +132,6 @@ Adafruit_HMC5883_Unified mag = Adafruit_HMC5883_Unified(1);
 
 Adafruit_BMP085_Unified bmp = Adafruit_BMP085_Unified(2);
 
-
-/*Uncomment for debbuger*/
-/*
-void displayHMCDetails(void)
-{
-  sensor_t sensor;
-  mag.getSensor(&sensor);
-  Serial.println("------------------------------------");
-  Serial.print  (F("Sensor:       ")); Serial.println(sensor.name);
-  Serial.print  (F("Driver Ver:   ")); Serial.println(sensor.version);
-  Serial.print  (F("Unique ID:    ")); Serial.println(sensor.sensor_id);
-  Serial.print  (F("Max Value:    ")); Serial.print(sensor.max_value); Serial.println(F(" uT"));
-  Serial.print  (F("Min Value:    ")); Serial.print(sensor.min_value); Serial.println(F(" uT"));
-  Serial.print  (F("Resolution:   ")); Serial.print(sensor.resolution); Serial.println(F(" uT"));  
-  Serial.println(F("------------------------------------"));
-  Serial.println(F(""));
-  delay(500);
-}
-
-void displayBMPDetails(void)
-{
-  sensor_t sensor;
-  bmp.getSensor(&sensor);
-  Serial.println(F("------------------------------------"));
-  Serial.print  (F("Sensor:       ")); Serial.println(sensor.name);
-  Serial.print  (F("Driver Ver:   ")); Serial.println(sensor.version);
-  Serial.print  (F("Unique ID:    ")); Serial.println(sensor.sensor_id);
-  Serial.print  (F("Max Value:    ")); Serial.print(sensor.max_value); Serial.println(F(" hPa"));
-  Serial.print  (F("Min Value:    ")); Serial.print(sensor.min_value); Serial.println(F(" hPa"));
-  Serial.print  (F("Resolution:   ")); Serial.print(sensor.resolution); Serial.println(F(" hPa"));  
-  Serial.println(F("------------------------------------"));
-  Serial.println(F(""));
-  delay(500);
-}
-
-void displayDHTDetails(void)
-{
-  // Print temperature sensor details.
-  sensor_t sensor;
-  dht.temperature().getSensor(&sensor);
-  Serial.println(F("------------------------------------"));
-  Serial.println(F("Temperature"));
-  Serial.print  (F("Sensor:       ")); Serial.println(sensor.name);
-  Serial.print  (F("Driver Ver:   ")); Serial.println(sensor.version);
-  Serial.print  (F("Unique ID:    ")); Serial.println(sensor.sensor_id);
-  Serial.print  (F("Max Value:    ")); Serial.print(sensor.max_value); Serial.println(F(" *C"));
-  Serial.print  (F("Min Value:    ")); Serial.print(sensor.min_value); Serial.println(F(" *C"));
-  Serial.print  (F("Resolution:   ")); Serial.print(sensor.resolution); Serial.println(F(" *C"));  
-  Serial.println(F("------------------------------------"));
-  // Print humidity sensor details.
-  dht.humidity().getSensor(&sensor);
-  Serial.println(F("------------------------------------"));
-  Serial.println(F("Humidity"));
-  Serial.print  (F("Sensor:       ")); Serial.println(sensor.name);
-  Serial.print  (F("Driver Ver:   ")); Serial.println(sensor.version);
-  Serial.print  (F("Unique ID:    ")); Serial.println(sensor.sensor_id);
-  Serial.print  (F("Max Value:    ")); Serial.print(sensor.max_value); Serial.println(F("%"));
-  Serial.print  (F("Min Value:    ")); Serial.print(sensor.min_value); Serial.println(F("%"));
-  Serial.print  (F("Resolution:   ")); Serial.print(sensor.resolution); Serial.println(F("%"));  
-  Serial.println(F("------------------------------------"));
-   // verify connection
-  Serial.println(F("------------------------------------")); 
-  Serial.println(F("Position"));
-  Serial.println(F("Testing device connections..."));
-  Serial.println(accelgyro.testConnection() ? "MPU6050 connection successful" : "MPU6050 connection failed");
-  Serial.println("------------------------------------"); 
-  // Set delay between sensor readings based on sensor details.
-  delayMS = sensor.min_delay / 1000;
-}
-*/
-
 void enviarInfo(String outgoing) {
   LoRa.beginPacket();                   // start packet
   LoRa.print(outgoing);                 // add payload
@@ -322,17 +251,8 @@ void setup() {
     Serial.println(F("Ooops, no HMC5883 detected ... Check your wiring!"));
     while(1);
   }
-
-  /* Display some basic information on this sensor */
-  /*Uncomment for debbuger*/
-  /*
-  Serial.println(F("Display some basic information on this sensors"));
-  displayHMCDetails();
-  displayBMPDetails();
-  displayDHTDetails();
-  */
   
-  //Serial.println(F("CatSat!"));
+  Serial.println(F("CatSat Ready!"));
   
 }
 
