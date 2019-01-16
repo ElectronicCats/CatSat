@@ -287,6 +287,8 @@ void setup() {
   ss.println(PMTK_SET_NMEA_886_PMTK_FR_MODE);
   
     /*****LoRa init****/
+   //Re-write pins CS, reset, y IRQ 
+  LoRa.setPins(RFM95_CS, RFM95_RST, RFM95_INT); // CS, reset, int pin
 
   if (!LoRa.begin(selectBand(channel))) {           // initialize ratio at 915 MHz
     Serial.println("LoRa init failed. Check your connections.");
