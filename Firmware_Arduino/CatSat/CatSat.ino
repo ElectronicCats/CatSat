@@ -56,12 +56,12 @@ Distributed as-is; no warranty is given.
 Library I2CDev and MPU6050
 https://github.com/jrowberg/i2cdevlib
 
-Library LoRa Radio
-http://www.airspayce.com/mikem/arduino/RadioHead/index.html
+Library Arduino LoRa
+https://github.com/sandeepmistry/arduino-LoRa
+
 
 */
-#include <SPI.h>
-#include <RH_RF95.h>
+#include <LoRa.h>
 
 #include <Wire.h>
 #include <SoftwareSerial.h>
@@ -99,10 +99,12 @@ String id_node= "A1";
  *Selecciona un canal entre 0 y 12 este debe coincidir *
  *con el canal de tu satelite                          *
  *******************************************************/
-int channel = 12;    
+int channel = 12;   
 
-//Creamos objeto LoRa
-RH_RF95 rf95(RFM95_CS, RFM95_INT);
+ 
+byte msgCount = 0;            // count of outgoing messages
+byte localAddress = 0xBB;     // address of this device
+byte destination = 0xFF;      // destination to send to
 
 // Inicializar DHT sensor.
 DHT_Unified dht(DHTPIN, DHTTYPE);
@@ -201,9 +203,17 @@ void displayDHTDetails(void)
 }
 */
 
+void enviarInfo(String outgoing) {
+  LoRa.beginPacket();                   // start packet
+  LoRa.print(outgoing);                 // add payload
+  LoRa.endPacket();                     // finish packet and send it
+  msgCount++;                           // increment message ID
+  Serial.println("Dato enviado");
+}
+
 void gpsread(void){
   
-  while ((ss.available() > 0))
+  while ((ss.available() > 0) && (gps_flag == 0))
     {
     gps_fix fix = gps.read();
      Serial.print(F("Location: ")); 
@@ -216,6 +226,7 @@ void gpsread(void){
         Serial.print(fix.latitude(), 6);
         Serial.print(F(","));
         Serial.print(fix.longitude(), 6);
+        gps_flag = 1;
       }
       else
       { 
@@ -275,30 +286,16 @@ void setup() {
   */
   ss.println(PMTK_SET_NMEA_886_PMTK_FR_MODE);
   
-  /*****LoRa init****/
-  pinMode(RFM95_RST, OUTPUT);
-  digitalWrite(RFM95_RST, HIGH);
-  delay(100);
-  // manual reset
-  digitalWrite(RFM95_RST, LOW);
-  delay(10);
-  digitalWrite(RFM95_RST, HIGH);
-  delay(10);
-  
-  while (!rf95.init()) {
-    Serial.println(F("LoRa radio init failed"));
-    while (1);
+    /*****LoRa init****/
+
+  if (!LoRa.begin(selectBand(channel))) {           // initialize ratio at 915 MHz
+    Serial.println("LoRa init failed. Check your connections.");
+    while (true);                       // if failed, do nothing
   }
-  Serial.println("LoRa radio init OK!");
- 
-  // Defaults after init are 915.0MHz, modulation GFSK_Rb250Fd250, +13dbM
-  float chann = selectBand(channel);
-  if (!rf95.setFrequency(chann)) {
-    Serial.println(F("setFrequency failed"));
-    while (1);
-    }
-    
-  rf95.setTxPower(23, false); //Set the max transmition power
+
+  LoRa.setTxPower(17); //Set the max transmition power
+  LoRa.setSpreadingFactor(10); //Change the SF to get longer distances
+
   /******************/
  
   /* Initialise the sensor */
@@ -511,10 +508,8 @@ void loop() {
  
   if(gps_flag == 1)
   {
-    char todoch[Todo.length()+1];
-    Todo.toCharArray(todoch,Todo.length());
-    Serial.println(todoch);
-    rf95.send((uint8_t *)todoch,Todo.length());   
+    Serial.println(Todo);
+    enviarInfo(Todo);   
   }
   Todo = "";
   delay(1000);  
