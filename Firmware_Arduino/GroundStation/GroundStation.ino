@@ -57,7 +57,8 @@ http://www.airspayce.com/mikem/arduino/RadioHead/index.html
 **********************************************************/
 
 #include <SPI.h>
-#include <RH_RF95.h>
+#include <LoRa.h>
+
 
 /*******************************************************  
  *Selecciona un canal entre 0 y 12 este debe coincidir *
@@ -67,111 +68,96 @@ int channel = 12;
 
 String ID = "A1";
 
-float chann;
 String buff;
 
-RH_RF95 rf95(10, 2);
+#define RFM95_CS 10 
+#define RFM95_RST 9
+#define RFM95_INT 2
  
-float selectBand(int);
+long selectBand(int);
  
 void setup() 
 {     
-  pinMode(9, OUTPUT);
-  digitalWrite(9, HIGH);
- 
-  while (!Serial);
   Serial.begin(9600);
-  delay(100);
+  while (!Serial);
+
+  Serial.println("LoRa Receiver");
   
-  // manual reset
-  digitalWrite(9, LOW);
-  delay(10);
-  digitalWrite(9, HIGH);
-  delay(10);
- 
-  while (!rf95.init()) {
-    Serial.println("LoRa radio init failed");
+   //Re-write pins CS, reset, y IRQ 
+  LoRa.setPins(RFM95_CS, RFM95_RST, RFM95_INT); // CS, reset, int pin
+
+  if (!LoRa.begin(selectBand(channel))) {
+    Serial.println("Starting LoRa failed!");
     while (1);
   }
-  chann = selectBand(channel);
-  if (!rf95.setFrequency(chann)) {
-    while (1);
-  }
-  rf95.setTxPower(23, false);
+  LoRa.setTxPower(17); //Set the max transmition power
+  LoRa.setSpreadingFactor(10); //Change the SF to get longer distances
 }
  
 void loop()
 {
-  
-  if (rf95.available())
-  {
-    //Recibio mensaje completo  
-    uint8_t buf[RH_RF95_MAX_MESSAGE_LEN];
-    uint8_t len = sizeof(buf);
-    
-    if (rf95.recv(buf, &len))
-    { 
-      // String buff = (char*)buf;
-       //Serial.println(buff);
-      String buff = (char*)buf;
-      buff += ",";
-      buff += String(rf95.lastRssi());
-    // Serial.println(rf95.lastRssi(), DEC);  
-       if(buff.startsWith(ID))
-        {
-          Serial.println(buff);
-          }
-      }
-    else
-      {
-      Serial.println(F("Receive failed"));
-       }
+  int packetSize = LoRa.parsePacket();
+  if (packetSize) {
+    digitalWrite(14,HIGH);
+    // read packet
+    while (LoRa.available()) {
+      //Serial.print(LoRa.available());
+      buff+=(char)LoRa.read();
+      //Serial.write(LoRa.read());
+    }
+    buff+=",";
+    buff+=String(LoRa.packetRssi());
+   if(buff.startsWith(ID)){
+    Serial.println(buff);
+        }
+    buff="";
+
+    digitalWrite(14,LOW);
   }
 }
 
-float selectBand(int a)
+long selectBand(int a)
 {    
   switch(a){ 
     case 0:
-    return 903.08;
+    return 903080000; //903.08Mhz
   break;
     case 1:
-    return 905.24;
+    return 905240000; //905.24
   break;
     case 2:
-    return 907.40;
+    return 907400000; //907.40
   break;
     case 3:
-    return 909.56;
+    return 909560000; //909.56
   break;
     case 4:
-    return 911.72;
+    return 911720000; //911.72
   break;
     case 5:
-    return 913.88;
+    return 913880000; //913.88
   break;
     case 6:
-    return 916.04;
+    return 916040000; //916.04
   break;
     case 7:
-    return 918.20;
+    return 918200000; // 918.20
   break;
     case 8:
-    return 920.36;
+    return 920360000; //920.36
   break;
     case 9:
-    return 922.52;
+    return 922520000; //922.52
   break;
     case 10:
-    return 924.68;
+    return 924680000; //924.68
   break;
     case 11:
-    return 926.84;
+    return 926840000; //926.84
   break;
     case 12:
-    return 915;
+    return 915000000; //915
   break;
   }
-  
- }
+}
 
