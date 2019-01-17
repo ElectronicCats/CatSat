@@ -65,58 +65,82 @@ http://www.airspayce.com/mikem/arduino/RadioHead/index.html
 ************************************************************
 *    IMPORTANTE CAMBIAR id_node DEPENDIENDO TU CANSAT      *
 ************************************************************/
-#include <SPI.h>
-#include <RH_RF95.h>
+#include <LoRa.h>
 
 #include <Wire.h>
 #include <SoftwareSerial.h>
 #include <I2Cdev.h>
 
-#include <TinyGPS++.h>
+#include <NMEAGPS.h>
+
+#include <MPU6050.h>
 
 #include <Adafruit_Sensor.h>
+#include <Adafruit_HMC5883_U.h>
 #include <Adafruit_BMP085_U.h>
 #include <DHT_U.h>
 
-#define DHTPIN 6
-#define DHTTYPE DHT22   
+#define DHTPIN 6 // Pin digital para DHT22
+#define DHTTYPE DHT22   // DHT 22  (AM2302)
 
 #define RFM95_CS 10 
 #define RFM95_RST 9
 #define RFM95_INT 2
-#define RF95_FREQ 915.0
+#define RF95_FREQ 915.0 //usados creando el objeto
 
+//Command activation Balloon mode
 #define PMTK_SET_NMEA_886_PMTK_FR_MODE  "$PMTK001,886,3*36"
 
-String id_node= "A1"; //CAMBIAR ID DE NODO
-int channel = 12;      //Cambiar canal de tu satelite
-float chann;
+float selectBand(int);
 
-RH_RF95 rf95(RFM95_CS, RFM95_INT);
+/************************************************************
+*    IMPORTANTE CAMBIAR id_node DEPENDIENDO TU CANSAT      *
+************************************************************/
+
+String id_node= "A1"; 
+
+
+/*******************************************************  
+ *Selecciona un canal entre 0 y 12 este debe coincidir *
+ *con el canal de tu satelite                          *
+ *******************************************************/
+int channel = 12;   
+
+byte msgCount = 0;            // count of outgoing messages
+
+
+float chann;
 
 DHT_Unified dht(DHTPIN, DHTTYPE);
 
+MPU6050 accelgyro;
+// #### Variables de Aceleración y Giroscopio
+// #### Accel and Gyro Vars
+int16_t ax, ay, az;
+int16_t gx, gy, gz;
+
 String Todo; //String a mandar
 
-TinyGPSPlus gps;
+NMEAGPS gps;
 static const int RXPin = 5, TXPin = 6;
 static const uint32_t GPSBaud = 9600;
 int gps_flag = 0;
 
 SoftwareSerial ss(RXPin, TXPin);
+//#define ss Serial
 
 uint32_t delayMS;
 
-Adafruit_BMP085_Unified bmp = Adafruit_BMP085_Unified(2);
+/* Assign a unique ID to this sensor at the same time */
+Adafruit_HMC5883_Unified mag = Adafruit_HMC5883_Unified(1);
 
-float selectBand(int);
+Adafruit_BMP085_Unified bmp = Adafruit_BMP085_Unified(2);
 
 
 void setup() {
-  Serial.begin(115200);
+ Serial.begin(115200);
   ss.begin(GPSBaud);
   dht.begin();
-
   /*
    * Activation Balloon mode: 
    * For high-altitude balloon purpose that the vertical movement will 
@@ -124,40 +148,44 @@ void setup() {
   */
   ss.println(PMTK_SET_NMEA_886_PMTK_FR_MODE);
   
-  /*****LoRa init****/
-  pinMode(RFM95_RST, OUTPUT);
-  digitalWrite(RFM95_RST, HIGH);
-  delay(100);
-  // manual reset
-  digitalWrite(RFM95_RST, LOW);
-  delay(10);
-  digitalWrite(RFM95_RST, HIGH);
-  delay(10);
-  
-  while (!rf95.init()) {
-    Serial.println(F("LoRa radio init failed"));
-    while (1);
-  }
- // setFrequency(Bw125Cr48Sf4096);   //Bw125 CR=4/8 SF12
+    /*****LoRa init****/
+   //Re-write pins CS, reset, y IRQ 
+  LoRa.setPins(RFM95_CS, RFM95_RST, RFM95_INT); // CS, reset, int pin
 
-  chann = selectBand(channel);
-  if (!rf95.setFrequency(chann)) {
-    while (1);
+  if (!LoRa.begin(selectBand(channel))) {           // initialize ratio at 915 MHz
+    Serial.println("LoRa init failed. Check your connections.");
+    while (true);                       // if failed, do nothing
   }
 
+  LoRa.setTxPower(17); //Set the max transmition power
+  LoRa.setSpreadingFactor(10); //Change the SF to get longer distances
 
-  rf95.setTxPower(23, false); //Set the max transmition power
-  Serial.println("LoRa radio init OK!");
+  /******************/
  
-  
+  /* Initialise the sensor */
   if(!bmp.begin())
   {
+    /* There was a problem detecting the BMP085 ... check your connections */
     Serial.print(F("Ooops, no BMP085 detected ... Check your wiring or I2C ADDR!"));
     while(1);
   }
+  
+    accelgyro.initialize();  /// Initialize MPU
+ 
+    accelgyro.setI2CMasterModeEnabled(false);
+    accelgyro.setI2CBypassEnabled(true) ;
+    accelgyro.setSleepEnabled(false);
 
-  /***Sensors intialized***/
-  Serial.println(F("CatSat!"));
+    
+  /* Initialise the sensor */
+  if(!mag.begin())
+  {
+    /* There was a problem detecting the HMC5883 ... check your connections */
+    Serial.println(F("Ooops, no HMC5883 detected ... Check your wiring!"));
+    while(1);
+  }
+  
+  Serial.println(F("CatSat Ready!"));
   
 }
 
@@ -198,10 +226,8 @@ void loop() {
  
   if(gps_flag == 1)
   {
-    char todoch[Todo.length()+1];
-    Todo.toCharArray(todoch,Todo.length());
-    Serial.println(todoch);
-    rf95.send((uint8_t *)todoch,Todo.length()); 
+    Serial.println(Todo);
+    enviarInfo(Todo);   
   }
   Todo = "";
   delay(2000);  
@@ -209,38 +235,34 @@ void loop() {
   
 }
 
+void enviarInfo(String outgoing) {
+  LoRa.beginPacket();                   // start packet
+  LoRa.print(outgoing);                 // add payload
+  LoRa.endPacket();                     // finish packet and send it
+  msgCount++;                           // increment message ID
+  Serial.println("Dato enviado");
+}
+
 
 void gpsread(void){
+  
   while ((ss.available() > 0) && (gps_flag == 0))
-    if (gps.encode(ss.read()))
     {
+    gps_fix fix = gps.read();
      Serial.print(F("Location: ")); 
-      if (gps.location.isValid())
+      if (fix.valid.location)
       { 
-        Todo += String(gps.location.lat(), 6);
+        Todo += String(fix.latitude(), 6);
         Todo += ",";
-        Todo += String(gps.location.lng(), 6);
-        Todo += ",";
-        Todo += String(gps.altitude.meters(), 6);
-        Todo += ",";
-        Todo += String(gps.speed.mps(), 6);
+        Todo += String(fix.longitude(), 6);
         Todo += "\n";
-        Serial.print(gps.location.lat(), 6);
+        Serial.print(fix.latitude(), 6);
         Serial.print(F(","));
-        Serial.print(gps.location.lng(), 6);
-        Serial.print(F(","));
-        Serial.print(gps.altitude.meters(), 6);
-        Serial.print(F(","));
-        Serial.print(gps.speed.mps(), 6);
-        
+        Serial.print(fix.longitude(), 6);
         gps_flag = 1;
       }
       else
       { 
-        Todo += "0";
-        Todo += ",";
-        Todo += "0";
-        Todo += ",";
         Todo += "0";
         Todo += ",";
         Todo += "0";
@@ -250,13 +272,13 @@ void gpsread(void){
       }
 
       Serial.print(F("  Date/Time: "));
-      if (gps.date.isValid())
+      if (fix.valid.date)
       {
-        Serial.print(gps.date.month());
+        Serial.print(fix.dateTime.month);
         Serial.print(F("/"));
-        Serial.print(gps.date.day());
+        Serial.print(fix.dateTime.day);
         Serial.print(F("/"));
-        Serial.print(gps.date.year());
+        Serial.print(fix.dateTime.year);
       }
       else
       {
@@ -264,19 +286,17 @@ void gpsread(void){
       }
 
       Serial.print(F(""));
-      if (gps.time.isValid())
+      if (fix.valid.date)
       {
-        if (gps.time.hour() < 10) Serial.print(F("0"));
-        Serial.print(gps.time.hour());
+        if (fix.dateTime.hours < 10) Serial.print(F("0"));
+        Serial.print(fix.dateTime.hours);
         Serial.print(F(":"));
-      if (gps.time.minute() < 10) Serial.print(F("0"));
-        Serial.print(gps.time.minute());
+      if (fix.dateTime.minutes < 10) Serial.print(F("0"));
+        Serial.print(fix.dateTime.minutes);
         Serial.print(F(":"));
-      if (gps.time.second() < 10) Serial.print(F("0"));
-        Serial.print(gps.time.second());
+      if (fix.dateTime.seconds < 10) Serial.print(F("0"));
+        Serial.print(fix.dateTime.seconds);
         Serial.print(F("."));
-      if (gps.time.centisecond() < 10) Serial.print(F("0"));
-        Serial.print(gps.time.centisecond());
       }
       else
       {
@@ -285,18 +305,11 @@ void gpsread(void){
 
       Serial.println(); 
      }
-      
-
-      if (millis() > 5000 && gps.charsProcessed() < 10)
-      {
-        Serial.println(F("No GPS detected: check wiring."));
-        while(true);
-      }
   
 }
 
-float selectBand(int a)
-{    
+
+float selectBand(int a){    
   switch(a){ 
     case 0:
     return 903.08;
