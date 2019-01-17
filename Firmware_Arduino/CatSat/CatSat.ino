@@ -103,8 +103,6 @@ int channel = 12;
 
  
 byte msgCount = 0;            // count of outgoing messages
-byte localAddress = 0xBB;     // address of this device
-byte destination = 0xFF;      // destination to send to
 
 // Inicializar DHT sensor.
 DHT_Unified dht(DHTPIN, DHTTYPE);
@@ -440,48 +438,48 @@ void loop() {
   
 }
 
-float selectBand(int a)
+
+long selectBand(int a)
 {    
   switch(a){ 
     case 0:
-    return 903.08;
+    return 903080000; //903.08Mhz
   break;
     case 1:
-    return 905.24;
+    return 905240000; //905.24
   break;
     case 2:
-    return 907.40;
+    return 907400000; //907.40
   break;
     case 3:
-    return 909.56;
+    return 909560000; //909.56
   break;
     case 4:
-    return 911.72;
+    return 911720000; //911.72
   break;
     case 5:
-    return 913.88;
+    return 913880000; //913.88
   break;
     case 6:
-    return 916.04;
+    return 916040000; //916.04
   break;
     case 7:
-    return 918.20;
+    return 918200000; // 918.20
   break;
     case 8:
-    return 920.36;
+    return 920360000; //920.36
   break;
     case 9:
-    return 922.52;
+    return 922520000; //922.52
   break;
     case 10:
-    return 924.68;
+    return 924680000; //924.68
   break;
     case 11:
-    return 926.84;
+    return 926840000; //926.84
   break;
     case 12:
-    return 915;
+    return 915000000; //915
   break;
   }
-  
- }
+}
