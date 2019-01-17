@@ -1,7 +1,7 @@
 /************************************************************
 SPANISH
-EarthStation.ino
-EarthStation - Estacion Terrena para CatSat
+GroundStation.ino
+GroundStation - Estacion Terrena para CatSat
 Eduardo Contreras @ Electronic Cats
 Original Creation Date: Jul 14, 2016
 https://github.com/ElectronicsCats/CatSat/
@@ -28,13 +28,13 @@ Distribuido como; no se da ninguna garantía.
 
 /************************************************************
 ENGLISH
-EarthStation.ino
-EarthStation - Earth-Station for CatSat
+GroundStation.ino
+GroundStation - Ground-Station for CatSat
 Eduardo contreras @ Electronic Cats
 Original Creation Date: Jal 14, 2016
 https://github.com/ElectronicsCats/CatSat/
 
-This example demonstrates how to use the earth-station for CatSat
+This example demonstrates how to use the ground-station for CatSat
 
 Development environment specifics:
   IDE: Arduino 1.6.8
