@@ -104,21 +104,18 @@ void loop()
 {
   int packetSize = LoRa.parsePacket();
   if (packetSize) {
-    digitalWrite(14,HIGH);
+    digitalWrite(LED_BUILTIN,HIGH);
     // read packet
     while (LoRa.available()) {
-      //Serial.print(LoRa.available());
       buff+=(char)LoRa.read();
-      //Serial.write(LoRa.read());
     }
     buff+=",";
     buff+=String(LoRa.packetRssi());
-   if(buff.startsWith(ID)){
-    Serial.println(buff);
-        }
+    if(buff.startsWith(ID)){
+      Serial.println(buff);
+     }
     buff="";
-
-    digitalWrite(14,LOW);
+    digitalWrite(LED_BUILTIN,LOW);
   }
 }
 
@@ -166,4 +163,3 @@ long selectBand(int a)
   break;
   }
 }
-
