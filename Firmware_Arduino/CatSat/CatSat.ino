@@ -102,7 +102,7 @@ String id_node= "A1";
 int channel = 12;   
 
  
-byte msgCount = 0;            // count of outgoing messages
+//byte msgCount = 0;            // count of outgoing messages
 
 // Inicializar DHT sensor.
 DHT_Unified dht(DHTPIN, DHTTYPE);
@@ -130,13 +130,197 @@ Adafruit_HMC5883_Unified mag = Adafruit_HMC5883_Unified(1);
 
 Adafruit_BMP085_Unified bmp = Adafruit_BMP085_Unified(2);
 
+unsigned long previousMillis = 0;
+
+// Schedule TX every this many seconds (might become longer due to duty
+// cycle limitations).
+const unsigned TX_INTERVAL = 5;
+
 void enviarInfo(String outgoing) {
   LoRa.beginPacket();                   // start packet
   LoRa.print(outgoing);                 // add payload
   LoRa.endPacket();                     // finish packet and send it
-  msgCount++;                           // increment message ID
+  //msgCount++;                           // increment message ID
   Serial.println("Dato enviado");
 }
+
+
+void setup() {
+  Serial.begin(115200);
+  ss.begin(GPSBaud);
+  dht.begin();
+  /*
+   * Activation Balloon mode: 
+   * For high-altitude balloon purpose that the vertical movement will 
+   * have more effect on the position calculation
+  */
+  ss.println(PMTK_SET_NMEA_886_PMTK_FR_MODE);
+  
+    /*****LoRa init****/
+   //Re-write pins CS, reset, y IRQ 
+  LoRa.setPins(RFM95_CS, RFM95_RST, RFM95_INT); // CS, reset, int pin
+
+  if (!LoRa.begin(selectBand(channel))) {           // initialize ratio at 915 MHz
+    Serial.println("LoRa init failed. Check your connections.");
+    while (true);                       // if failed, do nothing
+  }
+
+  LoRa.setTxPower(17); //Set the max transmition power
+  LoRa.setSpreadingFactor(10); //Change the SF to get longer distances
+
+  /******************/
+ 
+  /* Initialise the sensor */
+  if(!bmp.begin())
+  {
+    /* There was a problem detecting the BMP085 ... check your connections */
+    Serial.print(F("Ooops, no BMP085 detected ... Check your wiring or I2C ADDR!"));
+    while(1);
+  }
+  
+  accelgyro.initialize();  /// Initialize MPU
+
+  accelgyro.setI2CMasterModeEnabled(false);
+  accelgyro.setI2CBypassEnabled(true) ;
+  accelgyro.setSleepEnabled(false);
+    
+  /* Initialise the sensor */
+  if(!mag.begin())
+  {
+    /* There was a problem detecting the HMC5883 ... check your connections */
+    Serial.println(F("Ooops, no HMC5883 detected ... Check your wiring!"));
+    while(1);
+  }
+  
+  Serial.println(F("CatSat Ready!"));
+  
+}
+
+void loop() {
+  if(millis() > previousMillis + TX_INTERVAL * 1000){
+    readSensors();
+    if(gps_flag == 1)
+    {
+      Serial.println(Todo);
+      enviarInfo(Todo);
+      previousMillis = millis();
+      Todo = "";
+      gps_flag = 0;   
+    }
+  }
+}
+
+bool readSensors(){
+  Todo += id_node;  //Add id to String 
+  Todo += ",";
+  sensors_event_t event;
+
+  dht.temperature().getEvent(&event);
+  if (isnan(event.temperature)) {
+    Serial.println(F("Error reading temperature!"));
+    Todo += 0;
+    Todo += ","; 
+  }
+  else {
+    /*Uncomment for debbuger*/
+    /*
+    Serial.print(F("TemperatureDHT: "));
+    Serial.print(event.temperature);
+    Serial.println(F(" *C"));
+    */
+    Todo += event.temperature;
+    Todo += ","; 
+  }
+  
+  dht.humidity().getEvent(&event);
+  if (isnan(event.relative_humidity)) {
+    //Serial.println(F("Error reading humidity!"));
+    Todo += 0;
+    Todo += ","; 
+  }
+  else {
+    /*Uncomment for debbuger*/
+    /*
+    Serial.print(F("HumidityDHT: "));
+    Serial.print(event.relative_humidity);
+    Serial.println(F("%"));
+    */
+    Todo += event.relative_humidity;
+    Todo += ",";
+  }
+
+  bmp.getEvent(&event);
+ 
+  if (event.pressure)
+  {
+    /* Display atmospheric pressue in hPa */
+    /*Uncomment for debbuger*/
+    /*
+    Serial.print(F("Pressure:    "));
+    Serial.print(event.pressure);
+    Serial.println(F(" hPa"));
+    */
+    Todo += event.pressure;
+    Todo += ",";    
+    
+    float temperature;
+    bmp.getTemperature(&temperature);
+    Todo += temperature;
+    Todo += ","; 
+    /*Uncomment for debbuger*/
+    /*
+    Serial.print(F("Temperature: "));
+    Serial.print(temperature);
+    Serial.println(F(" C"));
+    */
+  }
+  else
+  {
+    Serial.println(F("Sensor error"));
+  }
+  
+   
+  mag.getEvent(&event);
+ 
+  // Display the results (magnetic vector values are in micro-Tesla (uT))
+  /*Uncomment for debbuger*/
+  /*
+  Serial.print(F("Magnetometro:  ")); 
+  Serial.print(F("X: ")); Serial.print(event.magnetic.x); Serial.print(F("  "));
+  Serial.print(F("Y: ")); Serial.print(event.magnetic.y); Serial.print(F("  "));
+  Serial.print(F("Z: ")); Serial.print(event.magnetic.z); Serial.print(F("  "));Serial.println(F("uT"));
+  */
+  Todo += event.magnetic.x;
+  Todo += ",";
+  Todo += event.magnetic.y;
+  Todo += ",";
+  Todo += event.magnetic.z;
+  Todo += ",";
+  /*Uncomment for debbuger*/
+  /*
+  Serial.print(F("Acelerometro ")); 
+  Serial.print(F("X:")); Serial.print(ax); Serial.print("\t");
+  Serial.print(F("Y:")); Serial.print(ay); Serial.print("\t");
+  Serial.print(F("Z:")); Serial.print(az); Serial.print("\n");
+  Serial.print(F("Giroscopio ")); 
+  Serial.print(F("X:")); Serial.print(gx); Serial.print("\t");
+  Serial.print(F("X:")); Serial.print(gy); Serial.print("\t");
+  Serial.print(F("X:")); Serial.println(gz);Serial.print("\n");
+  */
+  Todo += ax;
+  Todo += ",";
+  Todo += ay;
+  Todo += ",";
+  Todo += az;
+  Todo += ",";
+  Todo += gx;
+  Todo += ",";
+  Todo += gy;
+  Todo += ",";
+  Todo += gz;
+  Todo += ","; 
+  gpsread();
+  }
 
 void gpsread(void){
   
@@ -202,245 +386,7 @@ void gpsread(void){
   
 }
 
-void setup() {
-  Serial.begin(115200);
-  ss.begin(GPSBaud);
-  dht.begin();
-  /*
-   * Activation Balloon mode: 
-   * For high-altitude balloon purpose that the vertical movement will 
-   * have more effect on the position calculation
-  */
-  ss.println(PMTK_SET_NMEA_886_PMTK_FR_MODE);
-  
-    /*****LoRa init****/
-   //Re-write pins CS, reset, y IRQ 
-  LoRa.setPins(RFM95_CS, RFM95_RST, RFM95_INT); // CS, reset, int pin
-
-  if (!LoRa.begin(selectBand(channel))) {           // initialize ratio at 915 MHz
-    Serial.println("LoRa init failed. Check your connections.");
-    while (true);                       // if failed, do nothing
-  }
-
-  LoRa.setTxPower(17); //Set the max transmition power
-  LoRa.setSpreadingFactor(10); //Change the SF to get longer distances
-
-  /******************/
- 
-  /* Initialise the sensor */
-  if(!bmp.begin())
-  {
-    /* There was a problem detecting the BMP085 ... check your connections */
-    Serial.print(F("Ooops, no BMP085 detected ... Check your wiring or I2C ADDR!"));
-    while(1);
-  }
-  
-    accelgyro.initialize();  /// Initialize MPU
- 
-    accelgyro.setI2CMasterModeEnabled(false);
-    accelgyro.setI2CBypassEnabled(true) ;
-    accelgyro.setSleepEnabled(false);
-
-    
-  /* Initialise the sensor */
-  if(!mag.begin())
-  {
-    /* There was a problem detecting the HMC5883 ... check your connections */
-    Serial.println(F("Ooops, no HMC5883 detected ... Check your wiring!"));
-    while(1);
-  }
-  
-  Serial.println(F("CatSat Ready!"));
-  
-}
-
-void loop() {
-  /* Get a new sensor event */ 
-  Todo += id_node;  //Add id to String 
-  Todo += ",";
-  sensors_event_t event;
-
-  dht.temperature().getEvent(&event);
-  if (isnan(event.temperature)) {
-    //Serial.println(F("Error reading temperature!"));
-    Todo += 0;
-    Todo += ","; 
-  }
-  else {
-    /*Uncomment for debbuger*/
-    /*
-    Serial.print(F("TemperatureDHT: "));
-    Serial.print(event.temperature);
-    Serial.println(F(" *C"));
-    */
-    Todo += event.temperature;
-    Todo += ","; 
-  }
-  // Get humidity event and print its value.
-  dht.humidity().getEvent(&event);
-  if (isnan(event.relative_humidity)) {
-    //Serial.println(F("Error reading humidity!"));
-    Todo += 0;
-    Todo += ","; 
-  }
-  else {
-    /*Uncomment for debbuger*/
-    /*
-    Serial.print(F("HumidityDHT: "));
-    Serial.print(event.relative_humidity);
-    Serial.println(F("%"));
-    */
-    Todo += event.relative_humidity;
-    Todo += ",";
-  }
-
-  bmp.getEvent(&event);
- 
-  /* Display the results (barometric pressure is measure in hPa) */
-  if (event.pressure)
-  {
-    /* Display atmospheric pressue in hPa */
-    /*Uncomment for debbuger*/
-    /*
-    Serial.print(F("Pressure:    "));
-    Serial.print(event.pressure);
-    Serial.println(F(" hPa"));
-    */
-    Todo += event.pressure;
-    Todo += ",";    
-    /* Calculating altitude with reasonable accuracy requires pressure    *
-     * sea level pressure for your position at the moment the data is     *
-     * converted, as well as the ambient temperature in degress           *
-     * celcius.  If you don't have these values, a 'generic' value of     *
-     * 1013.25 hPa can be used (defined as SENSORS_PRESSURE_SEALEVELHPA   *
-     * in sensors.h), but this isn't ideal and will give variable         *
-     * results from one day to the next.                                  *
-     *                                                                    *
-     * You can usually find the current SLP value by looking at weather   *
-     * websites or from environmental information centers near any major  *
-     * airport.                                                           *
-     *                                                                    *
-     * For example, for Paris, France you can check the current mean      *
-     * pressure and sea level at: http://bit.ly/16Au8ol                   */
-     
-    /* First we get the current temperature from the BMP085 */
-    float temperature;
-    bmp.getTemperature(&temperature);
-    Todo += temperature;
-    Todo += ","; 
-    /*Uncomment for debbuger*/
-    /*
-    Serial.print(F("Temperature: "));
-    Serial.print(temperature);
-    Serial.println(F(" C"));
-    */
-    
-    /* Then convert the atmospheric pressure, and SLP to altitude         */
-    /* Update this next line with the current SLP for better results      */
-    //float seaLevelPressure = SENSORS_PRESSURE_SEALEVELHPA;
-    /*Uncomment for debbuger*/
-    /*
-    Serial.print(F("Altitude:    ")); 
-    Serial.print(bmp.pressureToAltitude(seaLevelPressure,
-                                        event.pressure)); 
-    Serial.println(F(" m"));
-    Serial.println(F(""));
-    */
-  }
-  else
-  {
-    //Serial.println(F("Sensor error"));
-  }
-  
-   
-  mag.getEvent(&event);
- 
-  // Display the results (magnetic vector values are in micro-Tesla (uT))
-  /*Uncomment for debbuger*/
-  /*
-  Serial.print(F("Magnetometro:  ")); 
-  Serial.print(F("X: ")); Serial.print(event.magnetic.x); Serial.print(F("  "));
-  Serial.print(F("Y: ")); Serial.print(event.magnetic.y); Serial.print(F("  "));
-  Serial.print(F("Z: ")); Serial.print(event.magnetic.z); Serial.print(F("  "));Serial.println(F("uT"));
-  */
-  Todo += event.magnetic.x;
-  Todo += ",";
-  Todo += event.magnetic.y;
-  Todo += ",";
-  Todo += event.magnetic.z;
-  Todo += ",";
-  // Hold the module so that Z is pointing 'up' and you can measure the heading with x&y
-  // Calculate heading when the magnetometer is level, then correct for signs of axis.
-  //float heading = atan2(event.magnetic.y, event.magnetic.x);
-  
-  // Once you have your heading, you must then add your 'Declination Angle', which is the 'Error' of the magnetic field in your location.
-  // Find yours here: http://www.magnetic-declination.com/
-  // Mine is: -13* 2' W, which is ~13 Degrees, or (which we need) 0.22 radians
-  // If you cannot find your Declination, comment out these two lines, your compass will be slightly off.
-  //float declinationAngle = 0.22;
-  //heading += declinationAngle;
-  
-  // Correct for when signs are reversed.
- /* if(heading < 0)
-    heading += 2*PI;
-    
-  // Check for wrap due to addition of declination.
-  if(heading > 2*PI)
-    heading -= 2*PI;
-   
-  // Convert radians to degrees for readability.
-  float headingDegrees = heading * 180/M_PI; 
-  
-
-  //Uncomment for debbuger
-  Serial.print(F("Heading (degrees): ")); Serial.println(headingDegrees);
-*/
-  
-  // ##########  read raw accel/gyro measurements from device
-    accelgyro.getMotion6(&ax, &ay, &az, &gx, &gy, &gz);
-        // display tab-separated accel/gyro x/y/z values
-        /*Uncomment for debbuger*/
-        /*
-        Serial.print(F("Acelerometro ")); 
-        Serial.print(F("X:")); Serial.print(ax); Serial.print("\t");
-        Serial.print(F("Y:")); Serial.print(ay); Serial.print("\t");
-        Serial.print(F("Z:")); Serial.print(az); Serial.print("\n");
-        Serial.print(F("Giroscopio ")); 
-        Serial.print(F("X:")); Serial.print(gx); Serial.print("\t");
-        Serial.print(F("X:")); Serial.print(gy); Serial.print("\t");
-        Serial.print(F("X:")); Serial.println(gz);Serial.print("\n");
-        */
-        Todo += ax;
-        Todo += ",";
-        Todo += ay;
-        Todo += ",";
-        Todo += az;
-        Todo += ",";
-        Todo += gx;
-        Todo += ",";
-        Todo += gy;
-        Todo += ",";
-        Todo += gz;
-        Todo += ",";
-     // Todo += "\n";  
-
-        gpsread();
- 
-  if(gps_flag == 1)
-  {
-    Serial.println(Todo);
-    enviarInfo(Todo);   
-  }
-  Todo = "";
-  delay(1000);  
-  gps_flag = 0;
-
-  
-}
-
-
-long selectBand(int a)
-{    
+long selectBand(int a){    
   switch(a){ 
     case 0:
     return 903080000; //903.08Mhz
