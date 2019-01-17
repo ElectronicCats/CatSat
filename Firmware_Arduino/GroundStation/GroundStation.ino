@@ -50,8 +50,9 @@ please buy us a round!
 
 Distributed as-is; no warranty is given.
 
-Library LoRa Radio
-http://www.airspayce.com/mikem/arduino/RadioHead/index.html
+Library Arduino LoRa
+https://github.com/sandeepmistry/arduino-LoRa
+
 **********************************************************
 *IMPORTANTE CAMBIA TU ID DEPENDIENDO DE TU CANSAT         *
 **********************************************************/
@@ -59,6 +60,13 @@ http://www.airspayce.com/mikem/arduino/RadioHead/index.html
 #include <SPI.h>
 #include <LoRa.h>
 
+long selectBand(int);
+
+/************************************************************
+*    IMPORTANTE CAMBIAR id_node DEPENDIENDO TU CANSAT      *
+************************************************************/
+
+String ID = "A1";
 
 /*******************************************************  
  *Selecciona un canal entre 0 y 12 este debe coincidir *
@@ -66,15 +74,11 @@ http://www.airspayce.com/mikem/arduino/RadioHead/index.html
  *******************************************************/
 int channel = 12;
 
-String ID = "A1";
-
 String buff;
 
 #define RFM95_CS 10 
 #define RFM95_RST 9
 #define RFM95_INT 2
- 
-long selectBand(int);
  
 void setup() 
 {     
@@ -82,6 +86,8 @@ void setup()
   while (!Serial);
 
   Serial.println("LoRa Receiver");
+  
+  pinMode(LED_BUILTIN,OUTPUT);
   
    //Re-write pins CS, reset, y IRQ 
   LoRa.setPins(RFM95_CS, RFM95_RST, RFM95_INT); // CS, reset, int pin
