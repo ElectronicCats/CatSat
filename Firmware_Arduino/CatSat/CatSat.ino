@@ -82,12 +82,11 @@ https://github.com/sandeepmistry/arduino-LoRa
 #define RFM95_CS 10 
 #define RFM95_RST 9
 #define RFM95_INT 2
-#define RF95_FREQ 915.0 //usados creando el objeto
 
 //Command activation Balloon mode
 #define PMTK_SET_NMEA_886_PMTK_FR_MODE  "$PMTK001,886,3*36"
 
-float selectBand(int);
+long selectBand(int);
 
 /************************************************************
 *    IMPORTANTE CAMBIAR id_node DEPENDIENDO TU CANSAT      *
@@ -108,8 +107,8 @@ int channel = 12;
 DHT_Unified dht(DHTPIN, DHTTYPE);
 
 MPU6050 accelgyro;
-// #### Variables de Aceleración y Giroscopio
-// #### Accel and Gyro Vars
+//Variables de Aceleración y Giroscopio
+//Accel and Gyro Vars
 int16_t ax, ay, az;
 int16_t gx, gy, gz;
 
@@ -210,7 +209,7 @@ void loop() {
   }
 }
 
-bool readSensors(){
+bool readSensors(void){
   Todo += id_node;  //Add id to String 
   Todo += ",";
   sensors_event_t event;
