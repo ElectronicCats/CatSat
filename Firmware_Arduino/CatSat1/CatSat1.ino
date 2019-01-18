@@ -63,7 +63,7 @@ https://github.com/sandeepmistry/arduino-LoRa
 #include <LoRa.h>
 
 #include <Wire.h>
-#include <SoftwareSerial.h>
+#include <NeoSWSerial.h>
 #include <I2Cdev.h>
 
 #include <NMEAGPS.h>
@@ -115,7 +115,7 @@ static const int RXPin = 5, TXPin = 6;
 static const uint32_t GPSBaud = 9600;
 int gps_flag = 0;
 
-SoftwareSerial ss(RXPin, TXPin);
+NeoSWSerial ss(RXPin, TXPin);
 //#define ss Serial
 
 uint32_t delayMS;
