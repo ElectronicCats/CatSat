@@ -178,10 +178,10 @@ void setup() {
   accelgyro.setI2CBypassEnabled(true) ;
   accelgyro.setSleepEnabled(false);
     
-  /* Initialise the sensor */
+  // Initialise the sensor
   if(!mag.begin())
   {
-    /* There was a problem detecting the HMC5883 ... check your connections */
+    // There was a problem detecting the HMC5883 ... check your connections
     Serial.println(F("Ooops, no HMC5883 detected ... Check your wiring!"));
     while(1);
   }
@@ -216,7 +216,7 @@ bool readSensors(void){
     Todo += ","; 
   }
   else {
-    /*Uncomment for debbuger*/
+    // Uncomment for debbuger
     /*
     Serial.print(F("TemperatureDHT: "));
     Serial.print(event.temperature);
@@ -233,7 +233,7 @@ bool readSensors(void){
     Todo += ","; 
   }
   else {
-    /*Uncomment for debbuger*/
+    // Uncomment for debbuger
     /*
     Serial.print(F("HumidityDHT: "));
     Serial.print(event.relative_humidity);
@@ -247,7 +247,7 @@ bool readSensors(void){
  
   if (event.pressure)
   {
-    /* Display atmospheric pressue in hPa */
+    // Display atmospheric pressue in hPa 
     /*Uncomment for debbuger*/
     /*
     Serial.print(F("Pressure:    "));
@@ -261,7 +261,7 @@ bool readSensors(void){
     bmp.getTemperature(&temperature);
     Todo += temperature;
     Todo += ","; 
-    /*Uncomment for debbuger*/
+    // Uncomment for debbuger
     /*
     Serial.print(F("Temperature: "));
     Serial.print(temperature);
@@ -277,7 +277,7 @@ bool readSensors(void){
   mag.getEvent(&event);
  
   // Display the results (magnetic vector values are in micro-Tesla (uT))
-  /*Uncomment for debbuger*/
+  // Uncomment for debbuger
   /*
   Serial.print(F("Magnetometro:  ")); 
   Serial.print(F("X: ")); Serial.print(event.magnetic.x); Serial.print(F("  "));
@@ -290,7 +290,7 @@ bool readSensors(void){
   Todo += ",";
   Todo += event.magnetic.z;
   Todo += ",";
-  /*Uncomment for debbuger*/
+  // Uncomment for debbuger
   /*
   Serial.print(F("Acelerometro ")); 
   Serial.print(F("X:")); Serial.print(ax); Serial.print("\t");
