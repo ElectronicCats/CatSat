@@ -58,9 +58,8 @@ https://github.com/jrowberg/i2cdevlib
 
 Library Arduino LoRa
 https://github.com/sandeepmistry/arduino-LoRa
-
-
 */
+
 #include <LoRa.h>
 
 #include <Wire.h>
@@ -100,9 +99,6 @@ String id_node= "A1";
  *******************************************************/
 int channel = 12;   
 
- 
-//byte msgCount = 0;            // count of outgoing messages
-
 // Inicializar DHT sensor.
 DHT_Unified dht(DHTPIN, DHTTYPE);
 
@@ -139,7 +135,6 @@ void enviarInfo(String outgoing) {
   LoRa.beginPacket();                   // start packet
   LoRa.print(outgoing);                 // add payload
   LoRa.endPacket();                     // finish packet and send it
-  //msgCount++;                           // increment message ID
   Serial.println("Dato enviado");
 }
 
