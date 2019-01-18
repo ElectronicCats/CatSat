@@ -12,7 +12,7 @@ basica del CatSat Kit Educativo
 http://electroniccats.com
 
 Especificaciones del entorno de Desarrollo:
-  IDE: Arduino 1.6.8
+  IDE: Arduino 1.8.4
   Plataforma de Hardware:
   Kit CanSat
   - Arduino Mini Pro
@@ -39,7 +39,7 @@ https://github.com/ElectronicsCats/CatSat/
 This example demonstrates how to use CatSat
 
 Development environment specifics:
-  IDE: Arduino 1.6.8
+  IDE: Arduino 1.8.4
   Hardware Platform:
   Kit CanSat
   - Arduino Mini Pro
