@@ -1,14 +1,14 @@
 /************************************************************
 SPANISH
-CatSat.ino
-CatSat - Satelite en Lata Educativo
+CatSat1.ino
+CatSat 1 - Satelite en Lata Educativo
 Andres Sabas @ Electronic Cats
 Eduardo Contreras @ Electronic Cats
 Original Creation Date: Jul 10, 2016
 https://github.com/ElectronicsCats/CatSat/
 
 Este ejemplos demuestra el funcionamiento basico de los sensores y funcionalidad
-basica del CatSat Kit Educativo
+basica del CatSat 1 Kit Educativo
 http://electroniccats.com
 
 Especificaciones del entorno de Desarrollo:
@@ -30,13 +30,13 @@ Distribuido como; no se da ninguna garantía.
 
 /************************************************************
 ENGLISH
-CatSat.ino
-CatSat - Satelite en Lata Educativo
+CatSat1.ino
+CatSat 1 - Satelite en Lata Educativo
 Andres Sabas @ Electronic Cats
 Original Creation Date: Jal 10, 2016
 https://github.com/ElectronicsCats/CatSat/
 
-This example demonstrates how to use CatSat
+This example demonstrates how to use CatSat 1
 
 Development environment specifics:
   IDE: Arduino 1.8.4
@@ -186,7 +186,7 @@ void setup() {
     while(1);
   }
   
-  Serial.println(F("CatSat Ready!"));
+  Serial.println(F("CatSat 1 Ready!"));
   
 }
 
