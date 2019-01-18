@@ -118,8 +118,6 @@ int gps_flag = 0;
 NeoSWSerial ss(RXPin, TXPin);
 //#define ss Serial
 
-uint32_t delayMS;
-
 /* Assign a unique ID to this sensor at the same time */
 Adafruit_HMC5883_Unified mag = Adafruit_HMC5883_Unified(1);
 
