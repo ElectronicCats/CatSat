@@ -85,6 +85,9 @@ https://github.com/sandeepmistry/arduino-LoRa
 //Command activation Balloon mode
 #define PMTK_SET_NMEA_886_PMTK_FR_MODE  "$PMTK001,886,3*36"
 
+//Uncomment for debugging
+//#define DEBUG
+
 long selectBand(int);
 
 /************************************************************
@@ -214,12 +217,11 @@ bool readSensors(void){
     Todo += ","; 
   }
   else {
-    // Uncomment for debbuger
-    /*
+    #ifdef DEBUG
     Serial.print(F("TemperatureDHT: "));
     Serial.print(event.temperature);
     Serial.println(F(" *C"));
-    */
+    #endif
     Todo += event.temperature;
     Todo += ","; 
   }
@@ -231,12 +233,11 @@ bool readSensors(void){
     Todo += ","; 
   }
   else {
-    // Uncomment for debbuger
-    /*
+    #ifdef DEBUG
     Serial.print(F("HumidityDHT: "));
     Serial.print(event.relative_humidity);
     Serial.println(F("%"));
-    */
+    #endif
     Todo += event.relative_humidity;
     Todo += ",";
   }
@@ -245,13 +246,12 @@ bool readSensors(void){
  
   if (event.pressure)
   {
-    // Display atmospheric pressue in hPa 
-    /*Uncomment for debbuger*/
-    /*
+    // Display atmospheric pressue in hPa
+    #ifdef DEBUG
     Serial.print(F("Pressure:    "));
     Serial.print(event.pressure);
     Serial.println(F(" hPa"));
-    */
+    #endif
     Todo += event.pressure;
     Todo += ",";    
     
@@ -259,12 +259,12 @@ bool readSensors(void){
     bmp.getTemperature(&temperature);
     Todo += temperature;
     Todo += ","; 
-    // Uncomment for debbuger
-    /*
+    
+    #ifdef DEBUG    
     Serial.print(F("Temperature: "));
     Serial.print(temperature);
     Serial.println(F(" C"));
-    */
+    #endif
   }
   else
   {
@@ -275,21 +275,19 @@ bool readSensors(void){
   mag.getEvent(&event);
  
   // Display the results (magnetic vector values are in micro-Tesla (uT))
-  // Uncomment for debbuger
-  /*
+  #ifdef DEBUG
   Serial.print(F("Magnetometro:  ")); 
   Serial.print(F("X: ")); Serial.print(event.magnetic.x); Serial.print(F("  "));
   Serial.print(F("Y: ")); Serial.print(event.magnetic.y); Serial.print(F("  "));
   Serial.print(F("Z: ")); Serial.print(event.magnetic.z); Serial.print(F("  "));Serial.println(F("uT"));
-  */
+  #endif
   Todo += event.magnetic.x;
   Todo += ",";
   Todo += event.magnetic.y;
   Todo += ",";
   Todo += event.magnetic.z;
   Todo += ",";
-  // Uncomment for debbuger
-  /*
+  #ifdef DEBUG
   Serial.print(F("Acelerometro ")); 
   Serial.print(F("X:")); Serial.print(ax); Serial.print("\t");
   Serial.print(F("Y:")); Serial.print(ay); Serial.print("\t");
@@ -298,7 +296,7 @@ bool readSensors(void){
   Serial.print(F("X:")); Serial.print(gx); Serial.print("\t");
   Serial.print(F("X:")); Serial.print(gy); Serial.print("\t");
   Serial.print(F("X:")); Serial.println(gz);Serial.print("\n");
-  */
+  #endif
   Todo += ax;
   Todo += ",";
   Todo += ay;
