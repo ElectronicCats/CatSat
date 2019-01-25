@@ -86,7 +86,7 @@ https://github.com/sandeepmistry/arduino-LoRa
 #define PMTK_SET_NMEA_886_PMTK_FR_MODE  "$PMTK001,886,3*36"
 
 //Uncomment for debugging
-//#define DEBUG
+#define DEBUG
 
 long selectBand(int);
 
@@ -272,7 +272,7 @@ bool readSensors(void){
   }
   
    
-  mag.getEvent(&event);
+  //mag.getEvent(&event);
  
   // Display the results (magnetic vector values are in micro-Tesla (uT))
   #ifdef DEBUG
@@ -287,6 +287,8 @@ bool readSensors(void){
   Todo += ",";
   Todo += event.magnetic.z;
   Todo += ",";
+
+  accelgyro.getMotion6(&ax, &ay, &az, &gx, &gy, &gz);
   #ifdef DEBUG
   Serial.print(F("Acelerometro ")); 
   Serial.print(F("X:")); Serial.print(ax); Serial.print("\t");
