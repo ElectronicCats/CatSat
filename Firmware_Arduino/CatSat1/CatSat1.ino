@@ -114,12 +114,11 @@ int16_t gx, gy, gz;
 String Todo; //String a mandar
 
 NMEAGPS gps;
+static gps_fix  fix;
 static const int RXPin = 5, TXPin = 6;
 static const uint32_t GPSBaud = 9600;
-int gps_flag = 0;
 
 NeoSWSerial ss(RXPin, TXPin);
-//#define ss Serial
 
 /* Assign a unique ID to this sensor at the same time */
 Adafruit_HMC5883_Unified mag = Adafruit_HMC5883_Unified(1);
@@ -192,17 +191,14 @@ void setup() {
 }
 
 void loop() {
-  if(millis() > previousMillis + TX_INTERVAL * 1000){
-    readSensors();
-    if(gps_flag == 1)
-    {
+    while (gps.available( ss )) {
+      fix = gps.read();
+      readSensors();
+      gpsread();
       Serial.println(Todo);
       enviarInfo(Todo);
-      previousMillis = millis();
-      Todo = "";
-      gps_flag = 0;   
+      Todo = "";  
     }
-  }
 }
 
 bool readSensors(void){
@@ -311,14 +307,9 @@ bool readSensors(void){
   Todo += ",";
   Todo += gz;
   Todo += ","; 
-  gpsread();
-  }
+}
 
 void gpsread(void){
-  
-  while ((ss.available() > 0) && (gps_flag == 0))
-    {
-    gps_fix fix = gps.read();
      Serial.print(F("Location: ")); 
       if (fix.valid.location)
       { 
@@ -329,7 +320,6 @@ void gpsread(void){
         Serial.print(fix.latitude(), 6);
         Serial.print(F(","));
         Serial.print(fix.longitude(), 6);
-        gps_flag = 1;
       }
       else
       { 
@@ -338,7 +328,6 @@ void gpsread(void){
         Todo += "0";
         Todo += "\n";
         Serial.print(F("INVALID"));
-        gps_flag = 1;
       }
 
       Serial.print(F("  Date/Time: "));
@@ -374,8 +363,6 @@ void gpsread(void){
       }
 
       Serial.println(); 
-     }
-  
 }
 
 long selectBand(int a){    
