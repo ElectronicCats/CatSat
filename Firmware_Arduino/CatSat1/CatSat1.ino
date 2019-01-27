@@ -226,7 +226,7 @@ bool readSensors(void){
   
   dht.humidity().getEvent(&event);
   if (isnan(event.relative_humidity)) {
-    //Serial.println(F("Error reading humidity!"));
+    Serial.println(F("Error reading humidity!"));
     Todo += 0;
     Todo += ","; 
   }
