@@ -84,6 +84,8 @@ https://github.com/sandeepmistry/arduino-LoRa
 
 //Command activation Balloon mode
 #define PMTK_SET_NMEA_886_PMTK_FR_MODE  "$PMTK001,886,3*36"
+// Command turn on GPRMC and GGA
+#define PMTK_SET_NMEA_OUTPUT_RMCGGA "$PMTK314,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0*28"
 
 //Uncomment for debugging
 #define DEBUG
