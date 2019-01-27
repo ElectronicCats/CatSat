@@ -268,7 +268,7 @@ bool readSensors(void){
   }
   
    
-  //mag.getEvent(&event);
+  mag.getEvent(&event);
  
   // Display the results (magnetic vector values are in micro-Tesla (uT))
   #ifdef DEBUG
