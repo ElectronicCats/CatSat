@@ -156,7 +156,7 @@ void setup() {
    //Re-write pins CS, reset, y IRQ 
   LoRa.setPins(RFM95_CS, RFM95_RST, RFM95_INT); // CS, reset, int pin
 
-  if (!LoRa.begin(selectBand(channel))) {           // initialize ratio at 915 MHz
+  if (!LoRa.begin(915E6)) {           // initialize ratio at 915 MHz
     Serial.println("LoRa init failed. Check your connections.");
     while (true);                       // if failed, do nothing
   }
