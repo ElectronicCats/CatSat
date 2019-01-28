@@ -88,7 +88,7 @@ https://github.com/sandeepmistry/arduino-LoRa
 #define PMTK_SET_NMEA_OUTPUT_RMCGGA "$PMTK314,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0*28"
 
 //Uncomment for debugging
-#define DEBUG
+//#define DEBUG
 
 long selectBand(int);
 
@@ -318,6 +318,10 @@ void gpsread(void){
         Todo += String(fix.latitude(), 6);
         Todo += ",";
         Todo += String(fix.longitude(), 6);
+        Todo += ",";
+        Todo += String(fix.alt.whole, 6);
+        Todo += ",";
+        Todo += String(fix.speed_kph(), 6);
         Todo += "\n";
         Serial.print(fix.latitude(), 6);
         Serial.print(F(","));
@@ -325,6 +329,10 @@ void gpsread(void){
       }
       else
       { 
+        Todo += "0";
+        Todo += ",";
+        Todo += "0";
+        Todo += ",";
         Todo += "0";
         Todo += ",";
         Todo += "0";
