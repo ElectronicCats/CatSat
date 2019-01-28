@@ -1,20 +1,24 @@
 The Raw output is order as
 
 DHT
-event.temperature event.relative_humidity
+temperature, relative_humidity
 
 BMP  
-event.pressure  temp
+pressure, temperature 
 
 Magnetometer
 
-event.magnetic.x event.magnetic.y event.magnetic.z
+"X"=mx, "Y"=my, "Z"=mz
 
 Acele/gyro
 
-"X"=ax "Y"=ay "Z"=az
+"X"=ax, "Y"=ay, "Z"=az
 
-"X"=gx "Y"=gy "Z"=gz
+"X"=gx, "Y"=gy, "Z"=gz,
+
+lat,long,alt,vel
+
+RSSI
         
 
-A1,temp1,hum,press,temp2,mx,my,mz,ax,ay,az,gx,gy,gz,lat,long
+A1,temp1,hum,press,temp2,mx,my,mz,ax,ay,az,gx,gy,gz,lat,long,alt,vel,RSSI
