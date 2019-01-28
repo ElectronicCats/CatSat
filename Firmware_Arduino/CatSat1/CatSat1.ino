@@ -322,7 +322,6 @@ void gpsread(void){
         Todo += String(fix.alt.whole, 6);
         Todo += ",";
         Todo += String(fix.speed_kph(), 6);
-        Todo += "\n";
         Serial.print(fix.latitude(), 6);
         Serial.print(F(","));
         Serial.print(fix.longitude(), 6);
@@ -336,7 +335,6 @@ void gpsread(void){
         Todo += "0";
         Todo += ",";
         Todo += "0";
-        Todo += "\n";
         Serial.print(F("INVALID"));
       }
 
