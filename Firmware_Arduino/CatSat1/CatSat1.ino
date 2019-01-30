@@ -319,7 +319,7 @@ void gpsread(void){
         Todo += ",";
         Todo += String(fix.longitude(), 6);
         Todo += ",";
-        Todo += String(fix.alt.whole, 6);
+        Todo += String(fix.altitude(), 6);
         Todo += ",";
         Todo += String(fix.speed_kph(), 6);
         Serial.print(fix.latitude(), 6);
