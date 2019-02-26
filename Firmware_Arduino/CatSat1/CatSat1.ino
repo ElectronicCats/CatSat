@@ -168,12 +168,6 @@ void setup() {
   Serial.begin(115200);
   ss.begin(GPSBaud);
   dht.begin();
-  /*
-     Activation Balloon mode:
-     For high-altitude balloon purpose that the vertical movement will
-     have more effect on the position calculation
-  */
-  ss.println(PMTK_SET_NMEA_886_PMTK_FR_MODE);
 
   /*****LoRa init****/
   //Re-write pins CS, reset, y IRQ
@@ -211,6 +205,11 @@ void setup() {
     while (1);
   }
   
+  /*
+    Activation Balloon mode:
+    For high-altitude balloon purpose that the vertical movement will
+    have more effect on the position calculation
+  */
   ballonModeGPS();
   
   Serial.println(F("CatSat 1 Ready!"));
