@@ -64,7 +64,6 @@
 
 #include <Wire.h>
 #include <NeoSWSerial.h>
-//#include <I2Cdev.h>
 
 #include <NMEAGPS.h>
 
@@ -119,6 +118,8 @@ NMEAGPS gps;
 static gps_fix  fix;
 static const int RXPin = 5, TXPin = 6;
 static const uint32_t GPSBaud = 9600;
+static uint32_t last_rx = 0UL; // The last millis() time a character was
+                               // received from GPS.
 
 NeoSWSerial ss(RXPin, TXPin);
 
@@ -145,19 +146,13 @@ void ballonModeGPS() {
   String gpsData = "";
   while (!flag) {
     if ((ss.available())) {
-      while (ss.available()) {
-        char c = ss.read();  //Wait for a data on the GPS
-        if (c = '\n') {
           flag = 1;
           ss.println(PMTK_SET_NMEA_886_PMTK_FR_MODE);
           while (ss.available()) {
             gpsData += (char)ss.read();
           }
-          if (!gpsData.startsWith("$PMTK001,8"))flag = 0;
           gpsData = "";
           ss.println(PMTK_SET_NMEA_OUTPUT_RMCGGA);
-        }
-      }
     }
   }
   Serial.println("GPS balloon mode configured");
@@ -218,13 +213,16 @@ void setup() {
 
 void loop() {
   while (gps.available( ss )) {
+    last_rx = millis();
     fix = gps.read();
+    
     readSensors();
     gpsread();
     Serial.println(Todo);
     enviarInfo(Todo);
     Todo = "";
   }
+  listenForSomething();
 }
 
 bool readSensors(void) {
@@ -439,4 +437,17 @@ long selectBand(int a) {
       return 915000000; //915
       break;
   }
+}
+
+//----------------------------------------------------------------
+//  Listen to see if the GPS device is correctly 
+//  connected and functioning.
+
+static void listenForSomething()
+{
+  uint32_t current_ms  =  millis();
+  uint32_t ms_since_last_rx   = current_ms - last_rx;
+    if ((ms_since_last_rx >7000)) {
+      Serial.println( F("\nCheck GPS device and/or connections.  No data received.\n") );
+ }
 }
