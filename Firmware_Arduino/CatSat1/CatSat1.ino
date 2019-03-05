@@ -205,7 +205,7 @@ void setup() {
   ballonModeGPS();
   
   Serial.println(F("CatSat 1 Ready!"));
-
+  Serial.println(F("Fw version 2.0.2"));
 }
 
 void loop() {
