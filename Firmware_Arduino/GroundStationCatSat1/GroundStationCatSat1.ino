@@ -60,7 +60,7 @@ https://github.com/sandeepmistry/arduino-LoRa
 #include <SPI.h>
 #include <LoRa.h>
 
-long selectBand(int);
+uint32_t selectBand(int);
 
 /************************************************************
 *    IMPORTANTE CAMBIAR id_node DEPENDIENDO TU CANSAT      *
@@ -72,7 +72,7 @@ String ID = "A1";
  *Selecciona un canal entre 0 y 12 este debe coincidir *
  *con el canal de tu satelite                          *
  *******************************************************/
-int channel = 12;
+int chan = 12;
 
 String buff;
 
@@ -92,7 +92,7 @@ void setup()
    //Re-write pins CS, reset, y IRQ 
   LoRa.setPins(RFM95_CS, RFM95_RST, RFM95_INT); // CS, reset, int pin
 
-  if (!LoRa.begin(selectBand(channel))) {
+  if (!LoRa.begin(selectBand(chan))) {
     Serial.println("Starting LoRa failed!");
     while (1);
   }
@@ -119,8 +119,7 @@ void loop()
   }
 }
 
-long selectBand(int a)
-{    
+uint32_t selectBand(int a){    
   switch(a){ 
     case 0:
     return 903080000; //903.08Mhz
