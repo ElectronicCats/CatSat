@@ -89,7 +89,7 @@
 //Uncomment for debugging
 //#define DEBUG
 
-long selectBand(int);
+uint32_t selectBand(int);
 
 /************************************************************
      IMPORTANTE CAMBIAR id_node DEPENDIENDO TU CANSAT
@@ -101,7 +101,7 @@ String id_node = "A1";
   Selecciona un canal entre 0 y 12 este debe coincidir
   con el canal de tu satelite
  *******************************************************/
-int channel = 12;
+int chan = 12;
 
 // Inicializar DHT sensor.
 DHT_Unified dht(DHTPIN, DHTTYPE);
@@ -165,7 +165,7 @@ void setup() {
   //Re-write pins CS, reset, y IRQ
   LoRa.setPins(RFM95_CS, RFM95_RST, RFM95_INT); // CS, reset, int pin
 
-  if (!LoRa.begin(915E6)) {           // initialize ratio at 915 MHz
+  if (!LoRa.begin(selectBand(chan))) {           // initialize ratio at 915 MHz
     Serial.println("LoRa init failed. Check your connections.");
     while (true);                       // if failed, do nothing
   }
@@ -392,10 +392,10 @@ void gpsread(void) {
   Serial.println();
 }
 
-long selectBand(int a) {
+uint32_t selectBand(int a) {
   switch (a) {
     case 0:
-      return 903080000; //903.08Mhz
+      return 903080000; //903.08 Mhz
       break;
     case 1:
       return 905240000; //905.24
