@@ -11,7 +11,7 @@ Manual and more information in our [Wiki](https://github.com/ElectronicsCats/Cat
 Electronic Cats invests time and resources providing this open source design, please support Electronic Cats and open-source hardware by purchasing products from Electronic Cats!
 
 <a href="https://electroniccats.com/producto/catsat/">
-  <img src="https://media.discordapp.net/attachments/562297893667471381/619566704372219915/unknown.png?width=441&height=228" width="200" height="104" />
+  <img src="https://electroniccats.com/wp-content/uploads/badge_store.png" height="104" />
 </a>
 
 Designed by Electronic Cats.
