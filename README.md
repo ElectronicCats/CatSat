@@ -10,7 +10,7 @@ Manual and more information in our [Wiki](https://github.com/ElectronicsCats/Cat
 
 Electronic Cats invests time and resources providing this open source design, please support Electronic Cats and open-source hardware by purchasing products from Electronic Cats!
 
-<a href="https://electroniccats.com">
+<a href="https://electroniccats.com/store/catsat/">
   <img src="https://electroniccats.com/wp-content/uploads/badge_store.png" height="104" />
 </a>
 
